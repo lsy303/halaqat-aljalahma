@@ -1,17 +1,33 @@
 {
+  "id": "/halaqat-aljalahma/",
   "name": "سجل الطلاب · حلقات جامع يوسف بن شاهين الجلاهمة",
   "short_name": "حلقات الجلاهمة",
   "description": "متابعة حضور وتسميع طلاب حلقات جامع يوسف بن شاهين الجلاهمة",
   "lang": "ar",
   "dir": "rtl",
-  "start_url": "./",
-  "scope": "./",
+  "start_url": "/halaqat-aljalahma/",
+  "scope": "/halaqat-aljalahma/",
   "display": "standalone",
   "background_color": "#1E253F",
   "theme_color": "#1E253F",
   "icons": [
-    { "src": "icons/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
-    { "src": "icons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
-    { "src": "icons/icon-maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+    {
+      "src": "icons/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "icons/icon-maskable-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
   ]
 }
