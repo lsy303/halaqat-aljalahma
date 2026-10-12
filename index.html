@@ -769,22 +769,14 @@ function compress(file){ return new Promise((res,rej)=>{ const u=URL.createObjec
   img.onload=()=>{ const k=Math.min(1,1100/Math.max(img.width,img.height)); const c=document.createElement("canvas"); c.width=Math.round(img.width*k); c.height=Math.round(img.height*k); c.getContext("2d").drawImage(img,0,0,c.width,c.height); URL.revokeObjectURL(u); res(c.toDataURL("image/jpeg",.78)); };
   img.onerror=()=>{ URL.revokeObjectURL(u); rej(); }; img.src=u; }); }
 function tabAccount(){
-  return `<form class="card" id="acc-pass-form" style="display:flex;flex-direction:column;gap:10px">
-    <div class="sec-h" style="margin:0"><h2>حساب الأستاذ</h2><small dir="ltr">${esc(FB.auth.currentUser?.email||"")}</small></div>
-    <b style="font-size:14px">تغيير كلمة المرور</b>
-    <input class="inp" type="password" id="pw-cur" dir="ltr" autocomplete="current-password" placeholder="كلمة المرور الحالية">
-    <input class="inp" type="password" id="pw-new" dir="ltr" autocomplete="new-password" placeholder="كلمة المرور الجديدة (٨ أحرف على الأقل)">
-    <input class="inp" type="password" id="pw-new2" dir="ltr" autocomplete="new-password" placeholder="تأكيد كلمة المرور الجديدة">
+  return `<form class="card" id="acc-pass-form" style="display:flex;flex-direction:column;gap:10px" autocomplete="off">
+    <div class="sec-h" style="margin:0"><h2>الرقم السري للأساتذة</h2></div>
+    <p class="muted" style="margin:0;font-size:13px">رقم واحد يدخل فيه كل الأساتذة. إذا غيّرته، بلّغ الباقين بالرقم الجديد.</p>
+    <input class="inp pin num" type="password" id="pw-cur" inputmode="numeric" autocomplete="current-password" placeholder="الرقم الحالي">
+    <input class="inp pin num" type="password" id="pw-new" inputmode="numeric" autocomplete="new-password" placeholder="الرقم الجديد (٦ أرقام)" maxlength="6">
+    <input class="inp pin num" type="password" id="pw-new2" inputmode="numeric" autocomplete="new-password" placeholder="تأكيد الرقم الجديد" maxlength="6">
     <div class="err" id="pw-err" role="status"></div>
-    <div><button class="btn pri" type="submit">تغيير كلمة المرور</button></div>
-  </form>
-  <form class="card" id="acc-mail-form" style="display:flex;flex-direction:column;gap:10px">
-    <b style="font-size:14px">تغيير البريد الإلكتروني</b>
-    <p class="muted" style="margin:0;font-size:13px">يوصل رابط تأكيد على البريد الجديد، والتغيير يتم بعد الضغط عليه. بعدها ادخل بالبريد الجديد.</p>
-    <input class="inp" type="email" id="em-new" dir="ltr" autocomplete="email" placeholder="البريد الجديد">
-    <input class="inp" type="password" id="em-cur" dir="ltr" autocomplete="current-password" placeholder="كلمة المرور الحالية">
-    <div class="err" id="em-err" role="status"></div>
-    <div><button class="btn" type="submit">إرسال رابط التأكيد</button></div>
+    <div><button class="btn pri" type="submit">تغيير الرقم السري</button></div>
   </form>`;
 }
 function renderTeacher(){
@@ -903,8 +895,8 @@ function addEyes(root){
 new MutationObserver(()=>addEyes()).observe(document.documentElement, {childList:true, subtree:true});
 function authMsg(err){
   const c = (err && err.code) || "";
-  if(/wrong-password|invalid-credential|invalid-login/.test(c)) return "كلمة المرور الحالية غير صحيحة.";
-  if(c.includes("weak-password")) return "كلمة المرور ضعيفة، استخدم ٨ أحرف على الأقل.";
+  if(/wrong-password|invalid-credential|invalid-login/.test(c)) return "الرقم الحالي غير صحيح.";
+  if(c.includes("weak-password")) return "الرقم ضعيف، استخدم ٦ أرقام.";
   if(c.includes("email-already-in-use")) return "هذا البريد مستخدم لحساب ثاني.";
   if(c.includes("invalid-email")) return "صيغة البريد غير صحيحة.";
   if(c.includes("too-many")) return "محاولات كثيرة، انتظر قليلاً ثم حاول.";
@@ -927,10 +919,10 @@ document.addEventListener("submit", async e=>{
     const out=$("#pw-err"), cur=$("#pw-cur").value, n1=$("#pw-new").value, n2=$("#pw-new2").value;
     out.className="err";
     if(!cur || !n1){ out.textContent="عبّ كل الخانات."; return; }
-    if(n1.length<8){ out.textContent="كلمة المرور الجديدة لازم تكون ٨ أحرف على الأقل."; return; }
-    if(n1!==n2){ out.textContent="تأكيد كلمة المرور غير مطابق."; return; }
+    if(!/^\d{6}$/.test(n1)){ out.textContent="الرقم الجديد لازم يكون ٦ أرقام."; return; }
+    if(n1!==n2){ out.textContent="تأكيد الرقم غير مطابق."; return; }
     btn.disabled=true;
-    try{ const u=await reauth(cur); await FB.updatePassword(u, n1); e.target.reset(); out.className="err ok"; out.textContent="تم تغيير كلمة المرور."; }
+    try{ const u=await reauth(cur); await FB.updatePassword(u, n1); e.target.reset(); out.className="err ok"; out.textContent="تم تغيير الرقم السري. بلّغ باقي الأساتذة بالرقم الجديد."; }
     catch(err){ console.error(err); out.textContent=authMsg(err); }
     btn.disabled=false;
   } else {
@@ -946,24 +938,25 @@ document.addEventListener("submit", async e=>{
   }
 });
 function openLogin(){
-  $("#modal").innerHTML = `<div class="modal" data-act="close"><form class="dlg" id="login-form" role="dialog" aria-modal="true">
-    <h3>دخول الأستاذ</h3><p>ادخل بالبريد وكلمة المرور الخاصة بحساب الأستاذ.</p>
-    <input class="inp" id="mail-in" type="email" dir="ltr" autocomplete="username" placeholder="البريد الإلكتروني">
-    <input class="inp" id="pass-in" type="password" dir="ltr" autocomplete="current-password" placeholder="كلمة المرور">
+  $("#modal").innerHTML = `<div class="modal" data-act="close"><form class="dlg" id="login-form" role="dialog" aria-modal="true" autocomplete="off">
+    <h3>دخول الأستاذ</h3><p>اكتب الرقم السري للأساتذة.</p>
+    <input class="inp pin num" id="pass-in" type="password" inputmode="numeric" autocomplete="current-password" placeholder="••••••" aria-label="الرقم السري">
     <div class="err" id="pass-err" role="status"></div>
-    <div class="row"><button class="btn pri" type="submit" id="login-go">دخول</button><button class="btn ghost" type="button" data-act="close">إلغاء</button><span style="flex:1"></span><button class="lnk" type="button" data-act="forgot">نسيت كلمة المرور؟</button></div>
+    <div class="row"><button class="btn pri" type="submit" id="login-go" style="flex:1">دخول</button><button class="btn ghost" type="button" data-act="close">إلغاء</button></div>
+    <p class="muted" style="margin:0;font-size:12.5px">نسيت الرقم؟ تواصل مع مشرف الحلقة.</p>
   </form></div>`;
-  $("#mail-in").focus();
+  $("#pass-in").focus();
   $("#login-form").addEventListener("submit", async e=>{
     e.preventDefault();
-    const em = $("#mail-in").value.trim(), pw = $("#pass-in").value;
-    if(!em || !pw){ $("#pass-err").textContent="اكتب البريد وكلمة المرور."; return; }
+    const pw = $("#pass-in").value.trim();
+    if(pw.length < 6){ $("#pass-err").textContent="الرقم السري ٦ أرقام."; return; }
+    if(!FB.teacherEmail){ $("#pass-err").textContent="حساب الأستاذ غير مضبوط في firebase-config.js."; return; }
     $("#login-go").disabled = true; $("#pass-err").textContent = "";
-    try{ ui.view = "login-pending"; await FB.signInWithEmailAndPassword(FB.auth, em, pw); closeModal(); }
+    try{ ui.view = "login-pending"; await FB.signInWithEmailAndPassword(FB.auth, FB.teacherEmail, pw); closeModal(); }
     catch(err){
-      ui.view = "home"; $("#login-go").disabled = false;
+      ui.view = "home"; $("#login-go").disabled = false; $("#pass-in").select();
       const c = err && err.code || "";
-      $("#pass-err").textContent = /invalid|wrong-password|user-not-found/.test(c) ? "البريد أو كلمة المرور غير صحيحة." : c.includes("too-many") ? "محاولات كثيرة، انتظر قليلاً ثم حاول." : c.includes("network") ? "تعذّر الاتصال، تأكد من الإنترنت." : "تعذّر الدخول ("+c+").";
+      $("#pass-err").textContent = /invalid|wrong-password|user-not-found/.test(c) ? "الرقم السري غير صحيح." : c.includes("too-many") ? "محاولات كثيرة، انتظر قليلاً ثم حاول." : c.includes("network") ? "تعذّر الاتصال، تأكد من الإنترنت." : "تعذّر الدخول ("+c+").";
     }
   });
 }
@@ -1097,7 +1090,8 @@ document.addEventListener("visibilitychange", ()=>{ if(document.visibilityState=
 document.fonts && document.fonts.ready.then(()=>{ if(ui.view==="teacher" && ui.tab==="wheel") drawWheel(); });
 </script>
 <script type="module">
-import { FIREBASE_CONFIG } from "./firebase-config.js";
+import * as CFG from "./firebase-config.js";
+const FIREBASE_CONFIG = CFG.FIREBASE_CONFIG;
 if(!FIREBASE_CONFIG || !FIREBASE_CONFIG.apiKey || /PASTE/.test(FIREBASE_CONFIG.apiKey)){
   window.dispatchEvent(new Event("fb-missing"));
 } else {
@@ -1113,7 +1107,7 @@ if(!FIREBASE_CONFIG || !FIREBASE_CONFIG.apiKey || /PASTE/.test(FIREBASE_CONFIG.a
   let db;
   try { db = F.initializeFirestore(app, { localCache: F.persistentLocalCache({ tabManager: F.persistentMultipleTabManager() }) }); }
   catch(e){ db = F.getFirestore(app); }
-  window.FB = { app, auth, db,
+  window.FB = { app, auth, db, teacherEmail: CFG.TEACHER_EMAIL || "",
     onAuthStateChanged: A.onAuthStateChanged, signInWithEmailAndPassword: A.signInWithEmailAndPassword, signOut: A.signOut,
     sendPasswordResetEmail: A.sendPasswordResetEmail, updatePassword: A.updatePassword, reauthenticateWithCredential: A.reauthenticateWithCredential,
     EmailAuthProvider: A.EmailAuthProvider, verifyBeforeUpdateEmail: A.verifyBeforeUpdateEmail,

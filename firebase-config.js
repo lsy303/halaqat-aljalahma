@@ -8,3 +8,6 @@ export const FIREBASE_CONFIG = {
   messagingSenderId: "961102128048",
   appId: "1:961102128048:web:1c731cc453be22aabe6c75"
 };
+
+// حساب الأساتذة المشترك: الأساتذة يكتبون الرقم السري فقط، وهذا البريد يُستخدم في الخلفية
+export const TEACHER_EMAIL = "ynjjr123@gmail.com";
