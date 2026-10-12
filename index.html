@@ -943,7 +943,7 @@ function openLogin(){
     <input class="inp pin num" id="pass-in" type="password" inputmode="numeric" autocomplete="current-password" placeholder="••••••" aria-label="الرقم السري">
     <div class="err" id="pass-err" role="status"></div>
     <div class="row"><button class="btn pri" type="submit" id="login-go" style="flex:1">دخول</button><button class="btn ghost" type="button" data-act="close">إلغاء</button></div>
-    <p class="muted" style="margin:0;font-size:12.5px">نسيت الرقم؟ تواصل مع مشرف الحلقة.</p>
+    <p class="muted" style="margin:0;font-size:12.5px">نسيت الرقم؟ <button class="lnk" type="button" data-act="forgot">أرسل رابط رقم جديد للمشرف</button></p>
   </form></div>`;
   $("#pass-in").focus();
   $("#login-form").addEventListener("submit", async e=>{
@@ -984,10 +984,10 @@ document.addEventListener("click", e=>{
     case "login": openLogin(); break;
     case "logout": FB.signOut(FB.auth); break;
     case "forgot": {
-      const em = ($("#mail-in")?.value||"").trim(), out = $("#pass-err");
-      if(!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(em)){ out.className="err"; out.textContent="اكتب بريدك الإلكتروني أولاً ثم اضغط نسيت كلمة المرور."; $("#mail-in")?.focus(); break; }
+      const out = $("#pass-err");
+      if(!FB.teacherEmail){ out.className="err"; out.textContent="حساب الأستاذ غير مضبوط في firebase-config.js."; break; }
       b.disabled = true;
-      FB.sendPasswordResetEmail(FB.auth, em).then(()=>{ out.className="err ok"; out.textContent="إذا كان البريد مسجّلاً، بيوصلك رابط لتعيين كلمة مرور جديدة. تأكد من مجلد الرسائل غير المرغوبة."; })
+      FB.sendPasswordResetEmail(FB.auth, FB.teacherEmail).then(()=>{ out.className="err ok"; out.textContent="أرسلنا رابط تعيين رقم جديد إلى بريد المشرف. تواصل معه ليبلّغك بالرقم الجديد."; })
         .catch(err=>{ out.className="err"; out.textContent = authMsg(err); }).finally(()=>{ b.disabled=false; });
       break; }
     case "close": if(e.target===b || b.tagName==="BUTTON") closeModal(); break;
@@ -1090,7 +1090,7 @@ document.addEventListener("visibilitychange", ()=>{ if(document.visibilityState=
 document.fonts && document.fonts.ready.then(()=>{ if(ui.view==="teacher" && ui.tab==="wheel") drawWheel(); });
 </script>
 <script type="module">
-import * as CFG from "./firebase-config.js";
+import * as CFG from "./firebase-config.js?v=1791827891";
 const FIREBASE_CONFIG = CFG.FIREBASE_CONFIG;
 if(!FIREBASE_CONFIG || !FIREBASE_CONFIG.apiKey || /PASTE/.test(FIREBASE_CONFIG.apiKey)){
   window.dispatchEvent(new Event("fb-missing"));
