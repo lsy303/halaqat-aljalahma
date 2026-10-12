@@ -1,0 +1,35 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // الأستاذ فقط: ضع هنا UID حساب الأستاذ من Firebase Console ← Authentication ← Users
+    // لإضافة أستاذ ثاني: ['UID_1', 'UID_2']
+    function isTeacher() {
+      return request.auth != null && request.auth.uid in ['IOKn9levwTNawAUQB9o96WlGrFp2'];
+    }
+
+    // الصفحة الرئيسية: الأسماء، الحضور، الجوائز، الفرسان، معلومات الحلقة
+    match /public/{docId} {
+      allow read: if true;
+      allow write: if isTeacher();
+    }
+
+    // الإعلانات
+    match /announcements/{id} {
+      allow read: if true;
+      allow write: if isTeacher();
+    }
+
+    // السجل الكامل: للأستاذ فقط
+    match /teacher/{docId} {
+      allow read, write: if isTeacher();
+    }
+
+    // صفحة الطالب: تُقرأ فقط لمن يعرف رقم اقرأ، ولا يمكن استعراض القائمة
+    match /iqra/{num} {
+      allow get: if true;
+      allow list: if false;
+      allow write: if isTeacher() && num.matches('^[0-9]{8}$');
+    }
+  }
+}
