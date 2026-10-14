@@ -295,6 +295,39 @@ details.st summary .meta{display:flex;gap:6px;align-items:center;flex-wrap:wrap;
 .sync.pending i{background:#E3B453}
 .sync.err i{background:#E07B6D}
 .err.ok{color:var(--ok)}
+.no{display:inline-grid;place-items:center;min-width:22px;height:22px;padding:0 4px;border-radius:6px;background:var(--sunk);color:var(--muted);font-size:12px;font-weight:600;margin-inline-end:8px;flex:none;vertical-align:middle}
+.rec-item{display:flex;flex-direction:column;gap:6px;padding-bottom:8px;border-bottom:1px dashed var(--line)}
+.rec-item:last-of-type{border-bottom:0;padding-bottom:0}
+.stu-row{grid-template-columns:24px minmax(0,1fr) 124px 32px}
+.par-tbl{min-width:520px}
+.par-tbl td:nth-child(2){white-space:nowrap}
+.kv{display:flex;justify-content:space-between;gap:12px;padding:8px 0;border-bottom:1px solid var(--line);font-size:14px}
+.kv:last-child{border-bottom:0}
+.kv>span{color:var(--muted)}
+.kv-notes{flex-direction:column;gap:4px}
+.kv-notes p{margin:0;white-space:pre-wrap;overflow-wrap:anywhere}
+.iban{display:flex;align-items:center;justify-content:space-between;gap:8px;background:var(--sunk);border-radius:10px;padding:10px 12px}
+.iban span{font-weight:600;letter-spacing:.04em;font-size:15px;overflow-wrap:anywhere;min-width:0}
+.car{position:relative;border-radius:var(--r);overflow:hidden;background:var(--surface);border:1px solid var(--line)}
+.slide{display:none;margin:0}
+.slide.on{display:block;animation:fadein .5s ease}
+@keyframes fadein{from{opacity:.25}to{opacity:1}}
+.slide img{display:block;width:100%;max-width:100%;aspect-ratio:4/3;object-fit:cover;background:var(--sunk)}
+.slide figcaption{padding:12px 16px 36px;display:flex;flex-direction:column;gap:4px;position:relative}
+.slide figcaption p{margin:0;font-size:15px;white-space:pre-wrap;overflow-wrap:anywhere}
+.slide.txt figcaption{padding:24px 18px 40px;border-inline-start:4px solid var(--copper);min-height:132px;justify-content:center}
+.slide.txt figcaption p{font-size:17px;font-weight:500}
+.car:not([data-n="1"]) .slide.txt figcaption{padding-inline:54px}
+.slide time{font-size:12px;color:var(--muted)}
+.slide .x{position:absolute;top:8px;inset-inline-end:8px;background:var(--surface)}
+.slide.has-img .x{top:-44px}
+.car-nav{position:absolute;top:calc(42% - 18px);width:36px;height:36px;border-radius:50%;border:0;background:rgba(30,37,63,.6);color:#fff;display:grid;place-items:center;cursor:pointer}
+.car-nav svg{width:18px;height:18px}
+.car-nav.prev{inset-inline-start:8px}
+.car-nav.next{inset-inline-end:8px}
+.dots{position:absolute;bottom:12px;left:0;right:0;display:flex;justify-content:center;gap:6px}
+.dot{width:8px;height:8px;border-radius:4px;border:0;padding:0;background:var(--line);cursor:pointer;transition:width .2s}
+.dot.on{background:var(--copper);width:20px}
 .pw-wrap{position:relative;display:block}
 .pw-wrap .inp{padding-inline-end:46px;width:100%}
 .pw-wrap[dir="ltr"] .inp{padding-inline-end:46px}
@@ -335,7 +368,8 @@ function rangeOf(e){
   f=Math.max(1,f); t=Math.min(n,t);
   return {f,t,n};
 }
-function pagesFor(e){
+function entries(e){ return Array.isArray(e) ? e.filter(x=>x&&x.s) : (e&&e.s ? [e] : []); }
+function pages1(e){
   const r = rangeOf(e); if(!r) return 0;
   const a = FIRST[e.s-1]+r.f-1, b = FIRST[e.s-1]+r.t-1;
   let sum = 0;
@@ -345,6 +379,7 @@ function pagesFor(e){
   }
   return sum;
 }
+function pagesFor(e){ return entries(e).reduce((a,x)=>a+pages1(x),0); }
 function fmtPages(v){
   if(!v) return "0";
   let r = Math.round(v*4)/4; if(r===0) r = .25;
@@ -352,12 +387,13 @@ function fmtPages(v){
   const g = fr===.25?"¼":fr===.5?"½":fr===.75?"¾":"";
   return (w? String(w):"") + g || "0";
 }
-function recText(e){
+function recText1(e){
   const r = rangeOf(e); if(!r) return "";
   const name = Q.n[e.s-1];
   return e.full || (r.f===1 && r.t===r.n) ? `سورة ${name} كاملة` : `${name} ${r.f}–${r.t}`;
 }
 
+function recText(e){ return entries(e).map(recText1).join(" + "); }
 /* ---------- Dates ---------- */
 const DAY = ["الأحد","الاثنين","الثلاثاء","الأربعاء","الخميس","الجمعة","السبت"];
 const iso = d => `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,"0")}-${String(d.getDate()).padStart(2,"0")}`;
@@ -383,10 +419,13 @@ function academicMonths(){
    teacher/data     — the full record. Teacher only.
    iqra/{8 digits}  — one student's homework, recitation log and fees. Readable only by
                       someone who knows that number (get allowed, list denied). */
+const DEFAULT_IBAN = "BH46ALSA00442574100100";
+function normPhone(p){ let v = String(p||"").replace(/\D/g,""); if(/^(00)?973\d{8}$/.test(v)) v = v.slice(-8); return v; }
 function emptyState(){ return { v:1, students: SEED_NAMES.map((n,i)=>({id:"s"+(i+1), name:n, iqra:""})), days:{}, prizes:{}, knights:{}, fees:{}, info: defaultInfo(), mirrorKeys:[] }; }
 function defaultInfo(){ return {
   contacts:[{n:"مشرف الحلقات",p:""},{n:"مدرس الحلقة",p:""}],
   wa:"",
+  iban:"BH46ALSA00442574100100",
   rules:["الجائزة اليومية دينار واحد، تُعطى لثلاثة طلاب يجيبون عن أسئلة الفائدة.","يتم اختيار الفائزين الثلاثة عن طريق القرعة.","في آخر الشهر يُكرَّم جميع الطلاب، ويُعطى كل طالب بقدر ما حفظ.","يُكرَّم فارس الحفظ، وهو أكثر الطلاب حفظاً خلال الشهر.","يُكرَّم فارس الانضباط، وهو الطالب الأكثر انضباطاً في حضوره."].join("\n")
 }; }
 let S = { v:1, students:[], days:{}, prizes:{}, knights:{}, fees:{}, info: defaultInfo(), ann:[] };
@@ -402,7 +441,7 @@ function publicView(){
 function mirrorFor(s){
   const days = {};
   for(const [d,m] of Object.entries(S.days)){ const r=(m||{})[s.id]; if(r && (r.a || r.d || hasWork(r))) days[d]=r; }
-  return { sid:s.id, name:s.name, days, fees:S.fees[s.id]||{} };
+  return { sid:s.id, name:s.name, days, fees:S.fees[s.id]||{}, iqra:s.iqra||"", email:s.email||"", notes:s.notes||"" };
 }
 let saveT = null, inFlight = 0, lastMirror = {}, lastTeacherJSON = "", syncState = "ok";
 function setSync(st){ syncState = st; const el=$("#sync"); if(el){ el.className="sync "+st; el.innerHTML = `<i></i>${st==="ok"?"محفوظ":st==="pending"?"جاري الحفظ…":"بانتظار الاتصال"}`; } }
@@ -411,15 +450,12 @@ async function flush(){
   saveT = null;
   const {db, doc, writeBatch} = FB;
   const b = writeBatch(db);
-  const now = {};
-  for(const s of S.students){
-    if(!/^\d{8}$/.test(s.iqra||"")) continue;
-    const m = clean(mirrorFor(s)), j = JSON.stringify(m);
-    now[s.iqra] = j;
-    if(lastMirror[s.iqra] !== j) b.set(doc(db,"iqra",s.iqra), m);
-  }
-  for(const k of new Set([...(S.mirrorKeys||[]), ...Object.keys(lastMirror)])) if(!(k in now)) b.delete(doc(db,"iqra",k));
-  lastMirror = now; S.mirrorKeys = Object.keys(now);
+  const now = {}, groups = {};
+  for(const s of S.students){ const p = normPhone(s.phone); if(!/^\d{8,12}$/.test(p)) continue; (groups[p] = groups[p]||{})[s.id] = clean(mirrorFor(s)); }
+  for(const [p,g] of Object.entries(groups)){ const m = {students:g}, j = JSON.stringify(m); now[p] = j; if(lastMirror[p] !== j) b.set(doc(db,"parents",p), m); }
+  for(const k of new Set([...(S.parentKeys||[]), ...Object.keys(lastMirror)])) if(!(k in now)) b.delete(doc(db,"parents",k));
+  for(const k of (S.mirrorKeys||[])) b.delete(doc(db,"iqra",k));
+  lastMirror = now; S.parentKeys = Object.keys(now); S.mirrorKeys = [];
   const t = clean(Object.assign({}, S, {ann:undefined}));
   lastTeacherJSON = JSON.stringify(t);
   b.set(doc(db,"teacher","data"), t);
@@ -436,6 +472,7 @@ function applyPublic(p){
   if(ui.stuDoc) mergeStudent(ui.stuDoc);
 }
 function mergeStudent(m){
+  { const s = stu(m.sid); if(s){ s.iqra = m.iqra||""; s.email = m.email||""; s.notes = m.notes||""; } }
   for(const [d,r] of Object.entries(m.days||{})){ S.days[d] = Object.assign({}, S.days[d]||{}); S.days[d][m.sid] = r; }
   S.fees[m.sid] = m.fees||{};
 }
@@ -486,12 +523,12 @@ function ensure(d,sid){ S.days[d]=S.days[d]||{}; S.days[d][sid]=S.days[d][sid]||
 const prizesOn = d => S.prizes[d]||[];
 function short3(n){ const w=String(n).trim().split(/\s+/).filter(x=>x!=="بن"&&x!=="بنت"); return w.length<=3 ? w.join(" ") : [w[0],w[1],w[w.length-1]].join(" "); }
 function nextSession(ds){ let x=addDays(parse(ds),1); while(![1,2,3].includes(x.getDay())) x=addDays(x,1); return iso(x); }
-const hasWork = r => !!(r && ((r.h&&r.h.s)||(r.m&&r.m.s)));
+const hasWork = r => !!(r && (entries(r.h).length||entries(r.m).length));
 function nextDue(sid){ for(const d of Object.keys(S.days).filter(d=>d>=TODAY).sort()){ const r=S.days[d][sid]; if(hasWork(r) && !r.d) return [d,r]; } return null; }
-const dueLine = (lbl,e) => e&&e.s ? `<div class="ln"><span class="k">${lbl}</span><span>${recText(e)}</span><span class="pg num">${fmtPages(pagesFor(e))} وجه</span></div>` : "";
+const dueLine = (lbl,e) => entries(e).length ? `<div class="ln"><span class="k">${lbl}</span><span>${recText(e)}</span><span class="pg num">${fmtPages(pagesFor(e))} وجه</span></div>` : "";
 
 /* ---------- UI state ---------- */
-const ui = { stuDoc:null, view:"home", sid:null, tab:"rec", week:CUR_WEEK, recDay:activeDay(), stuMonth:monthKey(activeDay()), open:new Set(), wheelSel:null, spinning:false, annDraft:false, delSid:null, editDue:new Set(), annImg:null, menu:false, knMonth:monthKey(TODAY) };
+const ui = { slots:{}, slide:0, delTid:null, stuDoc:null, view:"home", sid:null, tab:"rec", week:CUR_WEEK, recDay:activeDay(), stuMonth:monthKey(activeDay()), open:new Set(), wheelSel:null, spinning:false, annDraft:false, delSid:null, editDue:new Set(), annImg:null, menu:false, knMonth:monthKey(TODAY) };
 
 const $ = s => document.querySelector(s);
 const esc = s => String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
@@ -544,8 +581,11 @@ function renderHome(){
   const ann = S.ann.slice().sort((a,b)=>(b.date||"").localeCompare(a.date||"") || (b.ts||0)-(a.ts||0));
   const annHtml = `<section>
     <div class="sec-h"><h2>الإعلانات</h2>${teacher?`<button class="add-btn" data-act="ann-new">${I.plus} إعلان</button>`:""}</div>
-    ${ui.annDraft&&teacher?`<div class="card" style="display:flex;flex-direction:column;gap:10px"><textarea id="ann-text" class="inp" rows="3" placeholder="اكتب التنبيه أو الإعلان"></textarea><img id="ann-prev" class="ann-prev" alt="معاينة الصورة" ${ui.annImg?`src="${ui.annImg}"`:"hidden"}><div class="row"><input type="file" accept="image/*" id="ann-img" hidden><label for="ann-img" class="btn ghost" style="cursor:pointer">${ui.annImg?"تغيير الصورة":"إضافة صورة"}</label><button class="btn pri" data-act="ann-save">نشر</button><button class="btn ghost" data-act="ann-cancel">إلغاء</button></div></div>`:""}
-    <div class="ann-list">${ann.length?ann.map(a=>`<div class="ann"><div style="flex:1;min-width:0">${a.text?`<p>${esc(a.text)}</p>`:""}${a.img?`<img src="${esc(a.img)}" alt="صورة الإعلان" loading="lazy">`:""}<time class="num">${dShort(a.date)} · ${DAY[parse(a.date).getDay()]}</time></div>${teacher?`<button class="x" data-act="ann-del" data-id="${esc(a.id)}" aria-label="حذف">✕</button>`:""}</div>`).join(""):`<div class="demo">لا توجد إعلانات حالياً.</div>`}</div>
+    ${ui.annDraft&&teacher?`<div class="card" style="display:flex;flex-direction:column;gap:10px"><textarea id="ann-text" class="inp" rows="3" placeholder="اكتب الإعلان أو تعليقاً على الصورة"></textarea><img id="ann-prev" class="ann-prev" alt="معاينة الصورة" ${ui.annImg?`src="${ui.annImg}"`:"hidden"}><div class="row"><input type="file" accept="image/*" id="ann-img" hidden><label for="ann-img" class="btn ghost" style="cursor:pointer">${ui.annImg?"تغيير الصورة":"إضافة صورة"}</label><button class="btn pri" data-act="ann-save">نشر</button><button class="btn ghost" data-act="ann-cancel">إلغاء</button></div></div>`:""}
+    ${ann.length?`<div class="car" id="car" data-n="${ann.length}" aria-roledescription="carousel">
+      ${ann.map((a,i)=>`<figure class="slide ${i===(ui.slide%ann.length)?"on":""} ${a.img?"has-img":"txt"}" data-i="${i}">${a.img?`<img src="${esc(a.img)}" alt="${esc(a.text||"صورة الإعلان")}" loading="lazy">`:""}<figcaption>${a.text?`<p>${esc(a.text)}</p>`:""}<time class="num">${dShort(a.date)} · ${DAY[parse(a.date).getDay()]}</time>${teacher?`<button class="x" data-act="ann-del" data-id="${esc(a.id)}" aria-label="حذف الإعلان">✕</button>`:""}</figcaption></figure>`).join("")}
+      ${ann.length>1?`<button class="car-nav prev" data-act="car" data-d="-1" aria-label="السابق">${I.back}</button><button class="car-nav next" data-act="car" data-d="1" aria-label="التالي">${I.chev}</button><div class="dots">${ann.map((a,i)=>`<button class="dot ${i===(ui.slide%ann.length)?"on":""}" data-act="car-go" data-i="${i}" aria-label="الإعلان ${i+1}"></button>`).join("")}</div>`:""}
+    </div>`:`<div class="demo">لا توجد إعلانات حالياً.</div>`}
   </section>`;
 
   const kKeys = Object.keys(S.knights).filter(k=>(S.knights[k].h||[]).length||(S.knights[k].i||[]).length).sort();
@@ -557,7 +597,7 @@ function renderHome(){
     <div class="k"><div class="k-lbl">${I.star} فارس الانضباط</div><div class="k-names">${names(S.knights[kk].i)}</div></div>`:`<div class="k-empty" style="grid-column:1/-1">يُعلن آخر الشهر.</div>`}
   </section>`;
 
-  const rows = S.students.map(s=>{
+  const rows = S.students.map((s,ix)=>{
     const cells = days.map(d=>{
       const r = rec(d,s.id); const won = prizesOn(d).includes(s.id);
       const fut = d>TODAY;
@@ -569,7 +609,7 @@ function renderHome(){
       const lbl = `${DAY[parse(d).getDay()]}: ${st}${won?"، فاز بجائزة":""}`;
       return `<td><button class="cell ${cls} ${teacher?"edit":""}" ${teacher?`data-act="cyc" data-d="${d}" data-sid="${s.id}"`:"tabindex=\"-1\""} aria-label="${lbl}">${inner}${won?coin:""}</button></td>`;
     }).join("");
-    return `<tr><td class="nm"><button class="nm-btn" data-act="stu" data-sid="${s.id}">${esc(s.name)}<span class="chev">${I.chev}</span></button></td>${cells}</tr>`;
+    return `<tr><td class="nm"><button class="nm-btn" data-act="stu" data-sid="${s.id}"><span class="no num">${ix+1}</span>${esc(s.name)}<span class="chev">${I.chev}</span></button></td>${cells}</tr>`;
   }).join("");
   const present = S.students.filter(s=>rec(recDay,s.id)?.a==="p").length;
   const recited = S.students.filter(s=>rec(recDay,s.id)?.d).length;
@@ -613,23 +653,30 @@ function renderStudent(){
     const won = prizesOn(d).includes(s.id);
     const body = r.a==="a" ? `<div class="ln"><span class="pill a">غائب</span></div>` : `
       <div class="ln"><span class="pill p">حاضر</span>${r.d?`<span class="pill c">${I.check.replace('<svg','<svg width="12" height="12"')} تم التسميع</span>`:`<span class="pill" style="background:var(--sunk);color:var(--muted)">لم يُسمّع</span>`}${won?`<span class="pill c">جائزة دينار</span>`:""}</div>
-      ${r.h&&r.h.s?`<div class="ln"><span class="k">الحفظ</span><span>${recText(r.h)}</span><span class="pg num">${fmtPages(pagesFor(r.h))} وجه</span></div>`:""}
-      ${r.m&&r.m.s?`<div class="ln"><span class="k">المراجعة</span><span>${recText(r.m)}</span><span class="pg num">${fmtPages(pagesFor(r.m))} وجه</span></div>`:""}`;
+      ${entries(r.h).length?`<div class="ln"><span class="k">الحفظ</span><span>${recText(r.h)}</span><span class="pg num">${fmtPages(pagesFor(r.h))} وجه</span></div>`:""}
+      ${entries(r.m).length?`<div class="ln"><span class="k">المراجعة</span><span>${recText(r.m)}</span><span class="pg num">${fmtPages(pagesFor(r.m))} وجه</span></div>`:""}`;
     return `<div class="log-day"><div class="log-date"><b>${DAY[parse(d).getDay()]}</b><span class="num">${dShort(d)}</span></div><div class="log-body">${body}</div></div>`;
   }).join("") || `<p class="muted" style="margin:0">لا توجد سجلات في هذا الشهر.</p>`;
   const curM = monthKey(TODAY), paidNow = (S.fees[s.id]||{})[curM];
   const late = academicMonths().filter(k=>k<curM && !(S.fees[s.id]||{})[k]).map(monthName);
-  const feeCard = `<div class="fee-strip ${paidNow&&!late.length?"fs-paid":"fs-due"}">${I.cash}<b>رسوم ${monthName(curM)}: ${paidNow?"تم الدفع":"لم تُدفع"}</b>${late.length?`<span>متأخر: ${late.join("، ")}</span>`:""}</div>`;
+  const feeCard = `<div class="fee-strip ${paidNow&&!late.length?"fs-paid":"fs-due"}">${I.cash}<b>رسوم ${monthName(curM)}: ${paidNow?"تم الدفع":"لم تُدفع"}</b>${late.length?`<span>متأخر: ${late.join("، ")}</span>`:""}${(!paidNow||late.length)&&S.info.iban?`<button class="btn sm" data-act="copy" data-v="${esc(S.info.iban)}">نسخ الآيبان</button>`:""}</div>`;
   const kts = Object.keys(S.knights).sort().reverse().flatMap(m=>[["h","فارس الحفظ",I.book],["i","فارس الانضباط",I.star]].filter(([f])=>(S.knights[m][f]||[]).includes(s.id)).map(([f,l,ic])=>`<div class="knight">${I.trophy}<div><b>${l}</b><span>شهر ${monthLong(m)}، بارك الله فيه</span></div></div>`));
   const knCard = kts.length ? `<div class="knights-me">${kts.join("")}</div>` : "";
   const nd = nextDue(s.id);
   const hw = `<section class="hw"><div class="sec-h" style="margin:0"><h2>المطلوب للحصة القادمة</h2>${nd?`<small class="num" style="color:var(--navy-muted)">${DAY[parse(nd[0]).getDay()]} ${dShort(nd[0])}</small>`:""}</div>
     ${nd?`<div class="log-body">${dueLine("الحفظ",nd[1].h)}${dueLine("المراجعة",nd[1].m)}</div>`:`<p style="margin:0;color:var(--navy-muted)">لم يُحدَّد الواجب بعد.</p>`}</section>`;
+  const infoCard = teacher ? `<section class="card" style="display:flex;flex-direction:column;gap:10px"><div class="sec-h" style="margin:0"><h2>بيانات الطالب</h2><small>تظهر لولي الأمر</small></div>
+    <div class="fld"><label for="sq-${s.id}">رقم اقرأ</label><input class="inp num" dir="ltr" id="sq-${s.id}" inputmode="numeric" maxlength="12" value="${esc(s.iqra||"")}" data-stu="iqra" data-sid="${s.id}"></div>
+    <div class="fld"><label for="se-${s.id}">البريد الإلكتروني</label><input class="inp" type="email" dir="ltr" id="se-${s.id}" value="${esc(s.email||"")}" data-stu="email" data-sid="${s.id}"></div>
+    <div class="fld"><label for="sn-${s.id}">ملاحظات</label><textarea class="inp" rows="3" id="sn-${s.id}" data-stu="notes" data-sid="${s.id}">${esc(s.notes||"")}</textarea></div>
+    <div class="kv"><span>هاتف ولي الأمر</span><b class="num" dir="ltr">${esc(s.phone||"—")}</b></div></section>`
+    : ((s.iqra||s.email||s.notes) ? `<section class="card"><div class="sec-h" style="margin:0 0 4px"><h2>بيانات الطالب</h2></div>${s.iqra?`<div class="kv"><span>رقم اقرأ</span><b class="num" dir="ltr">${esc(s.iqra)}</b></div>`:""}${s.email?`<div class="kv"><span>البريد الإلكتروني</span><b dir="ltr" style="overflow-wrap:anywhere">${esc(s.email)}</b></div>`:""}${s.notes?`<div class="kv kv-notes"><span>ملاحظات</span><p>${esc(s.notes)}</p></div>`:""}</section>` : "");
   return mast({title:esc(s.name), sub:`<span>سجل الطالب</span>`, back:true}) + `<main class="wrap">
     ${demoNote}
     ${knCard}
     ${feeCard}
     ${hw}
+    ${infoCard}
     <div class="row" style="justify-content:space-between"><div class="sec-h" style="margin:0"><h2>${monthLong(ui.stuMonth)}</h2></div>${seg}</div>
     ${tiles}
     <section class="card"><div class="sec-h"><h2>السجل اليومي</h2></div><div class="log">${log}</div></section>
@@ -637,19 +684,27 @@ function renderStudent(){
 }
 
 /* ---------- Teacher ---------- */
-const TABS = [["rec","التسجيل اليومي"],["wheel","القرعة"],["knights","الفرسان"],["fees","الرسوم"],["students","الطلاب"],["info","معلومات الحلقة"],["account","الحساب"]];
+const TABS = [["rec","التسجيل اليومي"],["wheel","القرعة"],["knights","الفرسان"],["fees","الرسوم"],["students","الطلاب"],["parents","أولياء الأمور"],["tatt","حضور المعلمين"],["info","معلومات الحلقة"],["account","الحساب"]];
 function surahOptions(sel){ return `<option value="">— السورة —</option>` + Q.n.map((n,i)=>`<option value="${i+1}" ${sel===i+1?"selected":""}>${i+1}. ${n}</option>`).join(""); }
 function recFields(sid,k,e,day){
-  e = e||{}; const n = e.s?Q.c[e.s-1]:"";
-  const pg = pagesFor(e);
-  return `<div class="fld"><label>${k==="h"?"الحفظ":"المراجعة"}</label>
-    <div class="rec-row">
-      <select class="inp" id="${k}s-${sid}-${day}" data-sid="${sid}" data-day="${day}" data-k="${k}" data-f="s">${surahOptions(e.s)}</select>
-      <input class="inp num" type="number" inputmode="numeric" min="1" max="${n}" id="${k}f-${sid}-${day}" placeholder="من" value="${e.full?"":esc(e.f??"")}" data-sid="${sid}" data-day="${day}" data-k="${k}" data-f="f" ${e.full||!e.s?"disabled":""}>
-      <input class="inp num" type="number" inputmode="numeric" min="1" max="${n}" id="${k}t-${sid}-${day}" placeholder="إلى" value="${e.full?"":esc(e.t??"")}" data-sid="${sid}" data-day="${day}" data-k="${k}" data-f="t" ${e.full||!e.s?"disabled":""}>
-    </div>
-    <div class="row" style="justify-content:space-between"><label class="chk"><input type="checkbox" id="${k}c-${sid}-${day}" data-sid="${sid}" data-day="${day}" data-k="${k}" data-f="full" ${e.full?"checked":""} ${!e.s?"disabled":""}> السورة كاملة${n?` (${n} آية)`:""}</label>
-    <span class="calc num">${pg?`= <b class="pg">${fmtPages(pg)} وجه</b>`:""}</span></div>
+  const list = entries(e).slice(), key = sid+"|"+day+"|"+k, extra = ui.slots[key]||0;
+  for(let i=0; i<extra || !list.length; i++) list.push({});
+  const rows = list.map((x,i)=>{
+    const n = x.s?Q.c[x.s-1]:"", pg = pages1(x), id = `${sid}-${day}-${i}`;
+    const da = `data-sid="${sid}" data-day="${day}" data-k="${k}" data-i="${i}"`;
+    return `<div class="rec-item">
+      <div class="rec-row">
+        <select class="inp" id="${k}s-${id}" ${da} data-f="s" aria-label="السورة">${surahOptions(x.s)}</select>
+        <input class="inp num" type="number" inputmode="numeric" min="1" max="${n}" id="${k}f-${id}" placeholder="من" value="${x.full?"":esc(x.f??"")}" ${da} data-f="f" ${x.full||!x.s?"disabled":""} aria-label="من آية">
+        <input class="inp num" type="number" inputmode="numeric" min="1" max="${n}" id="${k}t-${id}" placeholder="إلى" value="${x.full?"":esc(x.t??"")}" ${da} data-f="t" ${x.full||!x.s?"disabled":""} aria-label="إلى آية">
+      </div>
+      <div class="row" style="justify-content:space-between"><label class="chk"><input type="checkbox" id="${k}c-${id}" ${da} data-f="full" ${x.full?"checked":""} ${!x.s?"disabled":""}> السورة كاملة${n?` (${n} آية)`:""}</label>
+      <span class="row" style="gap:8px"><span class="calc num">${pg?`= <b class="pg">${fmtPages(pg)} وجه</b>`:""}</span>${i>0?`<button type="button" class="x" data-act="rec-del" ${da} aria-label="حذف السورة">✕</button>`:""}</span></div>
+    </div>`;
+  }).join("");
+  const many = entries(e).length>1;
+  return `<div class="fld"><label>${k==="h"?"الحفظ":"المراجعة"}</label>${rows}
+    <div class="row" style="justify-content:space-between"><button type="button" class="lnk" data-act="rec-add" data-sid="${sid}" data-day="${day}" data-k="${k}">+ إضافة سورة</button><span class="calc num">${many?`المجموع = <b class="pg">${fmtPages(pagesFor(e))} وجه</b>`:""}</span></div>
   </div>`;
 }
 function dueBox(sid,r){
@@ -674,12 +729,12 @@ function tabRec(){
     <div class="row"><button class="btn ghost" data-act="rwk" data-d="-7" aria-label="الأسبوع السابق">${I.back.replace('<svg','<svg width="16" height="16"')}</button><span class="num muted">${weekLabel(ui.week)}</span><button class="btn ghost" data-act="rwk" data-d="7" ${ui.week>=CUR_WEEK?"disabled":""} aria-label="الأسبوع التالي">${I.chev.replace('<svg','<svg width="16" height="16"')}</button></div>
     <div class="seg">${days.map(d=>`<button class="${d===ui.recDay?"on":""}" data-act="rday" data-d="${d}">${DAY[parse(d).getDay()]} <span class="num">${dShort(d)}</span></button>`).join("")}</div></div>`;
   const all = `<div class="row"><button class="btn" data-act="allp">تسجيل حضور الجميع</button><span class="muted" style="font-size:13px">ثم عدّل الغائبين. وقت الحلقة اضغط "تم التسميع"، وسجّل واجب الحصة القادمة.</span></div>`;
-  const cards = S.students.map(s=>{
+  const cards = S.students.map((s,ix)=>{
     const r = rec(ui.recDay,s.id)||{};
     const att = r.a==="p"?`<span class="pill p">حاضر</span>`:r.a==="a"?`<span class="pill a">غائب</span>`:`<span class="pill" style="background:var(--sunk);color:var(--muted)">لم يُسجَّل</span>`;
     const pg = pagesFor(r.h);
     return `<details class="st" data-sid="${s.id}" ${ui.open.has(s.id)?"open":""}>
-      <summary><span class="n">${esc(s.name)}</span><span class="meta">${pg?`<span class="pg num" style="font-size:13px">${fmtPages(pg)} وجه</span>`:""}${r.d?`<span class="pill c">تم</span>`:""}${att}</span></summary>
+      <summary><span class="n"><span class="no num">${ix+1}</span>${esc(s.name)}</span><span class="meta">${pg?`<span class="pg num" style="font-size:13px">${fmtPages(pg)} وجه</span>`:""}${r.d?`<span class="pill c">تم</span>`:""}${att}</span></summary>
       <div class="st-body">
         <div class="seg"><button class="${r.a==="p"?"on":""}" data-act="att" data-sid="${s.id}" data-v="p">حاضر</button><button class="${r.a==="a"?"on":""}" data-act="att" data-sid="${s.id}" data-v="a">غائب</button><button class="${!r.a?"on":""}" data-act="att" data-sid="${s.id}" data-v="">بدون</button></div>
         ${dueBox(s.id,r)}
@@ -722,16 +777,43 @@ function tabFees(){
   const months = academicMonths();
   return `<div class="sec-h"><h2>الرسوم الشهرية</h2><small>اضغط للتأشير على تم الدفع</small></div>
   <div class="fee-tbl-wrap"><table class="fee-tbl"><thead><tr><th>الطالب</th>${months.map(m=>`<th>${monthName(m)}</th>`).join("")}</tr></thead><tbody>
-  ${S.students.map(s=>`<tr><td>${esc(s.name)}</td>${months.map(m=>{const on=(S.fees[s.id]||{})[m];return `<td><button class="fbtn ${on?"on":""}" data-act="fee" data-sid="${s.id}" data-m="${m}" aria-label="${monthName(m)}: ${on?"تم الدفع":"لم يُدفع"}">${on?I.check:""}</button></td>`;}).join("")}</tr>`).join("")}
+  ${S.students.map((s,ix)=>`<tr><td><span class="no num">${ix+1}</span>${esc(s.name)}</td>${months.map(m=>{const on=(S.fees[s.id]||{})[m];return `<td><button class="fbtn ${on?"on":""}" data-act="fee" data-sid="${s.id}" data-m="${m}" aria-label="${monthName(m)}: ${on?"تم الدفع":"لم يُدفع"}">${on?I.check:""}</button></td>`;}).join("")}</tr>`).join("")}
   </tbody></table></div>`;
 }
 function tabStudents(){
   return `<div class="card" style="display:flex;flex-direction:column;gap:12px">
-    <div class="sec-h" style="margin:0"><h2>الطلاب وأرقام اقرأ</h2><small>${S.students.length} طالب</small></div>
-    <p class="muted" style="margin:0;font-size:13px">رقم اقرأ (٨ أرقام) هو اللي يفتح فيه الطالب أو ولي الأمر صفحة التفاصيل.</p>
+    <div class="sec-h" style="margin:0"><h2>الطلاب وأرقام أولياء الأمور</h2><small>${S.students.length} طالب</small></div>
+    <p class="muted" style="margin:0;font-size:13px">رقم هاتف ولي الأمر هو الرقم السري لصفحة الطالب. الإخوان يكتبون نفس الرقم. رقم اقرأ والبريد والملاحظات تُضاف من صفحة الطالب.</p>
     <form class="add-row" id="add-stu"><input class="inp" id="new-name" placeholder="اسم الطالب الجديد (رباعي)" aria-label="اسم الطالب الجديد"><button class="btn pri" type="submit">${I.plus} إضافة</button></form>
-    ${S.students.map(s=>`<div class="stu-row"><input class="inp" id="nm-${s.id}" value="${esc(s.name)}" data-act-in="name" data-sid="${s.id}" aria-label="اسم الطالب"><input class="inp num pin" style="font-size:15px;letter-spacing:.12em" id="iq-${s.id}" inputmode="numeric" maxlength="8" placeholder="رقم اقرأ" value="${esc(s.iqra)}" data-act-in="iqra" data-sid="${s.id}" aria-label="رقم اقرأ"><button class="x" data-act="s-del" data-sid="${s.id}" aria-label="حذف الطالب">✕</button>${ui.delSid===s.id?`<div class="delc"><span style="flex:1;min-width:0">حذف <b>${esc(s.name)}</b> من القائمة؟</span><button class="btn sm danger" data-act="s-del-ok" data-sid="${s.id}">حذف</button><button class="btn sm ghost" data-act="s-del-no">إلغاء</button></div>`:""}</div>`).join("")}
+    ${S.students.map((s,ix)=>`<div class="stu-row"><span class="no num">${ix+1}</span><input class="inp" id="nm-${s.id}" value="${esc(s.name)}" data-act-in="name" data-sid="${s.id}" aria-label="اسم الطالب"><input class="inp num" dir="ltr" id="ph-${s.id}" type="tel" inputmode="tel" maxlength="15" placeholder="هاتف ولي الأمر" value="${esc(s.phone||"")}" data-act-in="phone" data-sid="${s.id}" aria-label="هاتف ولي الأمر"><button class="x" data-act="s-del" data-sid="${s.id}" aria-label="حذف الطالب">✕</button>${ui.delSid===s.id?`<div class="delc"><span style="flex:1;min-width:0">حذف <b>${esc(s.name)}</b> من القائمة؟</span><button class="btn sm danger" data-act="s-del-ok" data-sid="${s.id}">حذف</button><button class="btn sm ghost" data-act="s-del-no">إلغاء</button></div>`:""}</div>`).join("")}
     <div class="err" id="iq-err"></div>
+  </div>`;
+}
+function tabParents(){
+  const rows = S.students.map((s,ix)=>{
+    const p = s.phone||"", intl = p.length===8 ? "973"+p : p, sib = p ? S.students.filter(o=>o.phone===p).length : 0;
+    return `<tr><td><span class="no num">${ix+1}</span>${esc(s.name)}${sib>1?` <span class="pill c" style="font-size:11px">إخوان</span>`:""}</td><td class="num" dir="ltr">${p?esc(p):'<span class="muted">—</span>'}</td><td>${p?`<div class="row" style="gap:6px;justify-content:flex-end;flex-wrap:nowrap"><a class="btn sm" href="tel:${esc(p)}">اتصال</a><a class="btn sm" href="https://wa.me/${esc(intl)}" target="_blank" rel="noopener">واتساب</a><button class="btn sm ghost" data-act="copy" data-v="${esc(p)}">نسخ</button></div>`:""}</td></tr>`;
+  }).join("");
+  const missing = S.students.filter(s=>!s.phone).length;
+  return `<div class="sec-h"><h2>كشف أرقام أولياء الأمور</h2><small>للأساتذة فقط</small></div>
+  ${missing?`<div class="demo">${missing} طالب بدون رقم ولي أمر. أضف الأرقام من تبويب الطلاب.</div>`:""}
+  <div class="fee-tbl-wrap"><table class="fee-tbl par-tbl"><thead><tr><th>الطالب</th><th>الهاتف</th><th></th></tr></thead><tbody>${rows}</tbody></table></div>`;
+}
+function tabTeachers(){
+  const T = S.teachers = S.teachers||[]; S.tatt = S.tatt||{};
+  const days = sessionDays(ui.week), mk = monthKey(activeDay());
+  const cnt = t => Object.entries(S.tatt).filter(([d])=>monthKey(d)===mk && d<=TODAY).reduce((a,[d,m])=>{ if(m[t.id]==="p") a.p++; else if(m[t.id]==="a") a.a++; return a; },{p:0,a:0});
+  const rows = T.map((t,ix)=>{ const c = cnt(t); return `<tr><td class="nm"><span class="no num">${ix+1}</span><b style="font-size:14.5px">${esc(t.name)}</b></td>${days.map(d=>{ const v=(S.tatt[d]||{})[t.id]; const cls = v==="p"?"p":v==="a"?"a":(d>TODAY?"f":"n"); return `<td><button class="cell ${cls} edit" data-act="tcyc" data-d="${d}" data-tid="${t.id}" aria-label="${esc(t.name)}، ${DAY[parse(d).getDay()]}: ${v==="p"?"حاضر":v==="a"?"غائب":"لم يُسجَّل"}">${v==="p"?I.check:v==="a"?I.cross:"·"}</button></td>`; }).join("")}<td class="num" style="font-size:12.5px;white-space:nowrap"><span style="color:var(--ok)">${c.p}</span> / <span style="color:var(--bad)">${c.a}</span></td></tr>`; }).join("");
+  return `<div class="card" style="display:flex;flex-direction:column;gap:12px">
+    <div class="sec-h" style="margin:0"><h2>كشف حضور المعلمين</h2><small>للأساتذة فقط</small></div>
+    <div class="row"><button class="btn ghost" data-act="rwk" data-d="-7" aria-label="الأسبوع السابق">${I.back.replace('<svg','<svg width="16" height="16"')}</button><span class="num muted">${weekLabel(ui.week)}</span><button class="btn ghost" data-act="rwk" data-d="7" ${ui.week>=CUR_WEEK?"disabled":""} aria-label="الأسبوع التالي">${I.chev.replace('<svg','<svg width="16" height="16"')}</button></div>
+    ${T.length?`<div class="roll-wrap" style="overflow-x:auto"><table class="roll"><thead><tr><th>المعلم</th>${days.map(d=>`<th>${DAY[parse(d).getDay()]}<span class="d num">${dShort(d)}</span></th>`).join("")}<th>${monthName(mk)}<span class="d">حضور / غياب</span></th></tr></thead><tbody>${rows}</tbody></table></div>
+    <p class="muted" style="margin:0;font-size:12.5px">اضغط على الخانة للتبديل: حاضر، ثم غائب، ثم بدون.</p>`:`<div class="demo">أضف أسماء المعلمين من الأسفل.</div>`}
+  </div>
+  <div class="card" style="display:flex;flex-direction:column;gap:10px">
+    <div class="sec-h" style="margin:0"><h2>المعلمون</h2><small>${T.length}</small></div>
+    <form class="add-row" id="add-teacher"><input class="inp" id="new-teacher" placeholder="اسم المعلم" aria-label="اسم المعلم"><button class="btn pri" type="submit">${I.plus} إضافة</button></form>
+    ${T.map(t=>`<div class="ct-row" style="grid-template-columns:minmax(0,1fr) 32px"><input class="inp" id="tn-${t.id}" value="${esc(t.name)}" data-tname="${t.id}" aria-label="اسم المعلم"><button class="x" data-act="t-del" data-tid="${t.id}" aria-label="حذف المعلم">✕</button></div>${ui.delTid===t.id?`<div class="row" style="background:var(--bad-soft);border-radius:9px;padding:8px 10px;font-size:13px"><span style="flex:1;min-width:0">حذف <b>${esc(t.name)}</b> وسجل حضوره من الكشف؟</span><button class="btn sm danger" data-act="t-del-ok" data-tid="${t.id}">حذف</button><button class="btn sm ghost" data-act="t-del-no">إلغاء</button></div>`:""}`).join("")}
   </div>`;
 }
 function tabInfo(){
@@ -740,6 +822,10 @@ function tabInfo(){
     <div class="sec-h" style="margin:0"><h2>أرقام التواصل</h2><small>تظهر في القائمة الجانبية</small></div>
     ${f.contacts.map((c,i)=>`<div class="ct-row"><input class="inp" id="cn-${i}" value="${esc(c.n)}" placeholder="الاسم أو الصفة" data-info="cn" data-i="${i}" aria-label="الاسم"><input class="inp num" id="cp-${i}" dir="ltr" inputmode="tel" value="${esc(c.p)}" placeholder="رقم الجوال" data-info="cp" data-i="${i}" aria-label="رقم الجوال"><button class="x" data-act="c-del" data-i="${i}" aria-label="حذف">✕</button></div>`).join("")}
     <div><button class="add-btn" data-act="c-add">${I.plus} رقم جديد</button></div>
+  </div>
+  <div class="card" style="display:flex;flex-direction:column;gap:10px">
+    <div class="sec-h" style="margin:0"><h2>الحساب المصرفي للمركز (IBAN)</h2><small>يظهر مع زر نسخ</small></div>
+    <input class="inp num" id="iban-in" dir="ltr" placeholder="BH00XXXX0000000000000" value="${esc(f.iban||"")}" data-info="iban">
   </div>
   <div class="card" style="display:flex;flex-direction:column;gap:10px">
     <div class="sec-h" style="margin:0"><h2>رابط مجموعة الواتساب</h2></div>
@@ -761,6 +847,7 @@ function renderDrawer(){
     <div class="dr-head"><h2>معلومات الحلقة</h2><button class="x" data-act="menu-close" aria-label="إغلاق">✕</button></div>
     <section class="dr-sec"><h3>${I.phone} أرقام التواصل</h3>${contacts}</section>
     <section class="dr-sec"><h3>${I.chat} مجموعة الواتساب</h3>${f.wa?`<a class="wa" href="${esc(f.wa)}" target="_blank" rel="noopener">${I.chat} الانضمام لمجموعة الواتساب</a>`:`<p class="muted" style="margin:0;font-size:13px">يُضاف الرابط من لوحة الأستاذ.</p>`}</section>
+    <section class="dr-sec"><h3>${I.cash} الحساب المصرفي للمركز</h3>${f.iban?`<div class="iban"><span class="num" dir="ltr">${esc(f.iban.replace(/(.{4})/g,"$1 ").trim())}</span><button class="btn sm" data-act="copy" data-v="${esc(f.iban)}">نسخ</button></div><span class="muted" style="font-size:12.5px">رقم الآيبان (IBAN)</span>`:`<p class="muted" style="margin:0;font-size:13px">يُضاف من لوحة الأستاذ.</p>`}</section>
     <section class="dr-sec"><h3>${I.gift} ضوابط الجوائز</h3><ol class="rules">${rules}</ol></section>
     ${teacher?`<button class="btn" data-act="info-edit">تعديل المعلومات</button>`:""}
   </aside>`;
@@ -780,7 +867,7 @@ function tabAccount(){
   </form>`;
 }
 function renderTeacher(){
-  const body = {rec:tabRec,wheel:tabWheel,knights:tabKnights,fees:tabFees,students:tabStudents,info:tabInfo,account:tabAccount}[ui.tab]();
+  const body = {rec:tabRec,wheel:tabWheel,knights:tabKnights,fees:tabFees,students:tabStudents,parents:tabParents,tatt:tabTeachers,info:tabInfo,account:tabAccount}[ui.tab]();
   return mast({title:"لوحة الأستاذ", sub:`<span>تسجيل اليوم، القرعة، الرسوم، والفرسان</span>`, back:true}) + `<main class="wrap">
     <div class="tabs" role="tablist">${TABS.map(([k,l])=>`<button role="tab" class="${ui.tab===k?"on":""}" data-act="tab" data-k="${k}">${l}</button>`).join("")}</div>
     ${body}
@@ -847,9 +934,9 @@ function spin(){
 /* ---------- Modals ---------- */
 function rememberedIqra(sid){ try { return localStorage.getItem(KEY+":iq:"+sid)||""; } catch(e){ return ""; } }
 async function fetchStudent(sid, num){
-  const snap = await FB.getDoc(FB.doc(FB.db,"iqra",num));
+  const snap = await FB.getDoc(FB.doc(FB.db,"parents",normPhone(num)));
   if(!snap.exists()) return null;
-  const m = snap.data(); return m.sid===sid ? m : null;
+  return (snap.data().students||{})[sid] || null;
 }
 async function openStudent(sid){
   if(teacher){ go("student",{sid}); return; }
@@ -860,8 +947,8 @@ async function openStudent(sid){
 function openPin(sid){
   const s = stu(sid);
   $("#modal").innerHTML = `<div class="modal" data-act="close"><form class="dlg" id="pin-form" role="dialog" aria-modal="true">
-    <h3>${esc(s.name)}</h3><p>اكتب رقم الطالب في برنامج اقرأ (٨ أرقام) لعرض التسميع والرسوم.</p>
-    <input class="inp pin num" id="pin-in" inputmode="numeric" maxlength="8" autocomplete="off" placeholder="••••••••">
+    <h3>${esc(s.name)}</h3><p>اكتب رقم هاتف ولي الأمر لعرض التسميع والرسوم.</p>
+    <input class="inp pin num" id="pin-in" type="tel" inputmode="tel" maxlength="15" autocomplete="off" placeholder="رقم هاتف ولي الأمر" style="letter-spacing:.08em">
     <label class="chk"><input type="checkbox" id="pin-keep" checked> تذكّر الرقم على هذا الجهاز</label>
     <div class="err" id="pin-err"></div>
     <div class="row"><button class="btn pri" type="submit" id="pin-go">عرض</button><button class="btn ghost" type="button" data-act="close">إلغاء</button></div>
@@ -869,8 +956,8 @@ function openPin(sid){
   $("#pin-in").focus();
   $("#pin-form").addEventListener("submit", async e=>{
     e.preventDefault();
-    const v = $("#pin-in").value.replace(/\D/g,"");
-    if(v.length!==8){ $("#pin-err").textContent="الرقم لازم يكون ٨ أرقام."; return; }
+    const v = normPhone($("#pin-in").value);
+    if(!/^\d{8,12}$/.test(v)){ $("#pin-err").textContent="اكتب رقم الهاتف كامل (٨ أرقام)."; return; }
     $("#pin-go").disabled = true; $("#pin-err").textContent = "";
     try{
       const m = await fetchStudent(sid, v);
@@ -960,11 +1047,20 @@ function openLogin(){
     }
   });
 }
+function carShow(n){ const c = $("#car"); if(!c) return; const N = +c.dataset.n; ui.slide = ((n%N)+N)%N;
+  c.querySelectorAll(".slide").forEach((el,i)=>el.classList.toggle("on", i===ui.slide)); c.querySelectorAll(".dot").forEach((el,i)=>el.classList.toggle("on", i===ui.slide)); }
+let carPause = 0, carTx = null;
+setInterval(()=>{ const c = $("#car"); if(!c || +c.dataset.n<2 || Date.now()<carPause || document.hidden || matchMedia("(prefers-reduced-motion: reduce)").matches) return; carShow(ui.slide+1); }, 6000);
+document.addEventListener("touchstart", e=>{ if(e.target.closest && e.target.closest("#car")){ carTx = e.touches[0].clientX; carPause = Date.now()+12000; } }, {passive:true});
+document.addEventListener("touchend", e=>{ if(carTx===null) return; const dx = e.changedTouches[0].clientX - carTx; carTx = null; if(Math.abs(dx)>40){ carShow(ui.slide + (dx>0?1:-1)); carPause = Date.now()+12000; } }, {passive:true});
+document.addEventListener("mouseover", e=>{ if(e.target.closest && e.target.closest("#car")) carPause = Date.now()+8000; });
 function closeModal(){ $("#modal").innerHTML=""; }
 
 /* ---------- Render + events ---------- */
 function render(){
   pendingRender = false;
+  if(Array.isArray(S.students)) S.students.sort((a,b)=>String(a.name).localeCompare(String(b.name),"ar"));
+  if(S.info && S.info.iban===undefined) S.info.iban = DEFAULT_IBAN;
   if(!fbOK){ $("#app").innerHTML = mast({title:"سجل الطلاب"}) + `<main class="wrap"><div class="card"><b>الإعداد غير مكتمل</b><p class="muted">أضف بيانات مشروع Firebase في الملف firebase-config.js ثم أعد تحميل الصفحة.</p></div></main>`; return; }
   if(!loaded){ $("#app").innerHTML = mast({title:"سجل الطلاب"}) + `<main class="wrap"><div class="loading"><div class="spinner"></div><span>جاري تحميل السجل…</span></div></main>`; return; }
   let v = ui.view==="teacher"&&!teacher ? "home" : ui.view;
@@ -1018,13 +1114,23 @@ document.addEventListener("click", e=>{
       FB.setDoc(FB.doc(FB.db,"announcements",id), a).then(()=>toast("نُشر الإعلان")).catch(err=>{ console.error(err); toast("تعذّر نشر الإعلان"); });
       ui.annDraft=false; ui.annImg=null; render(); break; }
     case "menu": ui.menu=true; render(); break;
+    case "rec-add": { const key=sid+"|"+b.dataset.day+"|"+b.dataset.k; ui.slots[key]=(ui.slots[key]||0)+1; if(b.dataset.day===ui.recDay) ui.editDue.add(sid); ui.open.add(sid); render(); break; }
+    case "rec-del": { const day=b.dataset.day, k=b.dataset.k, i=+b.dataset.i, key=sid+"|"+day+"|"+k, r=ensure(day,sid), arr=entries(r[k]).slice();
+      if(i<arr.length){ arr.splice(i,1); if(!arr.length) delete r[k]; else r[k]=arr.length===1?arr[0]:arr; save(); } else if(ui.slots[key]) ui.slots[key]--;
+      ui.open.add(sid); render(); break; }
+    case "car": carShow(ui.slide + (+d)); carPause = Date.now()+12000; break;
+    case "car-go": carShow(+b.dataset.i); carPause = Date.now()+12000; break;
+    case "tcyc": { const tid=b.dataset.tid; S.tatt=S.tatt||{}; const m=S.tatt[d]=S.tatt[d]||{}; const n = !m[tid]?"p":m[tid]==="p"?"a":""; if(n) m[tid]=n; else delete m[tid]; save(); render(); break; }
+    case "t-del": ui.delTid=b.dataset.tid; render(); break;
+    case "t-del-no": ui.delTid=null; render(); break;
+    case "t-del-ok": S.teachers=(S.teachers||[]).filter(t=>t.id!==b.dataset.tid); ui.delTid=null; save(); render(); toast("حُذف المعلم"); break;
     case "s-del": ui.delSid=sid; render(); break;
     case "s-del-no": ui.delSid=null; render(); break;
     case "s-del-ok": { const nm=stu(sid)?.name||""; S.students=S.students.filter(x=>x.id!==sid); ui.delSid=null; save(); render(); toast(`حُذف ${nm.split(" ")[0]}`); break; }
     case "edit-due": ui.editDue.has(sid)?ui.editDue.delete(sid):ui.editDue.add(sid); ui.open.add(sid); render(); break;
     case "menu-close": ui.menu=false; render(); break;
     case "info-edit": ui.menu=false; go("teacher",{tab:"info"}); break;
-    case "copy": { const v=b.dataset.v; try { navigator.clipboard.writeText(v).then(()=>toast("نُسخ الرقم"),()=>toast(v)); } catch(err){ toast(v); } break; }
+    case "copy": { const v=b.dataset.v; try { navigator.clipboard.writeText(v).then(()=>toast("نُسخ"),()=>toast(v)); } catch(err){ toast(v); } break; }
     case "c-add": S.info.contacts.push({n:"",p:""}); save(); render(); $(`#cn-${S.info.contacts.length-1}`)?.focus(); break;
     case "c-del": S.info.contacts.splice(+b.dataset.i,1); save(); render(); break;
     case "ann-del": { const id=b.dataset.id; S.ann=S.ann.filter(x=>x.id!==id); render(); FB.deleteDoc(FB.doc(FB.db,"announcements",id)).then(()=>toast("حُذف الإعلان")).catch(()=>toast("تعذّر حذف الإعلان")); break; }
@@ -1033,23 +1139,29 @@ document.addEventListener("click", e=>{
 document.addEventListener("change", e=>{
   const t = e.target;
   if(t.dataset.k && t.dataset.sid){
-    const day = t.dataset.day || ui.recDay;
-    const r = ensure(day, t.dataset.sid); const k=t.dataset.k, f=t.dataset.f;
-    r[k] = r[k]||{};
-    if(f==="s"){ const v=parseInt(t.value,10); r[k] = v?{s:v}:{}; }
-    else if(f==="full"){ r[k].full = t.checked; if(t.checked){ delete r[k].f; delete r[k].t; } }
-    else { const n=Q.c[r[k].s-1]||0; let v=parseInt(t.value,10); if(v){ v=Math.max(1,Math.min(n,v)); r[k][f]=v; } else delete r[k][f]; }
-    if(!r[k].s) delete r[k];
+    const day = t.dataset.day || ui.recDay, sid = t.dataset.sid;
+    const r = ensure(day, sid), k = t.dataset.k, f = t.dataset.f, i = +(t.dataset.i||0), key = sid+"|"+day+"|"+k;
+    const arr = entries(r[k]).map(x=>Object.assign({},x));
+    const wasNew = i >= arr.length;
+    let x = wasNew ? {} : arr[i];
+    if(f==="s"){ const v=parseInt(t.value,10); x = v?{s:v}:{}; }
+    else if(f==="full"){ x.full = t.checked; if(t.checked){ delete x.f; delete x.t; } }
+    else { const n=Q.c[x.s-1]||0; let v=parseInt(t.value,10); if(v){ v=Math.max(1,Math.min(n,v)); x[f]=v; } else delete x[f]; }
+    if(wasNew){ if(x.s){ arr.push(x); if(ui.slots[key]) ui.slots[key]--; } }
+    else if(x.s) arr[i] = x; else arr.splice(i,1);
+    if(!arr.length) delete r[k]; else r[k] = arr.length===1 ? arr[0] : arr;
     if(!r.a && day===ui.recDay) r.a="p";
-    if(day===ui.recDay) ui.editDue.add(t.dataset.sid);
-    ui.open.add(t.dataset.sid); save();
-    if(f==="f" || f==="t"){
-      const c = t.closest(".fld")?.querySelector(".calc"), pg = pagesFor(r[k]);
+    if(day===ui.recDay) ui.editDue.add(sid);
+    ui.open.add(sid); save();
+    if((f==="f" || f==="t") && !wasNew){
+      const c = t.closest(".rec-item")?.querySelector(".calc"), pg = pages1(x);
       if(c) c.innerHTML = pg ? `= <b class="pg">${fmtPages(pg)} وجه</b>` : "";
-      if(r[k] && r[k][f]!==undefined) t.value = r[k][f];
+      if(x[f]!==undefined) t.value = x[f];
+      const tot = t.closest(".fld")?.lastElementChild?.querySelector(".calc");
+      if(tot) tot.innerHTML = entries(r[k]).length>1 ? `المجموع = <b class="pg">${fmtPages(pagesFor(r[k]))} وجه</b>` : "";
     } else {
       render();
-      if(f==="s" && r[k]) $(`#${k}f-${t.dataset.sid}-${day}`)?.focus();
+      if(f==="s" && x.s){ const idx = wasNew ? entries(r[k]).length-1 : i; $(`#${k}f-${sid}-${day}-${idx}`)?.focus(); }
     }
     toast("حُفظ");
   }
@@ -1061,9 +1173,24 @@ document.addEventListener("change", e=>{
     if(k==="cn") f.contacts[+t.dataset.i].n=t.value.trim();
     else if(k==="cp") f.contacts[+t.dataset.i].p=t.value.trim();
     else if(k==="rules") f.rules=t.value;
+    else if(k==="iban"){ f.iban = t.value.replace(/\s/g,"").toUpperCase(); t.value = f.iban; }
     else if(k==="wa"){ const v=t.value.trim(); if(v && !/^https:\/\//.test(v)){ $("#wa-err").textContent="الرابط لازم يبدأ بـ https://"; return; } $("#wa-err").textContent=""; f.wa=v; }
     save(); toast("حُفظ");
   }
+  if(t.dataset.actIn==="phone"){
+    const s = stu(t.dataset.sid), v = normPhone(t.value), err = $("#iq-err");
+    if(v && !/^\d{8,12}$/.test(v)){ err.textContent = `رقم ولي أمر ${s.name.split(" ")[0]} غير صحيح، اكتب ٨ أرقام.`; return; }
+    err.textContent = ""; s.phone = v; t.value = v; save();
+    const sib = v ? S.students.filter(o=>o.id!==s.id && o.phone===v).length : 0;
+    toast(sib ? `حُفظ الرقم (مشترك مع ${sib} من الإخوان)` : "حُفظ الرقم");
+  }
+  if(t.dataset.stu){
+    const s = stu(t.dataset.sid), f = t.dataset.stu; let v = t.value.trim();
+    if(f==="iqra") v = v.replace(/\D/g,"");
+    if(f==="email" && v && !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(v)){ toast("صيغة البريد غير صحيحة"); return; }
+    s[f] = v; t.value = v; save(); toast("حُفظ");
+  }
+  if(t.dataset.tname){ const x = (S.teachers||[]).find(y=>y.id===t.dataset.tname), v = t.value.trim(); if(x && v){ x.name = v; save(); toast("حُفظ"); } }
   if(t.dataset.actIn==="name"){ const s=stu(t.dataset.sid); const v=t.value.trim(); if(v){ s.name=v; save(); toast("حُفظ الاسم"); } }
   if(t.dataset.actIn==="iqra"){
     const s=stu(t.dataset.sid); const v=t.value.replace(/\D/g,"");
@@ -1072,6 +1199,13 @@ document.addEventListener("change", e=>{
     if(v && S.students.some(o=>o.id!==s.id && o.iqra===v)){ err.textContent="هذا الرقم مسجّل لطالب آخر."; return; }
     err.textContent=""; s.iqra=v; t.value=v; save(); toast("حُفظ الرقم");
   }
+});
+document.addEventListener("submit", e=>{
+  if(e.target.id!=="add-teacher") return;
+  e.preventDefault();
+  const v = $("#new-teacher").value.trim().replace(/\s+/g," ");
+  if(!v){ $("#new-teacher").focus(); return; }
+  S.teachers = S.teachers||[]; S.teachers.push({id:"t"+Date.now(), name:v}); save(); render(); toast("أُضيف المعلم"); $("#new-teacher")?.focus();
 });
 document.addEventListener("submit", e=>{
   if(e.target.id!=="add-stu") return;
@@ -1090,7 +1224,7 @@ document.addEventListener("visibilitychange", ()=>{ if(document.visibilityState=
 document.fonts && document.fonts.ready.then(()=>{ if(ui.view==="teacher" && ui.tab==="wheel") drawWheel(); });
 </script>
 <script type="module">
-import * as CFG from "./firebase-config.js?v=1791827891";
+import * as CFG from "./firebase-config.js?v=1791993365";
 const FIREBASE_CONFIG = CFG.FIREBASE_CONFIG;
 if(!FIREBASE_CONFIG || !FIREBASE_CONFIG.apiKey || /PASTE/.test(FIREBASE_CONFIG.apiKey)){
   window.dispatchEvent(new Event("fb-missing"));
