@@ -25,11 +25,17 @@ service cloud.firestore {
       allow read, write: if isTeacher();
     }
 
-    // صفحة الطالب: تُقرأ فقط لمن يعرف رقم اقرأ، ولا يمكن استعراض القائمة
-    match /iqra/{num} {
+    // صفحة الطالب: ملف لكل رقم هاتف ولي أمر (يضم الإخوان)، يُقرأ فقط لمن يعرف الرقم، ولا يمكن استعراض القائمة
+    match /parents/{num} {
       allow get: if true;
       allow list: if false;
-      allow write: if isTeacher() && num.matches('^[0-9]{8}$');
+      allow write: if isTeacher() && num.matches('^[0-9]{8,12}$');
+    }
+
+    // ملفات النظام القديم (برقم اقرأ): مغلقة للقراءة، والأستاذ يحذفها تلقائياً
+    match /iqra/{num} {
+      allow read: if false;
+      allow write: if isTeacher();
     }
   }
 }
