@@ -1,0 +1,1252 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>سجل الطلاب · حلقات جامع يوسف بن شاهين الجلاهمة</title>
+<meta name="theme-color" content="#1E253F">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" type="image/png" sizes="192x192" href="icons/icon-192.png">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="حلقات الجلاهمة">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Reem+Kufi:wght@500;600;700&family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&display=swap">
+<style>
+/* Layout: navy masthead carrying the mosque logo, then a single reading column of
+   cards (announcements, monthly knights, weekly roll). Copper is reserved for honours:
+   prizes, knights, and the active state. */
+:root{
+  --bg:#F3F2EE; --surface:#FFFFFF; --sunk:#EDEBE5; --ink:#1E253F; --muted:#666B7C; --line:#E0DCD2;
+  --navy:#1E253F; --navy-ink:#F3EFE7; --navy-muted:#AEB3C6;
+  --copper:#A47142; --copper-deep:#895331; --copper-soft:#F4EADF; --on-copper:#FFFFFF;
+  --ok:#2C7A56; --ok-soft:#E2F0E8; --bad:#AE4538; --bad-soft:#F7E5E1; --warn:#9A6A0C; --warn-soft:#FBEFD3;
+  --title:"Reem Kufi","IBM Plex Sans Arabic",Tahoma,sans-serif;
+  --display:"IBM Plex Sans Arabic",Tahoma,"Segoe UI",sans-serif;
+  --body:"IBM Plex Sans Arabic",Tahoma,"Segoe UI",sans-serif;
+  --r:12px;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#10152A; --surface:#181E34; --sunk:#141A2E; --ink:#ECE8DF; --muted:#9DA2B4; --line:#2A3150;
+  --navy:#0B0F20; --navy-ink:#F3EFE7; --navy-muted:#9DA2B4;
+  --copper:#C58E59; --copper-deep:#A8733F; --copper-soft:#2C2622; --on-copper:#1A1209;
+  --ok:#62BE90; --ok-soft:#16302A; --bad:#E07B6D; --bad-soft:#3A1F24; --warn:#E3B453; --warn-soft:#382D14; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#10152A; --surface:#181E34; --sunk:#141A2E; --ink:#ECE8DF; --muted:#9DA2B4; --line:#2A3150;
+  --navy:#0B0F20; --navy-ink:#F3EFE7; --navy-muted:#9DA2B4;
+  --copper:#C58E59; --copper-deep:#A8733F; --copper-soft:#2C2622; --on-copper:#1A1209;
+  --ok:#62BE90; --ok-soft:#16302A; --bad:#E07B6D; --bad-soft:#3A1F24; --warn:#E3B453; --warn-soft:#382D14; color-scheme:dark}
+
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+img{max-width:100%}
+html{-webkit-text-size-adjust:100%}
+body{background:var(--bg);color:var(--ink);font-family:var(--body);font-size:15px;line-height:1.6;margin:0;padding-bottom:env(safe-area-inset-bottom,0px)}
+button,input,select,textarea{font:inherit;color:inherit}
+button{cursor:pointer}
+:focus-visible{outline:2px solid var(--copper);outline-offset:2px}
+.num{font-variant-numeric:tabular-nums}
+
+/* Masthead */
+.mast{background:var(--navy);color:var(--navy-ink);position:relative;overflow:hidden}
+.mast::after{content:"";position:absolute;inset:auto 0 0 0;height:3px;background:linear-gradient(90deg,var(--copper-deep),var(--copper),var(--copper-deep))}
+.mast-in{max-width:760px;margin:0 auto;padding:calc(18px + env(safe-area-inset-top,0px)) 16px 22px;display:flex;gap:18px;align-items:center}
+.logo{flex:none;width:74px}
+.logo svg{display:block;width:100%;height:auto}
+.mast-txt{flex:1;min-width:0}
+.eyebrow{font-size:12px;letter-spacing:.02em;color:var(--navy-muted)}
+.mast h1{font-family:var(--title);font-weight:700;font-size:clamp(24px,6vw,32px);line-height:1.25;margin:2px 0 6px;text-wrap:balance}
+.week{font-size:13px;color:var(--navy-muted);display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.week b{color:var(--navy-ink);font-weight:600}
+.mast-act{align-self:flex-start;display:flex;flex-direction:column;gap:8px;align-items:flex-end}
+.icon-btn{background:transparent;border:1px solid rgba(255,255,255,.22);color:var(--navy-ink);border-radius:10px;height:38px;padding:0 12px;display:inline-flex;align-items:center;gap:6px;font-size:13px}
+.icon-btn:hover{border-color:var(--copper)}
+.icon-btn svg{width:16px;height:16px}
+.wk-nav{background:transparent;border:1px solid rgba(255,255,255,.22);color:var(--navy-ink);border-radius:8px;width:30px;height:28px;display:inline-grid;place-items:center}
+
+.wrap{max-width:760px;margin:0 auto;padding-inline:16px;padding-block:18px 48px;display:flex;flex-direction:column;gap:18px}
+
+.demo{font-size:12.5px;color:var(--muted);background:var(--sunk);border:1px dashed var(--line);border-radius:10px;padding:8px 12px}
+.tbar{display:flex;align-items:center;gap:10px;flex-wrap:wrap;background:var(--copper-soft);border:1px solid var(--copper);border-radius:10px;padding:8px 12px;font-size:13px}
+.tbar b{color:var(--copper-deep)}
+:root[data-theme="dark"] .tbar b{color:var(--copper)}
+.tbar .sp{flex:1}
+
+.sec-h{display:flex;align-items:baseline;justify-content:space-between;gap:4px 12px;margin:0 0 10px;flex-wrap:wrap}
+.sec-h h2{font-family:var(--display);font-weight:600;font-size:19px;margin:0}
+.sec-h small{color:var(--muted);font-size:12.5px}
+
+/* Announcements */
+.ann-list{display:flex;flex-direction:column;gap:8px}
+.ann{background:var(--surface);border:1px solid var(--line);border-inline-start:3px solid var(--copper);border-radius:10px;padding:10px 14px;display:flex;gap:10px;align-items:flex-start}
+.ann p{margin:0;flex:1;min-width:0;white-space:pre-wrap;overflow-wrap:anywhere}
+.ann time{display:block;font-size:12px;color:var(--muted);margin-top:2px}
+.add-btn{border:1px dashed var(--copper);background:transparent;color:var(--copper);border-radius:10px;padding:8px 12px;font-weight:600;display:inline-flex;align-items:center;gap:6px}
+.x{background:transparent;border:0;color:var(--muted);width:28px;height:28px;border-radius:8px;flex:none}
+.x:hover{background:var(--sunk);color:var(--bad)}
+
+/* Knights */
+.knights{background:var(--navy);color:var(--navy-ink);border-radius:var(--r);padding:16px;display:grid;grid-template-columns:1fr 1fr;gap:14px;position:relative}
+.knights .k{min-width:0}
+.knights .k-lbl{font-family:var(--display);color:var(--copper);font-size:15px;font-weight:600;display:flex;align-items:center;gap:6px}
+.knights .k-lbl svg{width:18px;height:18px}
+.knights .k-names{font-weight:600;font-size:15px;margin-top:4px;line-height:1.5}
+.knights .k-names span{display:block}
+.knights .k-head{grid-column:1/-1;display:flex;justify-content:space-between;align-items:baseline;border-bottom:1px solid rgba(255,255,255,.12);padding-bottom:8px}
+.knights .k-head h2{font-family:var(--display);margin:0;font-size:18px;font-weight:600}
+.knights .k-head small{color:var(--navy-muted)}
+.k-empty{color:var(--navy-muted);font-size:13px}
+
+/* Roll table */
+.roll-wrap{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);overflow:hidden}
+.roll{width:100%;border-collapse:collapse}
+.roll th{font-size:12px;font-weight:600;color:var(--muted);padding:10px 4px;border-bottom:1px solid var(--line);background:var(--sunk);text-align:center;line-height:1.3}
+.roll th:first-child{text-align:start;padding-inline-start:14px}
+.roll th .d{display:block;font-weight:400;font-size:11px}
+.roll th.today{color:var(--copper-deep)}
+:root[data-theme="dark"] .roll th.today{color:var(--copper)}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .roll th.today{color:var(--copper)}}
+.roll td{border-bottom:1px solid var(--line);padding:6px 4px;text-align:center;vertical-align:middle}
+.roll tr:last-child td{border-bottom:0}
+.roll td.nm{text-align:start;padding-inline-start:14px}
+.nm-btn{background:none;border:0;padding:4px 0;text-align:start;font-weight:600;font-size:14.5px;line-height:1.4;display:flex;align-items:center;gap:6px}
+.nm-btn:hover{color:var(--copper)}
+.nm-btn .chev{color:var(--muted);flex:none;width:14px;height:14px}
+.cell{width:38px;height:38px;border-radius:10px;border:1px solid transparent;background:transparent;display:inline-grid;place-items:center;position:relative;font-weight:700;font-size:16px}
+.cell.p{background:var(--ok-soft);color:var(--ok)}
+.cell.a{background:var(--bad-soft);color:var(--bad)}
+.cell.q{background:var(--warn-soft);color:var(--warn)}
+.cell.n{color:var(--line)}
+.cell.f{color:var(--line);opacity:.6}
+.cell.edit{border-color:var(--line);cursor:pointer}
+.cell.edit:hover{border-color:var(--copper)}
+.cell.rec{background:var(--copper-soft);color:var(--copper-deep)}
+:root[data-theme="dark"] .cell.rec{color:var(--copper)}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .cell.rec{color:var(--copper)}}
+.cell svg{width:18px;height:18px}
+.coin{position:absolute;top:-5px;inset-inline-end:-5px;width:18px;height:18px;border-radius:50%;background:linear-gradient(135deg,var(--copper),var(--copper-deep));color:#fff;font-size:10px;font-weight:700;display:grid;place-items:center;box-shadow:0 0 0 2px var(--surface);font-family:var(--display);line-height:1}
+.legend{display:flex;flex-wrap:wrap;gap:6px 16px;font-size:12px;color:var(--muted);padding:10px 14px;border-top:1px solid var(--line);background:var(--sunk)}
+.legend span{display:inline-flex;align-items:center;gap:6px}
+.legend i{display:inline-grid;place-items:center;width:18px;height:18px;border-radius:5px;font-style:normal;font-weight:700;font-size:11px}
+.legend .coin{position:static;box-shadow:none}
+.coin svg{width:66%;height:66%;display:block}
+
+/* Generic */
+.card{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:16px}
+.btn{border:1px solid var(--line);background:var(--surface);border-radius:10px;padding:9px 14px;font-weight:600;font-size:14px}
+.btn:hover{border-color:var(--copper)}
+.btn.pri{background:var(--navy);color:var(--navy-ink);border-color:var(--navy)}
+.btn.cop{background:linear-gradient(135deg,var(--copper),var(--copper-deep));color:#fff;border:0}
+.btn.ghost{background:transparent}
+.btn:disabled{opacity:.45;cursor:not-allowed}
+.row{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.muted{color:var(--muted)}
+.back{background:none;border:0;color:var(--navy-ink);display:inline-flex;align-items:center;gap:6px;padding:0;font-size:13px;opacity:.85}
+.back svg{width:16px;height:16px}
+
+/* Student page */
+.tiles{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+.tile{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:12px}
+.tile .v{font-family:var(--display);font-size:26px;font-weight:700;line-height:1.1}
+.tile .l{font-size:12.5px;color:var(--muted);margin-top:4px}
+.tile.hl{background:var(--navy);color:var(--navy-ink);border-color:var(--navy)}
+.tile.hl .l{color:var(--navy-muted)}
+.tile.hl .v{color:var(--copper)}
+@media (max-width:560px){.tiles{grid-template-columns:1fr 1fr}}
+.seg{display:inline-flex;background:var(--sunk);border:1px solid var(--line);border-radius:10px;padding:3px;gap:3px;flex-wrap:wrap}
+.seg button{border:0;background:transparent;border-radius:7px;padding:6px 12px;font-size:13px;font-weight:600;color:var(--muted)}
+.seg button.on{background:var(--surface);color:var(--ink);box-shadow:0 1px 2px rgba(0,0,0,.08)}
+.log{display:flex;flex-direction:column}
+.log-day{display:grid;grid-template-columns:76px 1fr;gap:12px;padding:12px 0;border-bottom:1px solid var(--line)}
+.log-day:last-child{border-bottom:0}
+.log-date b{display:block;font-size:14px}
+.log-date span{font-size:12px;color:var(--muted)}
+.log-body{min-width:0;display:flex;flex-direction:column;gap:4px;font-size:14px}
+.log-body .ln{display:flex;gap:8px;align-items:baseline;flex-wrap:wrap}
+.log-body .k{font-size:12px;color:var(--muted);width:46px;flex:none}
+.pill{display:inline-flex;align-items:center;gap:4px;font-size:12px;font-weight:600;border-radius:999px;padding:2px 10px}
+.pill.p{background:var(--ok-soft);color:var(--ok)}
+.pill.a{background:var(--bad-soft);color:var(--bad)}
+.pill.c{background:var(--copper-soft);color:var(--copper-deep)}
+:root[data-theme="dark"] .pill.c{color:var(--copper)}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .pill.c{color:var(--copper)}}
+.pg{color:var(--copper-deep);font-weight:600}
+:root[data-theme="dark"] .pg{color:var(--copper)}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .pg{color:var(--copper)}}
+.fees{display:flex;flex-wrap:wrap;gap:8px}
+.fee{border:1px solid var(--line);border-radius:10px;padding:6px 12px;font-size:13px;display:inline-flex;gap:6px;align-items:center;background:var(--surface)}
+.fee.paid{border-color:var(--ok);color:var(--ok);background:var(--ok-soft)}
+.fee.due{color:var(--bad);border-color:var(--bad-soft)}
+.fee svg{width:16px;height:16px;flex:none}
+.fee-strip{display:flex;align-items:center;gap:10px;flex-wrap:wrap;border-radius:10px;padding:9px 14px;font-size:14px}
+.fee-strip.fs-paid{background:var(--ok-soft);color:var(--ok)}
+.fee-strip.fs-due{background:var(--bad-soft);color:var(--bad)}
+.fee-strip svg{width:24px;height:24px;flex:none}
+.fee-strip span{font-size:12.5px;margin-inline-start:auto}
+.fee-now{display:flex;align-items:center;gap:12px;border-radius:12px;padding:12px 14px}
+.fee-now.paid{background:var(--ok-soft);color:var(--ok)}
+.fee-now.due{background:var(--bad-soft);color:var(--bad)}
+.fee-now svg{width:38px;height:38px;flex:none}
+.fee-now b{display:block;font-size:16px}
+.fee-now span{font-size:13px}
+.fee-card{display:flex;flex-direction:column;gap:12px}
+.fee-card h2 svg{width:22px;height:22px;color:var(--copper);vertical-align:-4px;margin-inline-end:6px}
+.knights-me{display:flex;flex-direction:column;gap:8px}
+.knight{background:linear-gradient(135deg,var(--copper),var(--copper-deep));color:#fff;border-radius:var(--r);padding:14px 16px;display:flex;align-items:center;gap:12px}
+.knight svg{width:34px;height:34px;flex:none}
+.knight b{display:block;font-size:17px}
+.knight span{font-size:13px;opacity:.92}
+
+/* Teacher */
+.tabs{display:flex;gap:4px;overflow-x:auto;background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:4px;scrollbar-width:none}
+.tabs button{flex:none;border:0;background:transparent;padding:8px 14px;border-radius:9px;font-weight:600;font-size:14px;color:var(--muted);white-space:nowrap}
+.tabs button.on{background:var(--navy);color:var(--navy-ink)}
+details.st{background:var(--surface);border:1px solid var(--line);border-radius:12px}
+details.st[open]{border-color:var(--copper)}
+details.st summary{list-style:none;display:flex;align-items:center;gap:10px;padding:12px 14px;cursor:pointer}
+details.st summary::-webkit-details-marker{display:none}
+details.st summary .n{flex:1;min-width:0;font-weight:600}
+details.st summary .meta{display:flex;gap:6px;align-items:center;flex-wrap:wrap;justify-content:flex-end}
+.st-body{padding:4px 14px 14px;display:flex;flex-direction:column;gap:12px;border-top:1px solid var(--line);padding-top:12px}
+.fld{display:grid;grid-template-columns:1fr;gap:6px}
+.fld > label{font-size:12.5px;color:var(--muted);font-weight:600}
+.rec-row{display:grid;grid-template-columns:minmax(0,1.4fr) 64px 64px;gap:8px;align-items:center}
+.inp{width:100%;min-width:0;border:1px solid var(--line);background:var(--bg);border-radius:9px;padding:8px 10px;font-size:14px}
+.inp:disabled{opacity:.5}
+.chk{display:inline-flex;align-items:center;gap:6px;font-size:13px;color:var(--muted)}
+.chk input{accent-color:var(--copper);width:16px;height:16px}
+.calc{font-size:13px;color:var(--muted)}
+.done-btn{border:1px solid var(--line);background:var(--bg);border-radius:10px;padding:8px 14px;font-weight:600;display:inline-flex;align-items:center;gap:6px}
+.done-btn.on{background:var(--copper-soft);border-color:var(--copper);color:var(--copper-deep)}
+:root[data-theme="dark"] .done-btn.on{color:var(--copper)}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .done-btn.on{color:var(--copper)}}
+.list{display:flex;flex-direction:column;gap:8px}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chip{border:1px solid var(--line);background:var(--surface);border-radius:999px;padding:6px 12px;font-size:13px;font-weight:500}
+.chip.on{background:var(--navy);color:var(--navy-ink);border-color:var(--navy)}
+.chip.won{opacity:.45;text-decoration:line-through}
+.wheel-box{display:grid;place-items:center;position:relative;padding:6px 0}
+.wheel-box canvas{width:min(320px,100%);height:auto;aspect-ratio:1;max-width:100%}
+.ptr{position:absolute;top:0;left:50%;transform:translateX(-50%);width:0;height:0;border-inline:13px solid transparent;border-top:22px solid var(--copper);filter:drop-shadow(0 2px 2px rgba(0,0,0,.25))}
+.winners{display:flex;flex-direction:column;gap:6px}
+.win{display:flex;align-items:center;gap:10px;background:var(--copper-soft);border-radius:10px;padding:8px 12px}
+.win .coin{position:static;box-shadow:none;width:24px;height:24px;font-size:12px}
+.win b{flex:1}
+.fee-tbl-wrap{overflow-x:auto;border:1px solid var(--line);border-radius:12px;background:var(--surface)}
+.fee-tbl{border-collapse:collapse;min-width:640px;width:100%}
+.fee-tbl th,.fee-tbl td{padding:6px;border-bottom:1px solid var(--line);text-align:center;font-size:13px}
+.fee-tbl th{background:var(--sunk);color:var(--muted);font-weight:600}
+.fee-tbl td:first-child,.fee-tbl th:first-child{text-align:start;padding-inline-start:12px;position:sticky;inset-inline-start:0;background:var(--surface);white-space:nowrap}
+.fee-tbl th:first-child{background:var(--sunk)}
+.fbtn{width:32px;height:32px;border-radius:8px;border:1px solid var(--line);background:var(--bg);display:inline-grid;place-items:center}
+.fbtn.on{background:var(--ok-soft);color:var(--ok);border-color:var(--ok)}
+.fbtn svg{width:16px;height:16px}
+.stu-row{display:grid;grid-template-columns:minmax(0,1fr) 120px 32px;gap:8px;align-items:center}
+.stu-row .delc{grid-column:1/-1;display:flex;gap:8px;align-items:center;flex-wrap:wrap;background:var(--bad-soft);border-radius:9px;padding:8px 10px;font-size:13px}
+.btn.danger{background:var(--bad);color:#fff;border-color:var(--bad)}
+.add-row{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:8px}
+
+/* Modal + toast */
+.modal{position:fixed;inset:0;background:rgba(10,13,26,.55);display:grid;place-items:center;padding:16px;z-index:20}
+.dlg{background:var(--surface);color:var(--ink);border-radius:16px;padding:20px;width:min(380px,100%);display:flex;flex-direction:column;gap:12px;border-top:4px solid var(--copper)}
+.dlg h3{font-family:var(--display);margin:0;font-size:20px;font-weight:600}
+.dlg p{margin:0;color:var(--muted);font-size:14px}
+.pin{letter-spacing:.3em;text-align:center;font-size:20px;direction:ltr}
+.err{color:var(--bad);font-size:13px;min-height:1.2em}
+.prize-big{display:grid;place-items:center;gap:8px;text-align:center;padding:6px 0}
+.prize-big .coin{position:static;width:64px;height:64px;font-size:28px;box-shadow:0 0 0 6px var(--copper-soft)}
+.prize-big b{font-family:var(--display);font-size:22px}
+.toast{position:fixed;bottom:calc(18px + env(safe-area-inset-bottom,0px));left:50%;transform:translateX(-50%);background:var(--navy);color:var(--navy-ink);padding:8px 16px;border-radius:999px;font-size:13px;z-index:30;box-shadow:0 6px 18px rgba(0,0,0,.2)}
+.ann img{display:block;width:100%;max-height:440px;object-fit:cover;border-radius:8px;margin-top:8px}
+.ann-prev{display:block;max-width:100%;max-height:220px;border-radius:8px}
+.drawer-bg{position:fixed;inset:0;background:rgba(10,13,26,.5);z-index:25}
+.drawer{position:fixed;top:0;bottom:0;left:0;width:min(360px,88vw);background:var(--bg);z-index:26;overflow-y:auto;padding:calc(16px + env(safe-area-inset-top,0px)) 16px calc(24px + env(safe-area-inset-bottom,0px));display:flex;flex-direction:column;gap:14px;box-shadow:8px 0 30px rgba(0,0,0,.25);animation:din .22s ease-out}
+@keyframes din{from{transform:translateX(-100%)}to{transform:none}}
+.dr-head{display:flex;align-items:center;justify-content:space-between;gap:8px}
+.dr-head h2{font-family:var(--display);margin:0;font-size:21px;font-weight:600}
+.dr-sec{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:14px;display:flex;flex-direction:column;gap:10px}
+.dr-sec h3{margin:0;font-size:16px;font-family:var(--display);font-weight:600;display:flex;align-items:center;gap:8px}
+.dr-sec h3 svg{width:20px;height:20px;color:var(--copper)}
+.contact{display:flex;align-items:center;gap:8px;flex-wrap:wrap;border-top:1px solid var(--line);padding-top:10px}
+.contact:first-of-type{border-top:0;padding-top:0}
+.contact .who{flex:1;min-width:0}
+.contact .who b{display:block;font-size:14px}
+.contact .ph{direction:ltr;unicode-bidi:isolate;font-size:15px;user-select:all;color:var(--muted)}
+.btn.sm{padding:6px 10px;font-size:13px;border-radius:8px;text-decoration:none;color:var(--ink)}
+.wa{background:#1F8F54;color:#fff;text-decoration:none;display:flex;align-items:center;justify-content:center;gap:8px;border-radius:10px;padding:11px 14px;font-weight:600}
+.wa svg{width:20px;height:20px}
+.rules{margin:0;padding-inline-start:18px;display:flex;flex-direction:column;gap:8px;font-size:14px;line-height:1.7}
+.rules li::marker{color:var(--copper)}
+.ct-row{display:grid;grid-template-columns:minmax(0,1fr) 128px 32px;gap:8px;align-items:center}
+.due{border:1px solid var(--line);border-radius:10px;padding:12px;display:flex;flex-direction:column;gap:10px;background:var(--bg)}
+.due.next{border:1px dashed var(--copper)}
+.due-h{display:flex;justify-content:space-between;align-items:baseline;gap:8px;flex-wrap:wrap}
+.due-h b{font-size:14px}
+.lnk{background:none;border:0;color:var(--copper);font-weight:600;font-size:13px;padding:0}
+.hw{background:var(--navy);color:var(--navy-ink);border-radius:var(--r);padding:16px;display:flex;flex-direction:column;gap:10px;border-bottom:3px solid var(--copper)}
+.hw h2{font-family:var(--display);margin:0;font-size:19px;font-weight:600}
+.hw .log-body .k{color:var(--navy-muted)}
+.hw .pg{color:var(--copper)}
+.hw .log-body{font-size:15px}
+.sync{display:inline-flex;align-items:center;gap:6px;font-size:12px;border-radius:999px;padding:2px 10px;background:rgba(255,255,255,.1);color:var(--navy-ink)}
+.sync i{width:8px;height:8px;border-radius:50%;background:#62BE90;display:inline-block}
+.sync.pending i{background:#E3B453}
+.sync.err i{background:#E07B6D}
+.err.ok{color:var(--ok)}
+.no{display:inline-grid;place-items:center;min-width:22px;height:22px;padding:0 4px;border-radius:6px;background:var(--sunk);color:var(--muted);font-size:12px;font-weight:600;margin-inline-end:8px;flex:none;vertical-align:middle}
+.rec-item{display:flex;flex-direction:column;gap:6px;padding-bottom:8px;border-bottom:1px dashed var(--line)}
+.rec-item:last-of-type{border-bottom:0;padding-bottom:0}
+.stu-row{grid-template-columns:24px minmax(0,1fr) 124px 32px}
+.par-tbl{min-width:520px}
+.par-tbl td:nth-child(2){white-space:nowrap}
+.kv{display:flex;justify-content:space-between;gap:12px;padding:8px 0;border-bottom:1px solid var(--line);font-size:14px}
+.kv:last-child{border-bottom:0}
+.kv>span{color:var(--muted)}
+.kv-notes{flex-direction:column;gap:4px}
+.kv-notes p{margin:0;white-space:pre-wrap;overflow-wrap:anywhere}
+.iban{display:flex;align-items:center;justify-content:space-between;gap:8px;background:var(--sunk);border-radius:10px;padding:10px 12px}
+.iban span{font-weight:600;letter-spacing:.04em;font-size:15px;overflow-wrap:anywhere;min-width:0}
+.car{position:relative;border-radius:var(--r);overflow:hidden;background:var(--surface);border:1px solid var(--line)}
+.slide{display:none;margin:0}
+.slide.on{display:block;animation:fadein .5s ease}
+@keyframes fadein{from{opacity:.25}to{opacity:1}}
+.slide img{display:block;width:100%;max-width:100%;aspect-ratio:4/3;object-fit:cover;background:var(--sunk)}
+.slide figcaption{padding:12px 16px 36px;display:flex;flex-direction:column;gap:4px;position:relative}
+.slide figcaption p{margin:0;font-size:15px;white-space:pre-wrap;overflow-wrap:anywhere}
+.slide.txt figcaption{padding:24px 18px 40px;border-inline-start:4px solid var(--copper);min-height:132px;justify-content:center}
+.slide.txt figcaption p{font-size:17px;font-weight:500}
+.car:not([data-n="1"]) .slide.txt figcaption{padding-inline:54px}
+.slide time{font-size:12px;color:var(--muted)}
+.slide .x{position:absolute;top:8px;inset-inline-end:8px;background:var(--surface)}
+.slide.has-img .x{top:-44px}
+.car-nav{position:absolute;top:calc(42% - 18px);width:36px;height:36px;border-radius:50%;border:0;background:rgba(30,37,63,.6);color:#fff;display:grid;place-items:center;cursor:pointer}
+.car-nav svg{width:18px;height:18px}
+.car-nav.prev{inset-inline-start:8px}
+.car-nav.next{inset-inline-end:8px}
+.dots{position:absolute;bottom:12px;left:0;right:0;display:flex;justify-content:center;gap:6px}
+.dot{width:8px;height:8px;border-radius:4px;border:0;padding:0;background:var(--line);cursor:pointer;transition:width .2s}
+.dot.on{background:var(--copper);width:20px}
+.pw-wrap{position:relative;display:block}
+.pw-wrap .inp{padding-inline-end:46px;width:100%}
+.pw-wrap[dir="ltr"] .inp{padding-inline-end:46px}
+.eye{position:absolute;top:50%;right:6px;transform:translateY(-50%);width:36px;height:36px;border:0;background:transparent;color:var(--muted);border-radius:8px;display:grid;place-items:center;cursor:pointer}
+.eye:hover{color:var(--copper);background:var(--sunk)}
+.eye svg{width:20px;height:20px}
+.loading{display:grid;place-items:center;gap:12px;padding:60px 16px;color:var(--muted);text-align:center}
+.spinner{width:34px;height:34px;border-radius:50%;border:3px solid var(--line);border-top-color:var(--copper);animation:spin 1s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+@media (prefers-reduced-motion: reduce){*{transition:none!important;animation:none!important}}
+</style>
+
+</head>
+<body>
+<div id="app"></div>
+<div id="modal"></div>
+<div id="drawer"></div>
+<div id="toast" class="toast" hidden></div>
+</body>
+
+<script>
+const LOGO = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="289 14 239 496"><defs><clipPath id="a"><path d="M491 239h19v20h-19Zm0 0"/></clipPath><clipPath id="b"><path d="M493.82 239.941c-1.27.645-1.812 2.274-2.004 3.68 2.715-1.516 5.332-1.754 8.172-.61-.46 1.094-1.402 1.774-2.347 2.512-3.32 2.602-6.657 7.063-5.22 10.922 1.524 4.094 15.22 2.352 17.352-3.914-4.898 2.434-14.117 3.961-15.18 1.059-.788-2.16 2.934-4.832 5.419-7.102 3.031-2.761 4.683-6.25 2.144-6.914-1.293-.34-2.68-.57-4.058-.57-1.48 0-2.953.266-4.278.937"/></clipPath><clipPath id="e"><path d="M394 246h27v15h-27Zm0 0"/></clipPath><clipPath id="f"><path d="M395.578 255.957c-.574 1.488-1.082 2.734-1.148 4.313l24.578-9.332c1.402-.829 1.883-3.063 1.808-4.407Zm0 0"/></clipPath><clipPath id="h"><path d="M301 428h11v26h-11Zm0 0"/></clipPath><clipPath id="i"><path d="M303.629 437.563c-2.094 5.472-3.188 14.156.867 15.992 1.367.62 2.856.422 3.938-.477 2.214-1.828 4.242-6.941 2.57-8.96l-1.961 3.183c-.41.668-1.281.906-1.953.77-2.203-.458-3.008-4.509-1.95-8.137 1.094-3.754 2.583-7.145 4.258-10.637.149-.313.106-.719-.035-.856a.25.25 0 0 0-.183-.074c-1.118 0-4.407 6.207-5.551 9.195"/></clipPath><clipPath id="k"><path d="M348 387h11v26h-11Zm0 0"/></clipPath><clipPath id="l"><path d="M350.734 396.223c-2.097 5.472-3.187 14.156.868 15.992 1.363.62 2.855.422 3.937-.473 2.215-1.832 4.242-6.945 2.57-8.965l-1.96 3.184c-.415.668-1.282.906-1.954.77-2.203-.458-3.007-4.508-1.953-8.137 1.094-3.754 2.586-7.145 4.258-10.637.152-.309.11-.719-.035-.855a.26.26 0 0 0-.18-.075c-1.12 0-4.406 6.207-5.55 9.196"/></clipPath><clipPath id="n"><path d="M460 407h11v27h-11Zm0 0"/></clipPath><clipPath id="o"><path d="M462.402 417.191c-2.097 5.47-3.187 14.153.868 15.993 1.367.617 2.855.418 3.937-.477 2.215-1.832 4.242-6.941 2.57-8.96l-1.96 3.183c-.41.664-1.282.906-1.954.765-2.203-.453-3.008-4.507-1.953-8.136 1.098-3.75 2.586-7.145 4.262-10.633.148-.313.105-.719-.035-.856a.26.26 0 0 0-.184-.074c-1.117 0-4.406 6.203-5.55 9.195"/></clipPath><clipPath id="q"><path d="M315 333h11v27h-11Zm0 0"/></clipPath><clipPath id="r"><path d="M317.36 342.668c-2.098 5.469-3.192 14.152.867 15.988 1.367.621 2.855.422 3.937-.476 2.215-1.828 4.242-6.942 2.57-8.961l-1.96 3.183c-.415.668-1.282.907-1.954.77-2.203-.457-3.007-4.508-1.949-8.137 1.09-3.754 2.582-7.144 4.258-10.637.148-.312.105-.718-.035-.855a.27.27 0 0 0-.184-.074c-1.117 0-4.406 6.207-5.55 9.199"/></clipPath><clipPath id="t"><path d="M335 437h38v20h-38Zm0 0"/></clipPath><clipPath id="u"><path d="M337.488 450.91c-.965 1.602-1.734 3.18-1.965 5.246l34.868-13.77c.906-1.777 1.668-3.074 1.668-5.027Zm0 0"/></clipPath><clipPath id="w"><path d="M366 385h38v20h-38Zm0 0"/></clipPath><clipPath id="x"><path d="M368.785 398.813c-.969 1.601-1.738 3.18-1.965 5.25l34.868-13.77c.902-1.777 1.664-3.074 1.664-5.031Zm0 0"/></clipPath><clipPath id="z"><path d="M300 385h38v20h-38Zm0 0"/></clipPath><clipPath id="A"><path d="M302.918 398.863c-.965 1.606-1.734 3.184-1.961 5.25l34.867-13.77c.899-1.777 1.664-3.073 1.664-5.03Zm0 0"/></clipPath><clipPath id="C"><path d="M339 424h17v17h-17Zm0 0"/></clipPath><clipPath id="D"><path d="M348.117 434.469c-.797-4.266-4.562-9.39-6.84-7.742-.886.64-1.703 2.492-1.484 3.543.398 1.937 2.855 1.421 4.078 1.718 2.102 2.09 2.695 5.63 3.152 8.274 1.43-.032 1.739-1.285 2.008-2.309l2.27-8.668c.137-.527.61-1.058 1-1.137.535-.105.945.329 1.347.758.434.469.856.938 1.422.711.461-.183.504-.8.594-1.324.281-1.68-.148-3.148-1.773-3.691a2.6 2.6 0 0 0-.832-.145c-2.926 0-3.832 5.844-4.942 10.012"/></clipPath><clipPath id="F"><path d="M382 479h10v24h-10Zm0 0"/></clipPath><clipPath id="G"><path d="m387.973 479.508-3.442 6.762c-1.816 3.57-3.32 11.464-.738 14.652 1.34 1.652 3.988 1.562 5.289-.164 1.57-2.082 2.629-4.903 1.945-7.278-1.629 1.098-1.664 3.79-3.964 3.403-.528-.09-1.157-.656-1.497-1.336-2.804-5.586 4.375-15.676 3.512-16.348-.047-.039-.137-.058-.246-.058-.3 0-.746.144-.86.367"/></clipPath><clipPath id="I"><path d="M396 302h31v17h-31Zm0 0"/></clipPath><clipPath id="J"><path d="M398.281 313.14c-1.515 1.032-1.902 3.407-2.234 5.153l27.75-10.574c1.133-1.746 1.848-3.215 2.305-5.055Zm0 0"/></clipPath><clipPath id="L"><path d="M419 404h9v23h-9Zm0 0"/></clipPath><clipPath id="M"><path d="M419.36 407.883c3.042 2.48 5.245 5.726 5.906 9.656l.203 8.477c3.941-6.723 2.535-14.86-2.102-20.317-.89-.707-1.41-1.508-2.62-1.586Zm0 0"/></clipPath><clipPath id="O"><path d="M353 20h28v61h-28Zm0 0"/></clipPath><clipPath id="P"><path d="m366.89 20.172-1.84 12.406c-.3.91-1.308 1.684-1.183 2.828.117 1.07.692 1.649 1.36 2.735.289.511-.442 1.78-.762 2.297l-7.711 12.468c-2.125 3.434-3.2 6.938-3.195 11.016l.003 16.621 7.614-.082.066-16.18c.008-2.515.524-4.746 1.758-6.867 1.281-2.203 2.188-4.48 4.152-6.504a40.5 40.5 0 0 1 5.024 8.906c.61 1.47.637 3.2.64 4.809l.043 16.035 7.621-.05-.074-16.692c-.035-7.34-3.82-12.785-7.816-18.695-1.485-2.2-2.91-4.305-3.844-6.938 1.664-1.652 1.895-4.031.121-5.68-.41-4.265-.976-8.382-1.972-12.433Zm0 0"/></clipPath><clipPath id="R"><path d="M461 172h49v24h-49Zm0 0"/></clipPath><clipPath id="S"><path d="M463.809 189.723c-.946 1.824-1.774 3.59-2.024 5.476l37.16-14.527 7.828-2.922c1.086-1.629 2.243-3.355 2.418-5.578Zm0 0"/></clipPath><clipPath id="U"><path d="M475 297h23v25h-23Zm0 0"/></clipPath><clipPath id="V"><path d="M492.414 297.957c-3.2 1.172-5.68 4.61-4.684 8.11.426 1.492 2.508 2.023 3.75 2.574-.097.859-.738 1.39-1.347 1.867-4.727 3.71-9.68 6.855-14.887 9.832-.09.453.234.777.664.672 7.074-1.68 13.246-5.551 17.656-11.41 1.145.816 1.543 1.304 2.477 1.539.91-1.106 1.34-2.387 1.086-3.836l-1.91-1.493c.445-2.082.867-4.183.355-6.187-.304-1.191-1.113-1.86-2.152-1.86q-.475 0-1.008.192m-2.305 5.36c-.359-.712.332-1.426.883-1.7.57-.285 1.348-.472 2.047.274.508.546.977 2.363.074 3.062a.7.7 0 0 1-.367.086c-.871 0-2.289-1.039-2.637-1.723"/></clipPath><clipPath id="X"><path d="M428 305h23v24h-23Zm0 0"/></clipPath><clipPath id="Y"><path d="M445.832 305.215c-3.2 1.172-5.68 4.613-4.68 8.11.422 1.491 2.508 2.023 3.75 2.573-.101.86-.742 1.391-1.351 1.868-4.727 3.71-9.68 6.855-14.887 9.832-.086.453.234.773.664.672 7.074-1.68 13.246-5.551 17.656-11.41 1.145.816 1.543 1.304 2.477 1.542.914-1.109 1.34-2.39 1.086-3.843l-1.91-1.489c.445-2.082.867-4.183.355-6.191-.305-1.188-1.113-1.856-2.152-1.856q-.475 0-1.008.192m-2.3 5.36c-.364-.712.327-1.43.878-1.7.57-.285 1.348-.473 2.047.273.508.543.977 2.364.078 3.063a.7.7 0 0 1-.37.09c-.872 0-2.286-1.047-2.634-1.727"/></clipPath><clipPath id="aa"><path d="M301 242h36v84h-36Zm0 0"/></clipPath><clipPath id="ab"><path d="m301.273 263.977 3.352 3.562-3.336 3.879-.012 11.586 5.352 5.258-5.375 5.715.012 31.304 34.652.035.004-31.394-5.305-5.602 5.23-5.101.145-9.102c.016-1.156.434-2.484-.383-3.387l-2.836-3.136 3.114-3.45.117-10.265c.02-1.887.328-3.602-.074-5.563l-3.66.52-.137 13.406c-.168 1.031-1.531 1.922-2.207 2.535l-8.403-8.898c2.172-2.27 4.247-3.84 5.82-6.234-.59.027-1.218-.06-1.847-.149-1.027-.14-2.05-.285-2.898.07-1.57.684-2.516 2.442-3.93 3.61l-5.18-4.594c-.8-.71-1.984-.715-3.164-1.004l.106 2.984 5.5 5.387-8.485 8.688c-.957-.461-2.351-1.516-2.355-2.684l-.059-16.82c-1.215-1.14-2.238-2.102-3.75-3.02Zm8.586 3.488 8.922-8.875 8.88 8.922-8.927 8.879Zm-4.832 13.902.008-8.293 2.406-2.804 8.497 8.722-6.27 6.582Zm16.453-2.351 8.422-8.73c1.02.628 1.48 1.538 2.328 2.491l-.113 8.215c-.687 1.828-2.808 3.008-4.207 4.61Zm-9.28 9.257 6.519-6.511 4.246 4.086 2.316 2.379-6.613 6.367Zm9.343 33.067 5.473-5.567-.032-12.882-5.601-5.547 6.527-6.371 4.336 4.484.024 25.961Zm-16.461-25.863 4.316-4.47 6.477 6.141-5.516 5.762-.043 12.738 5.543 5.668-10.785.07Zm9 18.62.012-9.538 4.703-4.45 4.418 4.442.012 9.578-4.508 4.558Zm0 0"/></clipPath><clipPath id="ad"><path d="M403 124h36v48h-36Zm0 0"/></clipPath><clipPath id="ae"><path d="m413.016 130.46-2.813 2.524-2.355 2.602c-2.739 3.86-4.141 8.324-4.133 13.133l.035 22.52 35.063.167.042-20.664c.008-3.86-.308-7.531-1.593-11.11-3.246-6.187-9.895-12.1-16.285-14.8Zm4.27 17.485-5.044-4.886c-.867-.836-2.043-1.364-2.555-2.637 2.579-4.32 6.352-7.488 10.403-10.3.465-.325.793-.692 1.3-.68.473.003.766.507 1.204.785 4.199 2.664 7.969 5.793 10.422 10.238l-3.286 3.2-5.367 5.034-3.175 2.895Zm6.925 6.395 5.164-5.035 5.504-4.957-.102 20.3Zm-16.16-9.828 3.965 3.742 6.367 6.082-3.73 3.664-6.801 6.547c.027-6.606-.329-13.063.199-20.035m13.195 12.414c1.75 1.816 3.469 3.25 5.16 4.918l5.496 5.41-21 .039Zm0 0"/></clipPath><clipPath id="ag"><path d="M310 402h25v23h-25Zm0 0"/></clipPath><clipPath id="ah"><path d="M324.613 402.82c-2.277 1.118-1.285 2.727-1.41 4.22-.226 2.683-3.344 5.886 2.016 6.944l.242.739-14.594 9.734c4.692-.797 9.453-2.734 13.106-5.793.793-.66 3.367-3.867 3.625-3.937.668-.184 1.418-.043 2.183.093 1.196.22 2.426.438 3.438-.566.93-.926 1.035-3.684.832-4.93-.485-2.937-5.965-6.52-9.106-6.52a3 3 0 0 0-.332.016m-.617 7.188c-.363-1.055.774-2.192 1.742-2.336 1.575-.238 2.852 2.629.953 3.262Zm4.996 1.367-.156-3.379c1.586.79 3.34 1.832 3.738 3.738Zm0 0"/></clipPath><clipPath id="aj"><path d="M386 328h40v22h-40Zm0 0"/></clipPath><clipPath id="ak"><path d="M423.266 329.813c-.278.597-1.028 2.18-.93 2.68.105.534 1.383 1.03-.457 1.585-1.254.375-2.207-.262-3.211-.965l.21-2.804-.745-.188c-.68 1.531-2.281 4.688-3.844 5.324-2.281.934-3.625-.535-5.75-.797-5.691-.699-11.226 3.72-14.844 7.446-1 .844-7.449 7.207-7.183 7.48.293.309 6.91-3.875 8.222-4.793.868-.601 3.625-2.636 4.125-3.054 2.055-1.707 4.97-3.309 7.754-2.922 1.567.218 3.719 1.507 5.332 1.441 2.348-.098 3.989-2.832 4.543-2.992.38-.106 1.114.195 1.989.5 1.445.5 3.273 1.004 4.476-.375 2.027-2.328 2.414-3.945 2.32-5.844-.062-1.144-.386-2.453-1.16-2.539h-.074c-.488 0-.543.313-.773.817"/></clipPath><linearGradient id="d" x1="-.096" x2="1" y1="0" y2="0" gradientTransform="scale(19.65484 -19.65484)rotate(90 19.31 6.15)" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#895331"/><stop offset=".063" stop-color="#895331"/><stop offset=".094" stop-color="#895331"/><stop offset=".109" stop-color="#895432"/><stop offset=".125" stop-color="#8A5432"/><stop offset=".141" stop-color="#8A5532"/><stop offset=".156" stop-color="#8A5532"/><stop offset=".172" stop-color="#8B5633"/><stop offset=".188" stop-color="#8B5633"/><stop offset=".195" stop-color="#8C5733"/><stop offset=".203" stop-color="#8C5733"/><stop offset=".219" stop-color="#8C5733"/><stop offset=".234" stop-color="#8D5834"/><stop offset=".25" stop-color="#8D5934"/><stop offset=".266" stop-color="#8E5934"/><stop offset=".281" stop-color="#8E5A34"/><stop offset=".289" stop-color="#8F5A35"/><stop offset=".297" stop-color="#8F5A35"/><stop offset=".313" stop-color="#8F5B35"/><stop offset=".328" stop-color="#8F5B36"/><stop offset=".344" stop-color="#905C36"/><stop offset=".359" stop-color="#915C36"/><stop offset=".375" stop-color="#915C36"/><stop offset=".391" stop-color="#915D37"/><stop offset=".406" stop-color="#925D37"/><stop offset=".414" stop-color="#925E37"/><stop offset=".422" stop-color="#925E37"/><stop offset=".438" stop-color="#935F37"/><stop offset=".453" stop-color="#935F38"/><stop offset=".469" stop-color="#946038"/><stop offset=".484" stop-color="#946038"/><stop offset=".5" stop-color="#956138"/><stop offset=".516" stop-color="#956138"/><stop offset=".531" stop-color="#956239"/><stop offset=".547" stop-color="#966239"/><stop offset=".563" stop-color="#976239"/><stop offset=".578" stop-color="#97633A"/><stop offset=".594" stop-color="#97633A"/><stop offset=".602" stop-color="#98643A"/><stop offset=".609" stop-color="#98643A"/><stop offset=".625" stop-color="#99643A"/><stop offset=".641" stop-color="#99653B"/><stop offset=".656" stop-color="#99653B"/><stop offset=".672" stop-color="#9A663B"/><stop offset=".688" stop-color="#9A663C"/><stop offset=".703" stop-color="#9B673C"/><stop offset=".719" stop-color="#9B673C"/><stop offset=".734" stop-color="#9C683C"/><stop offset=".75" stop-color="#9D683D"/><stop offset=".766" stop-color="#9D693D"/><stop offset=".781" stop-color="#9D6A3D"/><stop offset=".797" stop-color="#9E6A3E"/><stop offset=".805" stop-color="#9F6B3E"/><stop offset=".813" stop-color="#9F6B3E"/><stop offset=".828" stop-color="#9F6B3E"/><stop offset=".844" stop-color="#9F6C3F"/><stop offset=".859" stop-color="#A06C3F"/><stop offset=".875" stop-color="#A06D3F"/><stop offset=".891" stop-color="#A16D40"/><stop offset=".906" stop-color="#A16E40"/><stop offset=".922" stop-color="#A26E40"/><stop offset=".93" stop-color="#A26F40"/><stop offset=".938" stop-color="#A26F41"/><stop offset=".953" stop-color="#A27041"/><stop offset=".969" stop-color="#A37041"/><stop offset=".984" stop-color="#A37141"/><stop offset=".992" stop-color="#A47141"/><stop offset="1" stop-color="#A47142"/></linearGradient><linearGradient id="g" x1="0" x2="1" y1="0" y2="0" gradientTransform="matrix(0 -13.7358 -13.7358 0 407.661 260.268)" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#895331"/><stop offset=".016" stop-color="#895432"/><stop offset=".031" stop-color="#895432"/><stop offset=".047" stop-color="#8A5532"/><stop offset=".063" stop-color="#8A5532"/><stop offset=".078" stop-color="#8A5633"/><stop offset=".094" stop-color="#8B5633"/><stop offset=".109" stop-color="#8B5633"/><stop offset=".125" stop-color="#8C5733"/><stop offset=".156" stop-color="#8D5834"/><stop offset=".188" stop-color="#8D5934"/><stop offset=".219" stop-color="#8E5A35"/><stop offset=".234" stop-color="#8F5A35"/><stop offset=".25" stop-color="#8F5B35"/><stop offset=".266" stop-color="#905B36"/><stop offset=".281" stop-color="#905C36"/><stop offset=".297" stop-color="#915C36"/><stop offset=".313" stop-color="#915C36"/><stop offset=".328" stop-color="#915D36"/><stop offset=".344" stop-color="#925D37"/><stop offset=".359" stop-color="#925E37"/><stop offset=".375" stop-color="#925E37"/><stop offset=".391" stop-color="#935F37"/><stop offset=".406" stop-color="#945F38"/><stop offset=".422" stop-color="#946038"/><stop offset=".438" stop-color="#946038"/><stop offset=".469" stop-color="#956138"/><stop offset=".484" stop-color="#956239"/><stop offset=".5" stop-color="#966239"/><stop offset=".531" stop-color="#976239"/><stop offset=".563" stop-color="#97633A"/><stop offset=".594" stop-color="#98643A"/><stop offset=".625" stop-color="#99653B"/><stop offset=".641" stop-color="#9A663B"/><stop offset=".656" stop-color="#9A663B"/><stop offset=".688" stop-color="#9B673C"/><stop offset=".703" stop-color="#9C683C"/><stop offset=".719" stop-color="#9C683C"/><stop offset=".75" stop-color="#9D693D"/><stop offset=".766" stop-color="#9D6A3D"/><stop offset=".781" stop-color="#9E6A3E"/><stop offset=".813" stop-color="#9F6B3E"/><stop offset=".828" stop-color="#9F6C3F"/><stop offset=".844" stop-color="#A06C3F"/><stop offset=".859" stop-color="#A06D3F"/><stop offset=".875" stop-color="#A16D40"/><stop offset=".906" stop-color="#A16E40"/><stop offset=".922" stop-color="#A26F40"/><stop offset=".938" stop-color="#A26F41"/><stop offset=".953" stop-color="#A37041"/><stop offset=".969" stop-color="#A37041"/><stop offset=".984" stop-color="#A47141"/><stop offset="1" stop-color="#A47142"/></linearGradient><linearGradient id="j" x1="-.01" x2="1" y1="0" y2="0" gradientTransform="matrix(0 -25.54537 -25.54537 0 306.559 453.913)" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#895331"/><stop offset=".016" stop-color="#895331"/><stop offset=".031" stop-color="#895432"/><stop offset=".047" stop-color="#895432"/><stop offset=".063" stop-color="#8A5532"/><stop offset=".078" stop-color="#8A5532"/><stop offset=".094" stop-color="#8B5633"/><stop offset=".109" stop-color="#8B5633"/><stop offset=".125" stop-color="#8C5733"/><stop offset=".156" stop-color="#8C5733"/><stop offset=".188" stop-color="#8D5834"/><stop offset=".219" stop-color="#8E5934"/><stop offset=".234" stop-color="#8F5A35"/><stop offset=".25" stop-color="#8F5B35"/><stop offset=".266" stop-color="#8F5B35"/><stop offset=".281" stop-color="#905B36"/><stop offset=".297" stop-color="#905C36"/><stop offset=".313" stop-color="#915C36"/><stop offset=".328" stop-color="#915D36"/><stop offset=".344" stop-color="#925D37"/><stop offset=".359" stop-color="#925D37"/><stop offset=".375" stop-color="#925E37"/><stop offset=".391" stop-color="#935F37"/><stop offset=".406" stop-color="#935F37"/><stop offset=".422" stop-color="#946038"/><stop offset=".438" stop-color="#946038"/><stop offset=".469" stop-color="#956138"/><stop offset=".484" stop-color="#956139"/><stop offset=".5" stop-color="#966239"/><stop offset=".531" stop-color="#966239"/><stop offset=".563" stop-color="#97633A"/><stop offset=".594" stop-color="#98643A"/><stop offset=".625" stop-color="#99653B"/><stop offset=".641" stop-color="#9A663B"/><stop offset=".656" stop-color="#9A663B"/><stop offset=".688" stop-color="#9B673C"/><stop offset=".703" stop-color="#9B673C"/><stop offset=".719" stop-color="#9C683C"/><stop offset=".75" stop-color="#9D693D"/><stop offset=".766" stop-color="#9D6A3D"/><stop offset=".781" stop-color="#9E6A3E"/><stop offset=".813" stop-color="#9F6B3E"/><stop offset=".828" stop-color="#9F6C3F"/><stop offset=".844" stop-color="#A06C3F"/><stop offset=".859" stop-color="#A06D3F"/><stop offset=".875" stop-color="#A16D40"/><stop offset=".906" stop-color="#A16D40"/><stop offset=".922" stop-color="#A26F40"/><stop offset=".938" stop-color="#A26F41"/><stop offset=".953" stop-color="#A37041"/><stop offset=".969" stop-color="#A37041"/><stop offset=".984" stop-color="#A47141"/><stop offset="1" stop-color="#A47142"/></linearGradient><linearGradient id="m" x1="-.01" x2="1" y1="0" y2="0" gradientTransform="matrix(0 -25.54537 -25.54537 0 353.663 412.574)" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#895331"/><stop offset=".016" stop-color="#895331"/><stop offset=".031" stop-color="#895432"/><stop offset=".047" stop-color="#895432"/><stop offset=".063" stop-color="#8A5532"/><stop offset=".078" stop-color="#8A5532"/><stop offset=".094" stop-color="#8B5633"/><stop offset=".109" stop-color="#8B5633"/><stop offset=".125" stop-color="#8C5733"/><stop offset=".156" stop-color="#8C5733"/><stop offset=".188" stop-color="#8D5834"/><stop offset=".219" stop-color="#8E5934"/><stop offset=".234" stop-color="#8F5A35"/><stop offset=".25" stop-color="#8F5B35"/><stop offset=".266" stop-color="#8F5B35"/><stop offset=".281" stop-color="#905B36"/><stop offset=".297" stop-color="#905C36"/><stop offset=".313" stop-color="#915C36"/><stop offset=".328" stop-color="#915D36"/><stop offset=".344" stop-color="#925D37"/><stop offset=".359" stop-color="#925D37"/><stop offset=".375" stop-color="#925E37"/><stop offset=".391" stop-color="#935F37"/><stop offset=".406" stop-color="#935F37"/><stop offset=".422" stop-color="#946038"/><stop offset=".438" stop-color="#946038"/><stop offset=".469" stop-color="#956138"/><stop offset=".484" stop-color="#956139"/><stop offset=".5" stop-color="#966239"/><stop offset=".531" stop-color="#966239"/><stop offset=".563" stop-color="#97633A"/><stop offset=".594" stop-color="#98643A"/><stop offset=".625" stop-color="#99653B"/><stop offset=".641" stop-color="#9A663B"/><stop offset=".656" stop-color="#9A663B"/><stop offset=".688" stop-color="#9B673C"/><stop offset=".703" stop-color="#9B673C"/><stop offset=".719" stop-color="#9C683C"/><stop offset=".75" stop-color="#9D693D"/><stop offset=".766" stop-color="#9D6A3D"/><stop offset=".781" stop-color="#9E6A3E"/><stop offset=".813" stop-color="#9F6B3E"/><stop offset=".828" stop-color="#9F6C3F"/><stop offset=".844" stop-color="#A06C3F"/><stop offset=".859" stop-color="#A06D3F"/><stop offset=".875" stop-color="#A16D40"/><stop offset=".906" stop-color="#A16D40"/><stop offset=".922" stop-color="#A26F40"/><stop offset=".938" stop-color="#A26F41"/><stop offset=".953" stop-color="#A37041"/><stop offset=".969" stop-color="#A37041"/><stop offset=".984" stop-color="#A47141"/><stop offset="1" stop-color="#A47142"/></linearGradient><linearGradient id="p" x1="-.01" x2="1" y1="0" y2="0" gradientTransform="matrix(0 -25.54537 -25.54537 0 465.332 433.54)" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#895331"/><stop offset=".016" stop-color="#895331"/><stop offset=".031" stop-color="#895432"/><stop offset=".047" stop-color="#895432"/><stop offset=".063" stop-color="#8A5532"/><stop offset=".078" stop-color="#8A5532"/><stop offset=".094" stop-color="#8B5633"/><stop offset=".109" stop-color="#8B5633"/><stop offset=".125" stop-color="#8C5733"/><stop offset=".156" stop-color="#8C5733"/><stop offset=".188" stop-color="#8D5834"/><stop offset=".219" stop-color="#8E5934"/><stop offset=".234" stop-color="#8F5A35"/><stop offset=".25" stop-color="#8F5B35"/><stop offset=".266" stop-color="#8F5B35"/><stop offset=".281" stop-color="#905B36"/><stop offset=".297" stop-color="#905C36"/><stop offset=".313" stop-color="#915C36"/><stop offset=".328" stop-color="#915D36"/><stop offset=".344" stop-color="#925D37"/><stop offset=".359" stop-color="#925D37"/><stop offset=".375" stop-color="#925E37"/><stop offset=".391" stop-color="#935F37"/><stop offset=".406" stop-color="#935F37"/><stop offset=".422" stop-color="#946038"/><stop offset=".438" stop-color="#946038"/><stop offset=".469" stop-color="#956138"/><stop offset=".484" stop-color="#956139"/><stop offset=".5" stop-color="#966239"/><stop offset=".531" stop-color="#966239"/><stop offset=".563" stop-color="#97633A"/><stop offset=".594" stop-color="#98643A"/><stop offset=".625" stop-color="#99653B"/><stop offset=".641" stop-color="#9A663B"/><stop offset=".656" stop-color="#9A663B"/><stop offset=".688" stop-color="#9B673C"/><stop offset=".703" stop-color="#9B673C"/><stop offset=".719" stop-color="#9C683C"/><stop offset=".75" stop-color="#9D693D"/><stop offset=".766" stop-color="#9D6A3D"/><stop offset=".781" stop-color="#9E6A3E"/><stop offset=".813" stop-color="#9F6B3E"/><stop offset=".828" stop-color="#9F6C3F"/><stop offset=".844" stop-color="#A06C3F"/><stop offset=".859" stop-color="#A06D3F"/><stop offset=".875" stop-color="#A16D40"/><stop offset=".906" stop-color="#A16D40"/><stop offset=".922" stop-color="#A26F40"/><stop offset=".938" stop-color="#A26F41"/><stop offset=".953" stop-color="#A37041"/><stop offset=".969" stop-color="#A37041"/><stop offset=".984" stop-color="#A47141"/><stop offset="1" stop-color="#A47142"/></linearGradient><linearGradient id="s" x1="-.01" x2="1" y1="0" y2="0" gradientTransform="matrix(0 -25.54537 -25.54537 0 320.288 359.015)" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#895331"/><stop offset=".016" stop-color="#895331"/><stop offset=".031" stop-color="#895432"/><stop offset=".047" stop-color="#895432"/><stop offset=".063" stop-color="#8A5532"/><stop offset=".078" stop-color="#8A5532"/><stop offset=".094" stop-color="#8B5633"/><stop offset=".109" stop-color="#8B5633"/><stop offset=".125" stop-color="#8C5633"/><stop offset=".156" stop-color="#8C5733"/><stop offset=".188" stop-color="#8D5834"/><stop offset=".219" stop-color="#8E5934"/><stop offset=".234" stop-color="#8F5A35"/><stop offset=".25" stop-color="#8F5B35"/><stop offset=".266" stop-color="#8F5B35"/><stop offset=".281" stop-color="#905B36"/><stop offset=".297" stop-color="#905C36"/><stop offset=".313" stop-color="#915C36"/><stop offset=".328" stop-color="#915D36"/><stop offset=".344" stop-color="#925D37"/><stop offset=".359" stop-color="#925D37"/><stop offset=".375" stop-color="#925E37"/><stop offset=".391" stop-color="#935F37"/><stop offset=".406" stop-color="#935F37"/><stop offset=".422" stop-color="#946038"/><stop offset=".438" stop-color="#946038"/><stop offset=".469" stop-color="#956138"/><stop offset=".484" stop-color="#956139"/><stop offset=".5" stop-color="#966239"/><stop offset=".531" stop-color="#966239"/><stop offset=".563" stop-color="#97633A"/><stop offset=".594" stop-color="#98643A"/><stop offset=".625" stop-color="#99653B"/><stop offset=".641" stop-color="#9A663B"/><stop offset=".656" stop-color="#9A663B"/><stop offset=".688" stop-color="#9B673C"/><stop offset=".703" stop-color="#9B673C"/><stop offset=".719" stop-color="#9C683C"/><stop offset=".75" stop-color="#9D693D"/><stop offset=".766" stop-color="#9D6A3D"/><stop offset=".781" stop-color="#9E6A3E"/><stop offset=".813" stop-color="#9F6B3E"/><stop offset=".828" stop-color="#9F6C3F"/><stop offset=".844" stop-color="#A06C3F"/><stop offset=".859" stop-color="#A06D3F"/><stop offset=".875" stop-color="#A16D40"/><stop offset=".906" stop-color="#A16D40"/><stop offset=".922" stop-color="#A26F40"/><stop offset=".938" stop-color="#A26F41"/><stop offset=".953" stop-color="#A37041"/><stop offset=".969" stop-color="#A37041"/><stop offset=".984" stop-color="#A47141"/><stop offset="1" stop-color="#A47142"/></linearGradient><linearGradient id="v" x1="0" x2="1" y1="0" y2="0" gradientTransform="matrix(0 -18.79952 -18.79952 0 353.792 456.158)" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#895331"/><stop offset=".016" stop-color="#895432"/><stop offset=".031" stop-color="#895432"/><stop offset=".047" stop-color="#8A5532"/><stop offset=".063" stop-color="#8A5532"/><stop offset=".078" stop-color="#8A5633"/><stop offset=".094" stop-color="#8B5633"/><stop offset=".109" stop-color="#8B5633"/><stop offset=".125" stop-color="#8C5733"/><stop offset=".156" stop-color="#8D5834"/><stop offset=".188" stop-color="#8D5934"/><stop offset=".219" stop-color="#8E5A35"/><stop offset=".234" stop-color="#8F5A35"/><stop offset=".25" stop-color="#8F5B35"/><stop offset=".266" stop-color="#905B36"/><stop offset=".281" stop-color="#905C36"/><stop offset=".297" stop-color="#915C36"/><stop offset=".313" stop-color="#915C36"/><stop offset=".328" stop-color="#915D36"/><stop offset=".344" stop-color="#925D37"/><stop offset=".359" stop-color="#925E37"/><stop offset=".375" stop-color="#925E37"/><stop offset=".391" stop-color="#935F37"/><stop offset=".406" stop-color="#945F38"/><stop offset=".422" stop-color="#946038"/><stop offset=".438" stop-color="#946038"/><stop offset=".469" stop-color="#956138"/><stop offset=".484" stop-color="#956239"/><stop offset=".5" stop-color="#966239"/><stop offset=".531" stop-color="#976239"/><stop offset=".563" stop-color="#97633A"/><stop offset=".594" stop-color="#98643A"/><stop offset=".625" stop-color="#99653B"/><stop offset=".641" stop-color="#9A663B"/><stop offset=".656" stop-color="#9A663B"/><stop offset=".688" stop-color="#9B673C"/><stop offset=".703" stop-color="#9C683C"/><stop offset=".719" stop-color="#9C683C"/><stop offset=".75" stop-color="#9D693D"/><stop offset=".766" stop-color="#9D6A3D"/><stop offset=".781" stop-color="#9E6A3E"/><stop offset=".813" stop-color="#9F6B3E"/><stop offset=".828" stop-color="#9F6C3F"/><stop offset=".844" stop-color="#A06C3F"/><stop offset=".859" stop-color="#A06D3F"/><stop offset=".875" stop-color="#A16D40"/><stop offset=".906" stop-color="#A16E40"/><stop offset=".922" stop-color="#A26F40"/><stop offset=".938" stop-color="#A26F41"/><stop offset=".953" stop-color="#A37041"/><stop offset=".969" stop-color="#A37041"/><stop offset=".984" stop-color="#A47141"/><stop offset="1" stop-color="#A47142"/></linearGradient><linearGradient id="y" x1="0" x2="1" y1="0" y2="0" gradientTransform="matrix(0 -18.79952 -18.79952 0 385.087 404.063)" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#895331"/><stop offset=".016" stop-color="#895432"/><stop offset=".031" stop-color="#895432"/><stop offset=".047" stop-color="#8A5532"/><stop offset=".063" stop-color="#8A5532"/><stop offset=".078" stop-color="#8A5633"/><stop offset=".094" stop-color="#8B5633"/><stop offset=".109" stop-color="#8B5633"/><stop offset=".125" stop-color="#8C5733"/><stop offset=".156" stop-color="#8D5834"/><stop offset=".188" stop-color="#8D5934"/><stop offset=".219" stop-color="#8E5A35"/><stop offset=".234" stop-color="#8F5A35"/><stop offset=".25" stop-color="#8F5B35"/><stop offset=".266" stop-color="#905B36"/><stop offset=".281" stop-color="#905C36"/><stop offset=".297" stop-color="#915C36"/><stop offset=".313" stop-color="#915C36"/><stop offset=".328" stop-color="#915D36"/><stop offset=".344" stop-color="#925D37"/><stop offset=".359" stop-color="#925E37"/><stop offset=".375" stop-color="#925E37"/><stop offset=".391" stop-color="#935F37"/><stop offset=".406" stop-color="#945F38"/><stop offset=".422" stop-color="#946038"/><stop offset=".438" stop-color="#946038"/><stop offset=".469" stop-color="#956138"/><stop offset=".484" stop-color="#956239"/><stop offset=".5" stop-color="#966239"/><stop offset=".531" stop-color="#976239"/><stop offset=".563" stop-color="#97633A"/><stop offset=".594" stop-color="#98643A"/><stop offset=".625" stop-color="#99653B"/><stop offset=".641" stop-color="#9A663B"/><stop offset=".656" stop-color="#9A663B"/><stop offset=".688" stop-color="#9B673C"/><stop offset=".703" stop-color="#9C683C"/><stop offset=".719" stop-color="#9C683C"/><stop offset=".75" stop-color="#9D693D"/><stop offset=".766" stop-color="#9D6A3D"/><stop offset=".781" stop-color="#9E6A3E"/><stop offset=".813" stop-color="#9F6B3E"/><stop offset=".828" stop-color="#9F6C3F"/><stop offset=".844" stop-color="#A06C3F"/><stop offset=".859" stop-color="#A06D3F"/><stop offset=".875" stop-color="#A16D40"/><stop offset=".906" stop-color="#A16E40"/><stop offset=".922" stop-color="#A26F40"/><stop offset=".938" stop-color="#A26F41"/><stop offset=".953" stop-color="#A37041"/><stop offset=".969" stop-color="#A37041"/><stop offset=".984" stop-color="#A47141"/><stop offset="1" stop-color="#A47142"/></linearGradient><linearGradient id="B" x1="0" x2="1" y1="0" y2="0" gradientTransform="matrix(0 -18.79952 -18.79952 0 319.222 404.114)" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#895331"/><stop offset=".016" stop-color="#895432"/><stop offset=".031" stop-color="#895432"/><stop offset=".047" stop-color="#8A5532"/><stop offset=".063" stop-color="#8A5532"/><stop offset=".078" stop-color="#8A5633"/><stop offset=".094" stop-color="#8B5633"/><stop offset=".109" stop-color="#8B5633"/><stop offset=".125" stop-color="#8C5733"/><stop offset=".156" stop-color="#8D5834"/><stop offset=".188" stop-color="#8D5934"/><stop offset=".219" stop-color="#8E5A35"/><stop offset=".234" stop-color="#8F5A35"/><stop offset=".25" stop-color="#8F5B35"/><stop offset=".266" stop-color="#905B36"/><stop offset=".281" stop-color="#905C36"/><stop offset=".297" stop-color="#915C36"/><stop offset=".313" stop-color="#915C36"/><stop offset=".328" stop-color="#915D36"/><stop offset=".344" stop-color="#925D37"/><stop offset=".359" stop-color="#925E37"/><stop offset=".375" stop-color="#925E37"/><stop offset=".391" stop-color="#935F37"/><stop offset=".406" stop-color="#945F38"/><stop offset=".422" stop-color="#946038"/><stop offset=".438" stop-color="#946038"/><stop offset=".469" stop-color="#956138"/><stop offset=".484" stop-color="#956239"/><stop offset=".5" stop-color="#966239"/><stop offset=".531" stop-color="#976239"/><stop offset=".563" stop-color="#97633A"/><stop offset=".594" stop-color="#98643A"/><stop offset=".625" stop-color="#99653B"/><stop offset=".641" stop-color="#9A663B"/><stop offset=".656" stop-color="#9A663B"/><stop offset=".688" stop-color="#9B673C"/><stop offset=".703" stop-color="#9C683C"/><stop offset=".719" stop-color="#9C683C"/><stop offset=".75" stop-color="#9D693D"/><stop offset=".766" stop-color="#9D6A3D"/><stop offset=".781" stop-color="#9E6A3E"/><stop offset=".813" stop-color="#9F6B3E"/><stop offset=".828" stop-color="#9F6C3F"/><stop offset=".844" stop-color="#A06C3F"/><stop offset=".859" stop-color="#A06D3F"/><stop offset=".875" stop-color="#A16D40"/><stop offset=".906" stop-color="#A16E40"/><stop offset=".922" stop-color="#A26F40"/><stop offset=".938" stop-color="#A26F41"/><stop offset=".953" stop-color="#A37041"/><stop offset=".969" stop-color="#A37041"/><stop offset=".984" stop-color="#A47141"/><stop offset="1" stop-color="#A47142"/></linearGradient><linearGradient id="E" x1="0" x2="1" y1="0" y2="0" gradientTransform="matrix(0 -15.80337 -15.80337 0 347.76 440.262)" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#895331"/><stop offset=".016" stop-color="#895432"/><stop offset=".031" stop-color="#895432"/><stop offset=".047" stop-color="#8A5532"/><stop offset=".063" stop-color="#8A5532"/><stop offset=".078" stop-color="#8A5633"/><stop offset=".094" stop-color="#8B5633"/><stop offset=".109" stop-color="#8B5633"/><stop offset=".125" stop-color="#8C5733"/><stop offset=".156" stop-color="#8D5834"/><stop offset=".188" stop-color="#8D5934"/><stop offset=".219" stop-color="#8E5A35"/><stop offset=".234" stop-color="#8F5A35"/><stop offset=".25" stop-color="#8F5B35"/><stop offset=".266" stop-color="#905B36"/><stop offset=".281" stop-color="#905C36"/><stop offset=".297" stop-color="#915C36"/><stop offset=".313" stop-color="#915C36"/><stop offset=".328" stop-color="#915D36"/><stop offset=".344" stop-color="#925D37"/><stop offset=".359" stop-color="#925E37"/><stop offset=".375" stop-color="#925E37"/><stop offset=".391" stop-color="#935F37"/><stop offset=".406" stop-color="#945F38"/><stop offset=".422" stop-color="#946038"/><stop offset=".438" stop-color="#946038"/><stop offset=".469" stop-color="#956138"/><stop offset=".484" stop-color="#956239"/><stop offset=".5" stop-color="#966239"/><stop offset=".531" stop-color="#976239"/><stop offset=".563" stop-color="#97633A"/><stop offset=".594" stop-color="#98643A"/><stop offset=".625" stop-color="#99653B"/><stop offset=".641" stop-color="#9A663B"/><stop offset=".656" stop-color="#9A663B"/><stop offset=".688" stop-color="#9B673C"/><stop offset=".703" stop-color="#9C683C"/><stop offset=".719" stop-color="#9C683C"/><stop offset=".75" stop-color="#9D693D"/><stop offset=".766" stop-color="#9D6A3D"/><stop offset=".781" stop-color="#9E6A3E"/><stop offset=".813" stop-color="#9F6B3E"/><stop offset=".828" stop-color="#9F6C3F"/><stop offset=".844" stop-color="#A06C3F"/><stop offset=".859" stop-color="#A06D3F"/><stop offset=".875" stop-color="#A16D40"/><stop offset=".906" stop-color="#A16E40"/><stop offset=".922" stop-color="#A26F40"/><stop offset=".938" stop-color="#A26F41"/><stop offset=".953" stop-color="#A37041"/><stop offset=".969" stop-color="#A37041"/><stop offset=".984" stop-color="#A47141"/><stop offset="1" stop-color="#A47142"/></linearGradient><linearGradient id="H" x1="-.02" x2="1" y1="0" y2="0" gradientTransform="matrix(0 -22.96647 -22.96647 0 386.462 502.109)" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#895331"/><stop offset=".031" stop-color="#895432"/><stop offset=".047" stop-color="#895432"/><stop offset=".063" stop-color="#8A5532"/><stop offset=".078" stop-color="#8A5532"/><stop offset=".094" stop-color="#8A5532"/><stop offset=".109" stop-color="#8B5633"/><stop offset=".125" stop-color="#8B5633"/><stop offset=".133" stop-color="#8C5733"/><stop offset=".141" stop-color="#8C5733"/><stop offset=".156" stop-color="#8C5733"/><stop offset=".172" stop-color="#8D5834"/><stop offset=".188" stop-color="#8D5834"/><stop offset=".203" stop-color="#8D5934"/><stop offset=".219" stop-color="#8E5934"/><stop offset=".234" stop-color="#8E5A35"/><stop offset=".242" stop-color="#8F5A35"/><stop offset=".25" stop-color="#8F5B35"/><stop offset=".266" stop-color="#8F5B35"/><stop offset=".281" stop-color="#905B36"/><stop offset=".297" stop-color="#905C36"/><stop offset=".313" stop-color="#915C36"/><stop offset=".328" stop-color="#915C36"/><stop offset=".344" stop-color="#915D36"/><stop offset=".359" stop-color="#925D37"/><stop offset=".375" stop-color="#925E37"/><stop offset=".383" stop-color="#925E37"/><stop offset=".391" stop-color="#935E37"/><stop offset=".406" stop-color="#935F37"/><stop offset=".422" stop-color="#945F38"/><stop offset=".438" stop-color="#946038"/><stop offset=".453" stop-color="#946038"/><stop offset=".469" stop-color="#956138"/><stop offset=".484" stop-color="#956139"/><stop offset=".5" stop-color="#966239"/><stop offset=".516" stop-color="#966239"/><stop offset=".531" stop-color="#976239"/><stop offset=".547" stop-color="#97633A"/><stop offset=".563" stop-color="#97633A"/><stop offset=".578" stop-color="#98643A"/><stop offset=".594" stop-color="#99643A"/><stop offset=".609" stop-color="#99653B"/><stop offset=".625" stop-color="#99653B"/><stop offset=".641" stop-color="#99663B"/><stop offset=".656" stop-color="#9A663B"/><stop offset=".672" stop-color="#9B673C"/><stop offset=".688" stop-color="#9B673C"/><stop offset=".703" stop-color="#9B673C"/><stop offset=".719" stop-color="#9C683C"/><stop offset=".734" stop-color="#9D693D"/><stop offset=".75" stop-color="#9D693D"/><stop offset=".766" stop-color="#9D6A3D"/><stop offset=".781" stop-color="#9E6A3E"/><stop offset=".797" stop-color="#9F6B3E"/><stop offset=".813" stop-color="#9F6B3E"/><stop offset=".828" stop-color="#9F6C3F"/><stop offset=".844" stop-color="#A06C3F"/><stop offset=".859" stop-color="#A06D3F"/><stop offset=".875" stop-color="#A16D3F"/><stop offset=".891" stop-color="#A16D40"/><stop offset=".906" stop-color="#A26E40"/><stop offset=".922" stop-color="#A26F40"/><stop offset=".93" stop-color="#A26F40"/><stop offset=".938" stop-color="#A27041"/><stop offset=".953" stop-color="#A37041"/><stop offset=".969" stop-color="#A37041"/><stop offset=".984" stop-color="#A47141"/><stop offset=".992" stop-color="#A47141"/><stop offset="1" stop-color="#A47142"/></linearGradient><linearGradient id="K" x1="0" x2="1" y1="0" y2="0" gradientTransform="matrix(0 -15.62803 -15.62803 0 411.076 318.294)" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#895331"/><stop offset=".016" stop-color="#895432"/><stop offset=".031" stop-color="#895432"/><stop offset=".047" stop-color="#8A5532"/><stop offset=".063" stop-color="#8A5532"/><stop offset=".078" stop-color="#8A5633"/><stop offset=".094" stop-color="#8B5633"/><stop offset=".109" stop-color="#8B5633"/><stop offset=".125" stop-color="#8C5733"/><stop offset=".156" stop-color="#8D5834"/><stop offset=".188" stop-color="#8D5934"/><stop offset=".219" stop-color="#8E5A35"/><stop offset=".234" stop-color="#8F5A35"/><stop offset=".25" stop-color="#8F5B35"/><stop offset=".266" stop-color="#905B36"/><stop offset=".281" stop-color="#905C36"/><stop offset=".297" stop-color="#915C36"/><stop offset=".313" stop-color="#915C36"/><stop offset=".328" stop-color="#915D36"/><stop offset=".344" stop-color="#925D37"/><stop offset=".359" stop-color="#925E37"/><stop offset=".375" stop-color="#925E37"/><stop offset=".391" stop-color="#935F37"/><stop offset=".406" stop-color="#945F38"/><stop offset=".422" stop-color="#946038"/><stop offset=".438" stop-color="#946038"/><stop offset=".469" stop-color="#956138"/><stop offset=".484" stop-color="#956239"/><stop offset=".5" stop-color="#966239"/><stop offset=".531" stop-color="#976239"/><stop offset=".563" stop-color="#97633A"/><stop offset=".594" stop-color="#98643A"/><stop offset=".625" stop-color="#99653B"/><stop offset=".641" stop-color="#9A663B"/><stop offset=".656" stop-color="#9A663B"/><stop offset=".688" stop-color="#9B673C"/><stop offset=".703" stop-color="#9C683C"/><stop offset=".719" stop-color="#9C683C"/><stop offset=".75" stop-color="#9D693D"/><stop offset=".766" stop-color="#9D6A3D"/><stop offset=".781" stop-color="#9E6A3E"/><stop offset=".813" stop-color="#9F6B3E"/><stop offset=".828" stop-color="#9F6C3F"/><stop offset=".844" stop-color="#A06C3F"/><stop offset=".859" stop-color="#A06D3F"/><stop offset=".875" stop-color="#A16D40"/><stop offset=".906" stop-color="#A16E40"/><stop offset=".922" stop-color="#A26F40"/><stop offset=".938" stop-color="#A26F41"/><stop offset=".953" stop-color="#A37041"/><stop offset=".969" stop-color="#A37041"/><stop offset=".984" stop-color="#A47141"/><stop offset="1" stop-color="#A47142"/></linearGradient><linearGradient id="N" x1="0" x2="1" y1="0" y2="0" gradientTransform="matrix(0 -21.9001 -21.9001 0 424.386 426.014)" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#895331"/><stop offset=".016" stop-color="#895432"/><stop offset=".031" stop-color="#895432"/><stop offset=".047" stop-color="#8A5532"/><stop offset=".063" stop-color="#8A5532"/><stop offset=".078" stop-color="#8A5633"/><stop offset=".094" stop-color="#8B5633"/><stop offset=".109" stop-color="#8B5633"/><stop offset=".125" stop-color="#8C5733"/><stop offset=".156" stop-color="#8D5834"/><stop offset=".188" stop-color="#8D5934"/><stop offset=".219" stop-color="#8E5A35"/><stop offset=".234" stop-color="#8F5A35"/><stop offset=".25" stop-color="#8F5B35"/><stop offset=".266" stop-color="#905B36"/><stop offset=".281" stop-color="#905C36"/><stop offset=".297" stop-color="#915C36"/><stop offset=".313" stop-color="#915C36"/><stop offset=".328" stop-color="#915D36"/><stop offset=".344" stop-color="#925D37"/><stop offset=".359" stop-color="#925E37"/><stop offset=".375" stop-color="#925E37"/><stop offset=".391" stop-color="#935F37"/><stop offset=".406" stop-color="#945F38"/><stop offset=".422" stop-color="#946038"/><stop offset=".438" stop-color="#946038"/><stop offset=".469" stop-color="#956138"/><stop offset=".484" stop-color="#956239"/><stop offset=".5" stop-color="#966239"/><stop offset=".531" stop-color="#976239"/><stop offset=".563" stop-color="#97633A"/><stop offset=".594" stop-color="#98643A"/><stop offset=".625" stop-color="#99653B"/><stop offset=".641" stop-color="#9A663B"/><stop offset=".656" stop-color="#9A663B"/><stop offset=".688" stop-color="#9B673C"/><stop offset=".703" stop-color="#9C683C"/><stop offset=".719" stop-color="#9C683C"/><stop offset=".75" stop-color="#9D693D"/><stop offset=".766" stop-color="#9D6A3D"/><stop offset=".781" stop-color="#9E6A3E"/><stop offset=".813" stop-color="#9F6B3E"/><stop offset=".828" stop-color="#9F6C3F"/><stop offset=".844" stop-color="#A06C3F"/><stop offset=".859" stop-color="#A06D3F"/><stop offset=".875" stop-color="#A16D40"/><stop offset=".906" stop-color="#A16E40"/><stop offset=".922" stop-color="#A26F40"/><stop offset=".938" stop-color="#A26F41"/><stop offset=".953" stop-color="#A37041"/><stop offset=".969" stop-color="#A37041"/><stop offset=".984" stop-color="#A47141"/><stop offset="1" stop-color="#A47142"/></linearGradient><linearGradient id="Q" x1="0" x2="1" y1="0" y2="0" gradientTransform="scale(60.4915 -60.4915)rotate(90 3.7 2.367)" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#895331"/><stop offset=".016" stop-color="#895432"/><stop offset=".031" stop-color="#895432"/><stop offset=".047" stop-color="#8A5532"/><stop offset=".063" stop-color="#8A5532"/><stop offset=".078" stop-color="#8A5633"/><stop offset=".094" stop-color="#8B5633"/><stop offset=".109" stop-color="#8B5633"/><stop offset=".125" stop-color="#8C5733"/><stop offset=".156" stop-color="#8D5834"/><stop offset=".188" stop-color="#8D5934"/><stop offset=".219" stop-color="#8E5A35"/><stop offset=".234" stop-color="#8F5A35"/><stop offset=".25" stop-color="#8F5B35"/><stop offset=".266" stop-color="#905B36"/><stop offset=".281" stop-color="#905C36"/><stop offset=".297" stop-color="#915C36"/><stop offset=".313" stop-color="#915C36"/><stop offset=".328" stop-color="#915D36"/><stop offset=".344" stop-color="#925D37"/><stop offset=".359" stop-color="#925E37"/><stop offset=".375" stop-color="#925E37"/><stop offset=".391" stop-color="#935F37"/><stop offset=".406" stop-color="#945F38"/><stop offset=".422" stop-color="#946038"/><stop offset=".438" stop-color="#946038"/><stop offset=".469" stop-color="#956138"/><stop offset=".484" stop-color="#956239"/><stop offset=".5" stop-color="#966239"/><stop offset=".531" stop-color="#976239"/><stop offset=".563" stop-color="#97633A"/><stop offset=".594" stop-color="#98643A"/><stop offset=".625" stop-color="#99653B"/><stop offset=".641" stop-color="#9A663B"/><stop offset=".656" stop-color="#9A663B"/><stop offset=".688" stop-color="#9B673C"/><stop offset=".703" stop-color="#9C683C"/><stop offset=".719" stop-color="#9C683C"/><stop offset=".75" stop-color="#9D693D"/><stop offset=".766" stop-color="#9D6A3D"/><stop offset=".781" stop-color="#9E6A3E"/><stop offset=".813" stop-color="#9F6B3E"/><stop offset=".828" stop-color="#9F6C3F"/><stop offset=".844" stop-color="#A06C3F"/><stop offset=".859" stop-color="#A06D3F"/><stop offset=".875" stop-color="#A16D40"/><stop offset=".906" stop-color="#A16E40"/><stop offset=".922" stop-color="#A26F40"/><stop offset=".938" stop-color="#A26F41"/><stop offset=".953" stop-color="#A37041"/><stop offset=".969" stop-color="#A37041"/><stop offset=".984" stop-color="#A47141"/><stop offset="1" stop-color="#A47142"/></linearGradient><linearGradient id="T" x1="0" x2="1" y1="0" y2="0" gradientTransform="matrix(0 -23.02396 -23.02396 0 485.487 195.197)" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#895331"/><stop offset=".016" stop-color="#895432"/><stop offset=".031" stop-color="#895432"/><stop offset=".047" stop-color="#8A5532"/><stop offset=".063" stop-color="#8A5532"/><stop offset=".078" stop-color="#8A5633"/><stop offset=".094" stop-color="#8B5633"/><stop offset=".109" stop-color="#8B5633"/><stop offset=".125" stop-color="#8C5733"/><stop offset=".156" stop-color="#8D5834"/><stop offset=".188" stop-color="#8D5934"/><stop offset=".219" stop-color="#8E5A35"/><stop offset=".234" stop-color="#8F5A35"/><stop offset=".25" stop-color="#8F5B35"/><stop offset=".266" stop-color="#905B36"/><stop offset=".281" stop-color="#905C36"/><stop offset=".297" stop-color="#915C36"/><stop offset=".313" stop-color="#915C36"/><stop offset=".328" stop-color="#915D36"/><stop offset=".344" stop-color="#925D37"/><stop offset=".359" stop-color="#925E37"/><stop offset=".375" stop-color="#925E37"/><stop offset=".391" stop-color="#935F37"/><stop offset=".406" stop-color="#945F38"/><stop offset=".422" stop-color="#946038"/><stop offset=".438" stop-color="#946038"/><stop offset=".469" stop-color="#956138"/><stop offset=".484" stop-color="#956239"/><stop offset=".5" stop-color="#966239"/><stop offset=".531" stop-color="#976239"/><stop offset=".563" stop-color="#97633A"/><stop offset=".594" stop-color="#98643A"/><stop offset=".625" stop-color="#99653B"/><stop offset=".641" stop-color="#9A663B"/><stop offset=".656" stop-color="#9A663B"/><stop offset=".688" stop-color="#9B673C"/><stop offset=".703" stop-color="#9C683C"/><stop offset=".719" stop-color="#9C683C"/><stop offset=".75" stop-color="#9D693D"/><stop offset=".766" stop-color="#9D6A3D"/><stop offset=".781" stop-color="#9E6A3E"/><stop offset=".813" stop-color="#9F6B3E"/><stop offset=".828" stop-color="#9F6C3F"/><stop offset=".844" stop-color="#A06C3F"/><stop offset=".859" stop-color="#A06D3F"/><stop offset=".875" stop-color="#A16D40"/><stop offset=".906" stop-color="#A16E40"/><stop offset=".922" stop-color="#A26F40"/><stop offset=".938" stop-color="#A26F41"/><stop offset=".953" stop-color="#A37041"/><stop offset=".969" stop-color="#A37041"/><stop offset=".984" stop-color="#A47141"/><stop offset="1" stop-color="#A47142"/></linearGradient><linearGradient id="W" x1="-.004" x2="1" y1="0" y2="0" gradientTransform="matrix(0 -23.26566 -23.26566 0 486.27 321.031)" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#895331"/><stop offset=".016" stop-color="#895432"/><stop offset=".031" stop-color="#895432"/><stop offset=".047" stop-color="#8A5532"/><stop offset=".063" stop-color="#8A5532"/><stop offset=".078" stop-color="#8A5532"/><stop offset=".094" stop-color="#8B5633"/><stop offset=".109" stop-color="#8B5633"/><stop offset=".125" stop-color="#8C5733"/><stop offset=".156" stop-color="#8C5834"/><stop offset=".188" stop-color="#8D5934"/><stop offset=".219" stop-color="#8E5A34"/><stop offset=".234" stop-color="#8F5A35"/><stop offset=".25" stop-color="#8F5B35"/><stop offset=".266" stop-color="#8F5B35"/><stop offset=".281" stop-color="#905C36"/><stop offset=".297" stop-color="#915C36"/><stop offset=".313" stop-color="#915C36"/><stop offset=".328" stop-color="#915D36"/><stop offset=".344" stop-color="#925D37"/><stop offset=".359" stop-color="#925D37"/><stop offset=".375" stop-color="#925E37"/><stop offset=".391" stop-color="#935F37"/><stop offset=".406" stop-color="#945F38"/><stop offset=".422" stop-color="#946038"/><stop offset=".438" stop-color="#946038"/><stop offset=".469" stop-color="#956138"/><stop offset=".484" stop-color="#956139"/><stop offset=".5" stop-color="#966239"/><stop offset=".531" stop-color="#976239"/><stop offset=".563" stop-color="#97633A"/><stop offset=".594" stop-color="#98643A"/><stop offset=".625" stop-color="#99653B"/><stop offset=".641" stop-color="#9A663B"/><stop offset=".656" stop-color="#9A663B"/><stop offset=".688" stop-color="#9B673C"/><stop offset=".703" stop-color="#9C683C"/><stop offset=".719" stop-color="#9C683C"/><stop offset=".75" stop-color="#9D693D"/><stop offset=".766" stop-color="#9D6A3D"/><stop offset=".781" stop-color="#9E6A3E"/><stop offset=".813" stop-color="#9F6B3E"/><stop offset=".828" stop-color="#9F6C3F"/><stop offset=".844" stop-color="#A06C3F"/><stop offset=".859" stop-color="#A06D3F"/><stop offset=".875" stop-color="#A16D40"/><stop offset=".906" stop-color="#A16E40"/><stop offset=".922" stop-color="#A26F40"/><stop offset=".938" stop-color="#A26F41"/><stop offset=".953" stop-color="#A37041"/><stop offset=".969" stop-color="#A37041"/><stop offset=".984" stop-color="#A47141"/><stop offset="1" stop-color="#A47142"/></linearGradient><linearGradient id="Z" x1="-.004" x2="1" y1="0" y2="0" gradientTransform="matrix(0 -23.26566 -23.26566 0 439.69 328.289)" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#895331"/><stop offset=".016" stop-color="#895432"/><stop offset=".031" stop-color="#895432"/><stop offset=".047" stop-color="#8A5532"/><stop offset=".063" stop-color="#8A5532"/><stop offset=".078" stop-color="#8A5532"/><stop offset=".094" stop-color="#8B5633"/><stop offset=".109" stop-color="#8B5633"/><stop offset=".125" stop-color="#8C5733"/><stop offset=".156" stop-color="#8C5834"/><stop offset=".188" stop-color="#8D5934"/><stop offset=".219" stop-color="#8E5A34"/><stop offset=".234" stop-color="#8F5A35"/><stop offset=".25" stop-color="#8F5B35"/><stop offset=".266" stop-color="#8F5B35"/><stop offset=".281" stop-color="#905C36"/><stop offset=".297" stop-color="#915C36"/><stop offset=".313" stop-color="#915C36"/><stop offset=".328" stop-color="#915D36"/><stop offset=".344" stop-color="#925D37"/><stop offset=".359" stop-color="#925D37"/><stop offset=".375" stop-color="#925E37"/><stop offset=".391" stop-color="#935F37"/><stop offset=".406" stop-color="#945F38"/><stop offset=".422" stop-color="#946038"/><stop offset=".438" stop-color="#946038"/><stop offset=".469" stop-color="#956138"/><stop offset=".484" stop-color="#956139"/><stop offset=".5" stop-color="#966239"/><stop offset=".531" stop-color="#976239"/><stop offset=".563" stop-color="#97633A"/><stop offset=".594" stop-color="#98643A"/><stop offset=".625" stop-color="#99653B"/><stop offset=".641" stop-color="#9A663B"/><stop offset=".656" stop-color="#9A663B"/><stop offset=".688" stop-color="#9B673C"/><stop offset=".703" stop-color="#9C683C"/><stop offset=".719" stop-color="#9C683C"/><stop offset=".75" stop-color="#9D693D"/><stop offset=".766" stop-color="#9D6A3D"/><stop offset=".781" stop-color="#9E6A3E"/><stop offset=".813" stop-color="#9F6B3E"/><stop offset=".828" stop-color="#9F6C3F"/><stop offset=".844" stop-color="#A06C3F"/><stop offset=".859" stop-color="#A06D3F"/><stop offset=".875" stop-color="#A16D40"/><stop offset=".906" stop-color="#A16E40"/><stop offset=".922" stop-color="#A26F40"/><stop offset=".938" stop-color="#A26F41"/><stop offset=".953" stop-color="#A37041"/><stop offset=".969" stop-color="#A37041"/><stop offset=".984" stop-color="#A47141"/><stop offset="1" stop-color="#A47142"/></linearGradient><linearGradient id="ac" x1="0" x2="1" y1="0" y2="0" gradientTransform="matrix(0 -83.20221 -83.20221 0 318.84 325.315)" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#895331"/><stop offset=".016" stop-color="#895432"/><stop offset=".031" stop-color="#895432"/><stop offset=".047" stop-color="#8A5532"/><stop offset=".063" stop-color="#8A5532"/><stop offset=".078" stop-color="#8A5633"/><stop offset=".094" stop-color="#8B5633"/><stop offset=".109" stop-color="#8B5633"/><stop offset=".125" stop-color="#8C5733"/><stop offset=".156" stop-color="#8D5834"/><stop offset=".188" stop-color="#8D5934"/><stop offset=".219" stop-color="#8E5A35"/><stop offset=".234" stop-color="#8F5A35"/><stop offset=".25" stop-color="#8F5B35"/><stop offset=".266" stop-color="#905B36"/><stop offset=".281" stop-color="#905C36"/><stop offset=".297" stop-color="#915C36"/><stop offset=".313" stop-color="#915C36"/><stop offset=".328" stop-color="#915D36"/><stop offset=".344" stop-color="#925D37"/><stop offset=".359" stop-color="#925E37"/><stop offset=".375" stop-color="#925E37"/><stop offset=".391" stop-color="#935F37"/><stop offset=".406" stop-color="#945F38"/><stop offset=".422" stop-color="#946038"/><stop offset=".438" stop-color="#946038"/><stop offset=".469" stop-color="#956138"/><stop offset=".484" stop-color="#956239"/><stop offset=".5" stop-color="#966239"/><stop offset=".531" stop-color="#976239"/><stop offset=".563" stop-color="#97633A"/><stop offset=".594" stop-color="#98643A"/><stop offset=".625" stop-color="#99653B"/><stop offset=".641" stop-color="#9A663B"/><stop offset=".656" stop-color="#9A663B"/><stop offset=".688" stop-color="#9B673C"/><stop offset=".703" stop-color="#9C683C"/><stop offset=".719" stop-color="#9C683C"/><stop offset=".75" stop-color="#9D693D"/><stop offset=".766" stop-color="#9D6A3D"/><stop offset=".781" stop-color="#9E6A3E"/><stop offset=".813" stop-color="#9F6B3E"/><stop offset=".828" stop-color="#9F6C3F"/><stop offset=".844" stop-color="#A06C3F"/><stop offset=".859" stop-color="#A06D3F"/><stop offset=".875" stop-color="#A16D40"/><stop offset=".906" stop-color="#A16E40"/><stop offset=".922" stop-color="#A26F40"/><stop offset=".938" stop-color="#A26F41"/><stop offset=".953" stop-color="#A37041"/><stop offset=".969" stop-color="#A37041"/><stop offset=".984" stop-color="#A47141"/><stop offset="1" stop-color="#A47142"/></linearGradient><linearGradient id="af" x1="0" x2="1" y1="0" y2="0" gradientTransform="scale(46.57722 -46.57722)rotate(90 6.362 2.682)" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#895331"/><stop offset=".016" stop-color="#895432"/><stop offset=".031" stop-color="#895432"/><stop offset=".047" stop-color="#8A5532"/><stop offset=".063" stop-color="#8A5532"/><stop offset=".078" stop-color="#8A5633"/><stop offset=".094" stop-color="#8B5633"/><stop offset=".109" stop-color="#8B5633"/><stop offset=".125" stop-color="#8C5733"/><stop offset=".156" stop-color="#8D5834"/><stop offset=".188" stop-color="#8D5934"/><stop offset=".219" stop-color="#8E5A35"/><stop offset=".234" stop-color="#8F5A35"/><stop offset=".25" stop-color="#8F5B35"/><stop offset=".266" stop-color="#905B36"/><stop offset=".281" stop-color="#905C36"/><stop offset=".297" stop-color="#915C36"/><stop offset=".313" stop-color="#915C36"/><stop offset=".328" stop-color="#915D36"/><stop offset=".344" stop-color="#925D37"/><stop offset=".359" stop-color="#925E37"/><stop offset=".375" stop-color="#925E37"/><stop offset=".391" stop-color="#935F37"/><stop offset=".406" stop-color="#945F38"/><stop offset=".422" stop-color="#946038"/><stop offset=".438" stop-color="#946038"/><stop offset=".469" stop-color="#956138"/><stop offset=".484" stop-color="#956239"/><stop offset=".5" stop-color="#966239"/><stop offset=".531" stop-color="#976239"/><stop offset=".563" stop-color="#97633A"/><stop offset=".594" stop-color="#98643A"/><stop offset=".625" stop-color="#99653B"/><stop offset=".641" stop-color="#9A663B"/><stop offset=".656" stop-color="#9A663B"/><stop offset=".688" stop-color="#9B673C"/><stop offset=".703" stop-color="#9C683C"/><stop offset=".719" stop-color="#9C683C"/><stop offset=".75" stop-color="#9D693D"/><stop offset=".766" stop-color="#9D6A3D"/><stop offset=".781" stop-color="#9E6A3E"/><stop offset=".813" stop-color="#9F6B3E"/><stop offset=".828" stop-color="#9F6C3F"/><stop offset=".844" stop-color="#A06C3F"/><stop offset=".859" stop-color="#A06D3F"/><stop offset=".875" stop-color="#A16D40"/><stop offset=".906" stop-color="#A16E40"/><stop offset=".922" stop-color="#A26F40"/><stop offset=".938" stop-color="#A26F41"/><stop offset=".953" stop-color="#A37041"/><stop offset=".969" stop-color="#A37041"/><stop offset=".984" stop-color="#A47141"/><stop offset="1" stop-color="#A47142"/></linearGradient><linearGradient id="ai" x1="0" x2="1.005" y1="0" y2="0" gradientTransform="translate(310.868 413.632)scale(23.26876)" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#895331"/><stop offset=".016" stop-color="#895432"/><stop offset=".031" stop-color="#895432"/><stop offset=".047" stop-color="#8A5532"/><stop offset=".063" stop-color="#8A5532"/><stop offset=".078" stop-color="#8A5633"/><stop offset=".094" stop-color="#8B5633"/><stop offset=".109" stop-color="#8B5633"/><stop offset=".125" stop-color="#8C5733"/><stop offset=".156" stop-color="#8D5834"/><stop offset=".188" stop-color="#8D5934"/><stop offset=".219" stop-color="#8E5A35"/><stop offset=".234" stop-color="#8F5B35"/><stop offset=".25" stop-color="#8F5B35"/><stop offset=".266" stop-color="#905B36"/><stop offset=".281" stop-color="#905C36"/><stop offset=".297" stop-color="#915C36"/><stop offset=".313" stop-color="#915C36"/><stop offset=".328" stop-color="#915D36"/><stop offset=".344" stop-color="#925D37"/><stop offset=".359" stop-color="#925E37"/><stop offset=".375" stop-color="#925E37"/><stop offset=".391" stop-color="#935F37"/><stop offset=".406" stop-color="#945F38"/><stop offset=".422" stop-color="#946038"/><stop offset=".438" stop-color="#946038"/><stop offset=".469" stop-color="#956138"/><stop offset=".484" stop-color="#966239"/><stop offset=".5" stop-color="#966239"/><stop offset=".531" stop-color="#97623A"/><stop offset=".563" stop-color="#98633A"/><stop offset=".594" stop-color="#98643B"/><stop offset=".625" stop-color="#99653B"/><stop offset=".641" stop-color="#9A663B"/><stop offset=".656" stop-color="#9A663C"/><stop offset=".688" stop-color="#9B673C"/><stop offset=".703" stop-color="#9C683C"/><stop offset=".719" stop-color="#9C683D"/><stop offset=".75" stop-color="#9D693D"/><stop offset=".766" stop-color="#9E6A3D"/><stop offset=".781" stop-color="#9E6A3E"/><stop offset=".813" stop-color="#9F6B3E"/><stop offset=".828" stop-color="#9F6C3F"/><stop offset=".844" stop-color="#A06C3F"/><stop offset=".859" stop-color="#A06D3F"/><stop offset=".875" stop-color="#A16D40"/><stop offset=".906" stop-color="#A16E40"/><stop offset=".922" stop-color="#A26F40"/><stop offset=".938" stop-color="#A27041"/><stop offset=".953" stop-color="#A37041"/><stop offset=".969" stop-color="#A37041"/><stop offset=".984" stop-color="#A47141"/><stop offset="1" stop-color="#A47142"/></linearGradient><linearGradient id="al" x1="-.007" x2="1.002" y1="0" y2="0" gradientTransform="translate(386.502 339.293)scale(38.78248)" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#895331"/><stop offset=".016" stop-color="#895331"/><stop offset=".031" stop-color="#895432"/><stop offset=".047" stop-color="#8A5432"/><stop offset=".063" stop-color="#8A5532"/><stop offset=".078" stop-color="#8A5532"/><stop offset=".094" stop-color="#8B5633"/><stop offset=".109" stop-color="#8B5633"/><stop offset=".125" stop-color="#8C5733"/><stop offset=".156" stop-color="#8C5733"/><stop offset=".188" stop-color="#8D5834"/><stop offset=".219" stop-color="#8E5934"/><stop offset=".234" stop-color="#8F5A35"/><stop offset=".25" stop-color="#8F5B35"/><stop offset=".266" stop-color="#8F5B35"/><stop offset=".281" stop-color="#905C36"/><stop offset=".297" stop-color="#915C36"/><stop offset=".313" stop-color="#915C36"/><stop offset=".328" stop-color="#915D36"/><stop offset=".344" stop-color="#925D37"/><stop offset=".359" stop-color="#925D37"/><stop offset=".375" stop-color="#925E37"/><stop offset=".391" stop-color="#935F37"/><stop offset=".406" stop-color="#945F38"/><stop offset=".422" stop-color="#946038"/><stop offset=".438" stop-color="#946038"/><stop offset=".469" stop-color="#956138"/><stop offset=".484" stop-color="#956139"/><stop offset=".5" stop-color="#966239"/><stop offset=".531" stop-color="#976239"/><stop offset=".563" stop-color="#97633A"/><stop offset=".594" stop-color="#98643A"/><stop offset=".625" stop-color="#99653B"/><stop offset=".641" stop-color="#9A663B"/><stop offset=".656" stop-color="#9A663B"/><stop offset=".688" stop-color="#9B673C"/><stop offset=".703" stop-color="#9C683C"/><stop offset=".719" stop-color="#9C683C"/><stop offset=".75" stop-color="#9D693D"/><stop offset=".766" stop-color="#9D6A3D"/><stop offset=".781" stop-color="#9E6A3E"/><stop offset=".813" stop-color="#9F6B3E"/><stop offset=".828" stop-color="#9F6C3F"/><stop offset=".844" stop-color="#A06C3F"/><stop offset=".859" stop-color="#A06D3F"/><stop offset=".875" stop-color="#A16D40"/><stop offset=".906" stop-color="#A16E40"/><stop offset=".922" stop-color="#A26F40"/><stop offset=".938" stop-color="#A26F41"/><stop offset=".953" stop-color="#A37041"/><stop offset=".969" stop-color="#A37041"/><stop offset=".984" stop-color="#A47141"/><stop offset="1" stop-color="#A47142"/></linearGradient></defs><g clip-path="url(#a)"><g clip-path="url(#b)"><path fill="url(#d)" d="M509.773 260.54h-18.789v-21.536h18.79Zm0 0"/></g></g><g clip-path="url(#e)"><g clip-path="url(#f)"><path fill="url(#g)" d="M420.89 260.27h-26.46v-13.74h26.46Zm0 0"/></g></g><g clip-path="url(#h)"><g clip-path="url(#i)"><path fill="url(#j)" d="M312.676 454.176H300.44v-25.809h12.235Zm0 0"/></g></g><g clip-path="url(#k)"><g clip-path="url(#l)"><path fill="url(#m)" d="M359.781 412.836h-12.234v-25.809h12.234Zm0 0"/></g></g><g clip-path="url(#n)"><g clip-path="url(#o)"><path fill="url(#p)" d="M471.45 433.8h-12.235v-25.804h12.234Zm0 0"/></g></g><g clip-path="url(#q)"><g clip-path="url(#r)"><path fill="url(#s)" d="M326.406 359.277h-12.238V333.47h12.238Zm0 0"/></g></g><g clip-path="url(#t)"><g clip-path="url(#u)"><path fill="url(#v)" d="M372.059 456.156h-36.536V437.36h36.536Zm0 0"/></g></g><g clip-path="url(#w)"><g clip-path="url(#x)"><path fill="url(#y)" d="M403.352 404.063H366.82v-18.801h36.532Zm0 0"/></g></g><g clip-path="url(#z)"><g clip-path="url(#A)"><path fill="url(#B)" d="M337.488 404.113h-36.531v-18.8h36.531Zm0 0"/></g></g><g clip-path="url(#C)"><g clip-path="url(#D)"><path fill="url(#E)" d="M355.945 440.262h-16.37v-15.805h16.37Zm0 0"/></g></g><g clip-path="url(#F)"><g clip-path="url(#G)"><path fill="url(#H)" d="M391.71 502.574h-10.5v-23.433h10.5Zm0 0"/></g></g><g clip-path="url(#I)"><g clip-path="url(#J)"><path fill="url(#K)" d="M426.102 318.293h-30.055v-15.629h30.055Zm0 0"/></g></g><g clip-path="url(#L)"><g clip-path="url(#M)"><path fill="url(#N)" d="M429.41 426.016h-10.05v-21.903h10.05Zm0 0"/></g></g><path fill="#FFF" d="m312.055 198.09-.07-21.473c-.02-5.523 2.292-10.156 6.894-13.12l10.242-6.614c7.707 4.808 17.031 8.738 17.129 18.57l.145 15.024 7.316-.086-.11-19.493.09-43.863c.012-6.133 3.766-10.933 8.829-14.11 5.648-3.542 11.23-6.804 16.699-10.675l-.043-8.71-24.246.007-.086 8.746c2.32 1.922 4.844 3.355 7.633 5.129l-6.54 4.933-8.78-6.09.07-20.32 39.62.004-.015 20.086c-3.996 3.14-8.215 5.75-12.656 8.504 3.539 3.207 6.105 7.063 6.117 11.906l.148 71.61-7.468-.004-.036-62.5-.359-10.36c-.082-2.367-3.308-5.285-5.465-5.82-3.043.7-5.027 3.68-5.82 6.598l-.043 72.097-22.492.004-.047-23.539c-.61-2.324-2.184-3.902-4.02-5.316l-5.503-3.555c-4.262 2.723-9.7 5.43-9.692 10.23l.043 22.133Zm0 0"/><g clip-path="url(#O)"><g clip-path="url(#P)"><path fill="url(#Q)" d="M380.48 80.66h-26.925V20.172h26.925Zm0 0"/></g></g><path fill="#FFF" d="M421.27 116.992c-13.114 7.258-24.223 15.262-24.247 31.258l-.015 12.352-8.2 6.73.044-19.277c.023-11.668 5.32-21.668 14.527-28.606l4.66-3.539 13.121-7.953c7.63 3.813 14.723 8.023 20.996 13.691 3.242 2.926 5.688 6.465 7.785 10.262 2.645 4.774 3.622 10.078 3.836 15.465l-2.918 2.863-5.324 5.227-.023-9.012c-.032-14.176-12.328-23.566-24.242-29.46"/><g clip-path="url(#R)"><g clip-path="url(#S)"><path fill="url(#T)" d="M509.191 195.2h-47.406v-23.028h47.406Zm0 0"/></g></g><g clip-path="url(#U)"><g clip-path="url(#V)"><path fill="url(#W)" d="M497.383 321.117h-22.227v-23.351h22.227Zm0 0"/></g></g><g clip-path="url(#X)"><g clip-path="url(#Y)"><path fill="url(#Z)" d="M450.8 328.371h-22.222v-23.348h22.223Zm0 0"/></g></g><path fill="#FFF" d="M493.594 269.355c7.562 2.407 15.011 3.286 22.875 3.633l-6.387 10.48c-5.223-.78-10.21-.835-15.289.4-3.125.76-5.988 1.519-8.961 2.788l-16.121 6.875c-6.727 2.867-17.152 4.91-23.824 2.36-6.86-2.625-7.903-9.996-7.926-17.13l-.09-27.284c3.145-.793 5.629-2.247 8.336-4.516l.063 31.789c.171 3.836 2.652 6.57 6.566 6.824 6.848.442 13.723-.683 20.172-3.14l11.586-4.422c-5.246-2.684-10.223-4.985-15.703-6.52-3.961-1.113-8.176-.73-11.512 1.59-1.016.703-1.91 1.398-3.18.629 3.399-8.008 7.664-14.89 16.992-12.922 3.301.7 6.27 2.047 9.407 3.313ZM368.79 244.094l-3.231 5.437c-.207.348-.649.485-.88.465-.421-.039-.718-.484-.53-1.121 1.39-4.766 3.726-8.96 6.433-13.078l3.816-5.797c.29-.441.196-1.05-.046-1.36-.77-.984-5.356.364-8.024 1.551-6.945 3.082-13.562 6.391-20.793 8.864-11.258 3.84-28.8 5.89-38.277-.907-10.395-7.46-7.332-21.097-2.176-31.64.406-.828 1.457-1.223 2.14-1.004-.066 2.047-.804 3.57-1.324 5.32-2.164 7.281-.632 14.281 6.18 17.492 2.563 1.211 5.121 2.008 7.957 2.38 17.254 2.253 32.93-3.88 48.598-10.657 2.937-1.27 5.793-2.39 8.988-2.434 2.504-.035 4.3 1.5 4.352 4 .047 2.489-.836 4.708-2.157 6.778l-3.87 6.054Zm0 0"/><path fill="#FFF" d="M353.691 212.008c-1.753 2.937-4.02 5.054-6.144 7.71l-7.735-6.73-5.519 6.707-8.285-6.972 6.058-7.547c2.801 2.133 5.414 4.183 7.997 6.726l5.73-6.879 4.18 3.497Zm123.567 274.66 8.734 7.117-6.48 7.953-8.735-7.113Zm-46.824-9.941c-.512 1.878-1.043 3.582-2.622 4.796-.003-6.07-.347-11.695-2.464-17.218-4.32-11.282-13.598-22.082-21.254-31.516l-8.328-11.523c-1.668-2.305-3.036-4.653-5.07-6.793l.827-12.473 4.633 3.637 13.008 10.375c-2.098.52-3.937.035-5.75.133 3.024 5.007 6.43 9.046 9.969 13.343 11.043 13.414 22.004 29.106 17.05 47.239m33.059-177.981 8.43 7.055-6.54 7.812-8.429-7.054ZM344.04 328.828l8.433 7.055-6.54 7.812-8.433-7.054Zm0 0"/><path fill="#FFF" d="M405.684 497.867c10.964-6.09 27.738-14.379 31.824-26.586 1.765-5.273 2.402-10.687 2.418-16.355l.125-48.875 8.054-8.73.008 60.761c0 7.223.43 13.95 7.48 14.742 10.22 1.149 23.075-3.539 32.438-8.176l-21.082-3.28c-3.625-.567-7.008-.513-10.707.362l2.801-6.484c1.273-2.95 3.719-4.27 6.809-4.953l13.007-2.867c3.832-.844 3.407-5.969 3.215-10.852l-1.46-37.707c-.067-1.773.015-2.492 1.027-4.027l5.16-7.813 5.625 18.664c.543 1.805 1.195 3.426 1.168 5.375l-4.387-3.492.297 20.43-.402 8.789c-.286 6.258-3.012 11.789-7.446 16.398 13.297 3.82 26.489 5.72 39.989 5.77l-6.266 10.418c-8.14-.984-16.09-.234-23.59 3.023l-19.945 8.676c-6.137 2.668-12.664 3.695-19.266 2.746-5.406-.77-9.265-4.476-10.867-9.926l-4.988 11.797c-5.555 10.067-13.286 13.36-24.399 14.883l-11.992 1.64c-.383.055-.879-.023-.914-.343-.023-.195-.008-.523.336-.715Zm0 0"/><path fill="#FFF" d="m507.707 453.453-7.695-.992-1.63-50.223-.523-7.097 6.59-10.45 6.34 22.13c.418 1.452.91 2.702.816 4.386l-4.793-3.879Zm-7.539 38.766c-.523.758-1.258 1.39-2.094.898 1.156-6.094 2.004-12.242 1.938-18.402l6.847-.848c-.793 6.59-2.82 12.758-6.691 18.352m-64.645-304.473-6.57 7.879c-2.621-2.262-4.824-4.594-7.73-6.54l-5.668 6.52-8.176-7.125 6.11-7.488 3.25 2.578c1.616 1.285 3.183 2.375 4.679 4.067l5.781-6.668Zm76.579 185.477-6.176 8.195c-2.73-2.133-5.043-4.356-8.04-6.156l-5.343 6.789-8.516-6.719 5.739-7.781 3.37 2.418c1.68 1.203 3.298 2.219 4.872 3.832l5.453-6.938Zm0 0"/><path fill="#FFF" d="M420.266 228.707c-2.899-1.625-5.192-3.883-7.051-6.516-2.27-3.222 1.3-6.59 6.015-8.273 4.004-1.434 7.016 2.172 8.395 6.285 1.445 4.32-3.004 6.586-7.36 8.504m79.762-13.25-13.55-5.594c-7.47-3.082-15.543-6.902-21.575.875-1.945 2.508-3.492 5.32-4.52 8.426-.179.535 1.118.621 1.563.285 3.828-2.922 8.692-3.68 13.368-2.265 5.328 1.609 10.117 3.957 15.355 6.504l-10.746 4.144c-6.516 2.102-19.305 5.586-23.469 1.414-3.23-3.234-2.793-12.797-2.793-18.387l-.008-30.918-.152-25.023-8.387 8.508-.015 51.742-.235 8.82c-.18 6.907-9.168 8.38-16.172 6.227 5.442-6.66 6.7-15.41 2.829-22.817-2.098-4.023-7.192-5.378-11.086-3.21-4.559 2.535-7.766 6.605-9.98 11.234-2.485 5.2-3.923 10.094-1.208 15.281l-6.027.336c-2.106-.203-4.387-1.078-5.332-3.074-.762-1.617-.848-3.445-.852-5.371l-.07-54.895-8.219 7.438.047 48.539.453 5.824c.27 3.445 1.613 6.879 4.117 9.34 6.047 5.933 17.328 3.523 24.957-.09 4.082 1.586 7.875 2.914 12.11 3.434 8.375 1.023 13.25-1.004 16.765-9.106 1.746 4.984 5.547 8.649 10.895 9.004 6.828.457 13.246-1.164 19.515-3.8l16.477-6.93c6.879-2.543 13.996-3.32 21.277-2.02l6.457-10.496c-7.55-.176-14.707-1.04-21.789-3.379m-92.398 63.523c.621-1.8 1.816-3.574 3.348-4.777 2.722-2.14 6.27-1.07 8.398 1.531 2.352 2.875 3.2 6.504 3.078 10.332-5.578-1.343-10.523-3.324-14.824-7.086m-40.254-.011-3.598-3.32-5.062-5.012c5.176-1.196 10.062-1.938 15.11-.75 1.073.25 3.09.879 3.046 2.172-.05 1.566-1.969 2.742-3.285 3.472Zm52.352-15.672c-2.395-.79-4.91.094-6.993 1.344-3.05 1.832-4.945 4.664-6.96 7.55l-6.243 8.961c-4.445 6.38-18.011 5.848-25.383 1.942 7.137-5.051 11.301-7.934 12.094-17.035-1.234-2.18-3.148-3.442-5.43-4.301-10.109-3.817-22.269-1.621-32.117 2.453l-3.465 10.875c3.344-1.176 6.286-.649 8.817 1.476 1.918 1.13 3.488 3.27 4.894 4.942.305.363 1.559 1.328 1.032 1.816-8.309 5.89-14.004 14.64-14.875 24.836-.407 4.719.261 9.23 2.722 13.258 5.762 9.438 18.07 11.434 28.676 9.816l9.211-6.187-.844-4.773c-9.605 1.14-21.035 1.226-28.855-3.887-3.531-2.313-5.586-5.98-5.227-10.36.73-8.972 7.301-13.925 15.04-17.613 5.366 5.664 12.21 7.953 19.519 8.594 7.144.629 13.558-2.434 16.832-9.176 5.598 4.91 12.367 7.797 19.851 8.817 3.184-2.485 5.606-5.645 6.926-9.508 1.867-8.192-1.347-21.246-9.222-23.84M391.68 462.89c2.914-3.081 4.472-6.675 4.148-11.05l7.293 6.32c2.297 1.992 4.852 7.453 3.992 8.766-1.066 1.637-11.515-1.797-15.433-4.035m-1.254-6.13c-.778 1.497-2.528 2.055-4.153 2.926-4.941-1.707-9.203-6.324-6.476-10.035 1.308-1.78 3.433-3.203 5.629-3.62 3.476-.665 7.562 5.773 5 10.73m-37.293 19.18c1.133-.684 2.555-1.645 3.828-1.274 4.379 1.27 8.016 4.633 9.629 9.031-3.84 1.48-10.184-4.515-13.457-7.758m-45.59-3.539c-.195-.57.102-1.425.605-1.918 1.512-1.87 3.649-2.886 5.52-4.398l8.512-5.617 1.12 12.77c-4.519 1.554-15.097 1.097-15.757-.837m98.527-24.64-12.507-10.16-7.918-8.032c-.422-.433-.454-1.367-1.45-1.675l-2.96 8.644c.37 1.11 1.136 1.832 1.992 2.922-4.356 3.91-7.141 8.695-8.559 14.285-.645 2.555-.809 4.918-.078 7.602-4.457-.168-8.383.418-12.457 1.5-6.82 1.812-10.375 6.593-14.336 12.23-1.738 2.473-4.383 4.156-7.36 4.633-7.695 1.226-9.5-7.64-10.015-14.844l-1.82-25.449-7.743 8.55.809 6.532-8.922 6.04c-6.246 4.23-10.625 10.683-12.055 18.14-.367 1.914.176 3.5 2.122 4.433 4.144 1.989 9.035 2.598 13.804 1.742 3.98-.714 5.387-5.558 7.04-9.175.753 5.504 2.757 10.23 7.34 13.215 3.245 2.117 7.847 2.523 11.413 1.027 2.664-1.117 4.149-3.512 5.777-5.742 4.2 5.386 11.766 11.015 18.387 10.746 6.047-6.446 8.582-15.754 2.649-22.953 4.664-.055 8.66-.602 12.699-2.157l6.863 3.414c5.219 2.598 10.84 3.864 16.695 3.98 8.047-8.722 9.38-21.07.59-29.448"/><g clip-path="url(#aa)"><g clip-path="url(#ab)"><path fill="url(#ac)" d="M336.426 325.316h-35.172v-83.203h35.172Zm0 0"/></g></g><g clip-path="url(#ad)"><g clip-path="url(#ae)"><path fill="url(#af)" d="M438.863 171.406h-35.156v-46.574h35.156Zm0 0"/></g></g><path fill="#FFF" d="M462.586 348.02c-1.145-1.844.879-4.032 2.434-4.81 5.601-2.776 9.093 4.923 11.449 8.708-2.781.293-12.461-1.61-13.883-3.898m37.047-31.848-4.192 11.457c1.903 4.848 4.696 9.621 6.215 14.613 1.07 3.524 1.149 3.504-2.125 5.195-1.945 1.004-12.094 4.274-13.71 3.723-1.134-2.176-1.696-4.8-2.723-7.144-3.356-7.672-10.368-17.114-19.368-10.121-5.55 4.312-11.238 19.3-5.117 24.753 4.707 4.192 15.528 4.29 21.504 4.22.258 2.624-2.246 4.714-4.008 6.39-5.902 5.597-18.863 14.262-26.87 15.449-13.876 2.059-16.872-9.707-13.333-20.805l-2.484-.668c-3.031 9.844-6.152 27.192 5.953 32.168 14.105 5.797 36.273-12.007 42.754-23.773 1.656-3 2.445-5.984 3.605-9.164 10.875-2.293 18.543-4.664 21.567-16.375 2.8-10.848-2.258-20.871-7.668-29.918"/><path fill="#FFF" d="M368.742 360.645c-1.672-.02-6.722-6.036-6.722-7.72 0-2.355 5.453-5.76 7.546-5.948 3.106-.274 6.82 5.863 6.641 8.488-.117 1.785-6.055 5.195-7.465 5.18m66.91 14.578c4.72-.52 7.137-3.868 8.965-7.895 2.75-6.066 3.082-11.129 1.11-17.504-.454-1.46-1.817-5.426-3.29-5.828-1.218 3.281-4.792 8.125-3.94 11.602.405 1.656 3.16 6.183 3.042 7.515-4.059 2.356-12.902-1.86-13.117-6.562-.059-1.238 1.746-6.43 1.066-7.09-3.965-.082-5.238 5.617-7.004 8.504-2.55 4.168-6.12 7.293-11.379 6.781-2.835-.273-5.894-2.113-6.035-5.277-.074-1.637 2.883-6.52-.148-6.274-1.86.157-6.426 6.63-8.461 8.297-6.121 5.012-12.441 4.469-19.875 3.29 5.387-6.567 7.648-15.884 3.46-23.704-4.687-8.762-13.116-4.027-17.679 2.008-4.043 5.348-7.789 14.902-3.297 20.789-.289.457-.718.488-1.16.656-13.469 5.121-58.265 10.239-56.469-13.422.215-2.828 2.485-7.254 2.461-9.203-.011-1.164-1.047-1.543-1.902-.445-7.254 9.312-9.215 26.555 1.863 33.848 15.723 10.347 46.39 3.691 62.7-3.45 10.328 7.133 25.738 7.739 33.195-3.789 3.34 12.582 18.336 9.13 23.351-.363l4.07 4.313c1.786 1.214 3.684 2.539 5.962 2.62l2.484.669q.011-.044.027-.086"/><g clip-path="url(#ag)"><g clip-path="url(#ah)"><path fill="url(#ai)" d="M310.867 402.805v21.652h23.387v-21.652Zm0 0"/></g></g><g clip-path="url(#aj)"><g clip-path="url(#ak)"><path fill="url(#al)" d="M386.246 328.996v20.887h39.121v-20.887Zm0 0"/></g></g><path fill="#FFF" d="M154.625 538.941v5.86c0 1.437-.305 2.57-.918 3.386q-.917 1.229-2.7 1.227-.685.002-1.44-.309l-.426-2.21.148-.13a6.7 6.7 0 0 0 1.703.227c.914 0 1.375-.59 1.375-1.765v-6.286Zm5.711 4.321v2.242l-.16.18h-3.668v-12.278h2.289v9.66h1.379Zm0 0"/><path fill="#FFF" d="M160.176 543.066h3.172q.327-.002.328.325v1.964q0 .33-.328.329h-3.172q-.328 0-.328-.329v-1.964c0-.22.109-.325.328-.325"/><path fill="#FFF" d="M163.348 543.066h3.175q.33-.002.329.325v1.964q0 .33-.329.329h-3.175q-.324 0-.325-.329v-1.964c0-.22.11-.325.325-.325"/><path fill="#FFF" d="M173.906 540.332q-.915-.229-2.191-.23-.64-.001-1.262.05c.274 1.035.8 1.887 1.59 2.551q1.306-1.013 1.863-2.371m3.29 3.027v2.063l-.16.262h-1.524q-1.934 0-3.602-.868-1.782.868-4.648.868h-.739l-.16-.227v-2.098l.16-.293h1.559q1.06 0 1.621-.035-.79-.948-1.328-2.57l-.703.164-.149-.129.165-2.195q2.406-.67 4.19-.672 1.535 0 3.767.558l.324 2.52a7.3 7.3 0 0 1-1.602 2.375l.504-.016h2.164Zm0 0"/><path fill="#FFF" d="M177.035 543.066h3.172q.328-.002.328.325v1.964q0 .33-.328.329h-3.172q-.328 0-.328-.329v-1.964c0-.22.11-.325.328-.325"/><path fill="#FFF" d="M180.21 543.066h3.173q.328-.002.328.325v1.964q0 .33-.328.329h-3.172q-.328 0-.328-.329v-1.964c0-.22.11-.325.328-.325"/><path fill="#FFF" d="m190.375 534.816-1.344-1.605 1.735-1.441 1.328 1.605Zm-1.457 2.684-1.39-1.652 1.796-1.508 1.051 1.262 1.473-1.196 1.375 1.653-1.786 1.472-1.078-1.258Zm7.184 5.648-1.637 2.536q-1.916-.001-3.977-1.18l-.867 1.18q-1.559 0-2.93-1.164l-.18 1.164h-3.128l-.164-.164v-2.293l.164-.164h1.312l.57-3.961h2.243l-.524 3.457q.804.44 1.98.488l.477-3.945h2.207l-.406 3.601c.676.211 1.524.328 2.535.36a56 56 0 0 0-.816-4.465l2.258-.59a50 50 0 0 1 .883 5.14m-167.622 23.2q.936 0 2-.457v-1.739l-3.011.852c-.035.21-.051.398-.051.574q0 .769 1.062.77m5.618.41v2.125l-.164.246H30.48v-1.16q-1.294.85-2.343.851-1.373-.001-2.07-.77c-.462-.51-.696-1.179-.696-1.995q0-1.296.672-2.57l4.437-1.262v-1.36h2.258v5.649h1.196Zm0 0"/><path fill="#FFF" d="M38.828 564.48q-.363 0-.68.364-.32.359-.828 1.308l2.39 1.032q.213-.61.212-1.211.001-.658-.324-1.075-.33-.417-.77-.418m4.649 2.211v2.274l-.164.164h-.165q-.59.002-1-.254-.406-.251-.898-.777l-1.457 1.441L36.191 568q-.505.655-.98.895-.475.234-1.215.234h-.062l-.164-.211v-2.078l.164-.328h.246q.356.001.695-.403.337-.4.988-1.48c.535-.863 1.078-1.531 1.63-2.012q.826-.721 1.827-.722 1.126-.001 1.887 1.058.762 1.055.762 2.578a4.4 4.4 0 0 1-.047.621q.456.36 1.293.36h.097Zm0 0"/><path fill="#FFF" d="M52.035 566.184q.001-.67-.344-1.301a2.6 2.6 0 0 0-.996-1.008c.172.254.262.543.262.867q0 1.113-.934 2.016 1.062.328 1.848.457.165-.504.164-1.031m-3.094-1.36q0-.49-.324-.883-.329-.393-.887-.394-.737.001-1.34.887c.426.699 1.028 1.238 1.817 1.62.492-.394.734-.804.734-1.23m5.141 1.051q0 1.588-1.16 3.762-2.882-.523-4.914-1.52c-.805.414-1.52.684-2.133.817q-.926.197-2.316.195h-.246l-.165-.211v-2.176l.164-.23h2.356a10 10 0 0 1-1.457-1.653q.444-.573.836-.984l-.817.18-.164-.13v-2.112q2.403-.523 4.254-.524c1.88 0 3.305.43 4.29 1.285q1.471 1.284 1.472 3.301m11.688.816v2.274l-.165.164h-.41c-.652 0-1.203-.137-1.644-.406q-.664-.411-1.121-1.395c-1.649 1.442-3.703 2.32-6.172 2.637l-.95-2.438.133-.199q2.03-.21 3.438-.555-.768-2.372-2.965-6.238l2.047-1.191c1.289 2.324 2.187 4.61 2.703 6.855a6.2 6.2 0 0 0 1.29-.687v-8.66h2.26v7.613q-.001 1.228.231 1.637.228.41.98.41h.18Zm0 0"/><path fill="#FFF" d="m71.613 569.59 1.457 1.765-1.816 1.524-1.492-1.77Zm4.29-2.914V569l-.165.129h-.261q-1.605 0-2.473-1.406-2.848 1.406-5.86 1.406h-1.539l-.312-.309v-1.98l.312-.328h2.012q1.542 0 2.516-.223a9 9 0 0 0 2.004-.726q-1.34-.802-2.032-1.024-.686-.222-1.636-.223c-.5 0-1.098.11-1.781.329l-.18-.098v-2.309q1.223-.57 2.242-.57 1.095-.002 2.488.793c.926.527 2.098 1.406 3.52 2.625l-.363 1.293q.245.134.804.133h.54Zm0 0"/><path fill="#FFF" d="M79.863 556.855v12.274h-4.125l-.215-.18v-2.242l.215-.195h1.703v-9.657Zm4.418 12.274h-2.289v-12.274h2.29Zm8.66-5.563-1.441-1.703 1.852-1.523 1.406 1.703Zm6.907 3.125v2.274l-.164.164h-.067q-.54.001-1.39-.59v2.18q-2.21 1.39-4.5 1.39-2.063 0-3.34-1.172-1.278-1.167-1.278-3.476.001-1.408.559-2.899l1.734-.261.133.133q-.38 1.358-.379 2.324 0 1.47.715 2.144.709.67 2.266.672.93-.002 1.832-.215v-6.808h2.258v3.781c.304.121.761.18 1.359.18h.098Zm0 0"/><path fill="#FFF" d="m104.188 570.21 1.457 1.77-1.82 1.52-1.13-1.34-1.62 1.34-1.473-1.766 1.851-1.523 1.098 1.344Zm1.585-3.519v2.274l-.164.164h-.164a2.2 2.2 0 0 1-.636-.082c-.188-.05-.375-.16-.575-.317a6 6 0 0 1-.449-.394q-.156-.154-.5-.531l-.816 1.324h-2.785l-.329-.328v-2.059l.329-.23h2.261v-4.125h2.29v3.781q.474.342 1.277.344h.097Zm0 0"/><path fill="#FFF" d="M114.336 566.184q-.002-.67-.344-1.301a2.6 2.6 0 0 0-1-1.008q.263.381.262.867-.001 1.113-.934 2.016 1.066.328 1.852.457.165-.504.164-1.031m-3.094-1.36q0-.49-.328-.883c-.219-.261-.516-.394-.883-.394q-.739.001-1.344.887.64 1.048 1.817 1.62.738-.591.738-1.23m5.14 1.051q-.002 1.588-1.163 3.762-2.883-.523-4.91-1.52-1.212.62-2.137.817-.926.197-2.317.195h-.246l-.164-.211v-2.176l.164-.23h2.36a9.5 9.5 0 0 1-1.457-1.653q.44-.573.832-.984l-.817.18-.164-.13v-2.112q2.409-.523 4.254-.524 2.82.001 4.29 1.285 1.476 1.284 1.476 3.301m5.547.832v2.242l-.164.18h-3.668v-12.274h2.293v9.657h1.375Zm0 0"/><path fill="#FFF" d="m128.754 558.262-1.34-1.606 1.734-1.441 1.325 1.605Zm-1.457 2.683-1.39-1.652 1.8-1.504 1.047 1.258 1.473-1.195 1.375 1.652-1.782 1.476-1.082-1.261Zm7.187 5.649-1.636 2.535q-1.916.002-3.977-1.176L128 569.13q-1.554 0-2.926-1.16l-.183 1.16h-3.125l-.164-.16v-2.293l.164-.164h1.308l.574-3.961h2.243l-.524 3.453q.802.445 1.98.492l.473-3.945h2.211l-.41 3.601q1.018.311 2.54.36a56 56 0 0 0-.821-4.469l2.262-.59a52 52 0 0 1 .882 5.14m8.086-3.028-1.441-1.703 1.851-1.523 1.407 1.703Zm6.907 3.125v2.274l-.165.164h-.066q-.54.001-1.39-.59v2.18q-2.21 1.39-4.5 1.39-2.064 0-3.34-1.172-1.278-1.167-1.278-3.476.001-1.408.559-2.899l1.734-.261.133.133q-.38 1.358-.379 2.324 0 1.47.715 2.144.709.67 2.266.672.93-.002 1.832-.215v-6.808h2.257v3.781c.305.121.762.18 1.36.18h.097Zm0 0"/><path fill="#FFF" d="m151.785 569.965 1.457 1.77-1.816 1.519-1.488-1.766Zm1.785-8.07v7.234h-4.257l-.325-.328v-2.063l.325-.226h1.964v-4.617Zm16.32 1.734c-.472 0-.933.258-1.394.77a4.3 4.3 0 0 0 1.883 1.652q.738-.54.738-1.242c0-.34-.11-.618-.328-.844q-.33-.335-.898-.336m-.051-3.895-1.442-1.703 1.852-1.52 1.406 1.7Zm4.617 6.926v2.324l-.164.145h-.606a7.3 7.3 0 0 1-3.632-.965q-2.068.966-4.47.965h-2.538q-2.257 0-3.453-1.086-1.196-1.09-1.196-3.152-.001-.931.395-2.145l1.684-.36.164.165q-.263 1.048-.262 1.785 0 1.112.68 1.644.679.533 2.382.532h4.352a7.7 7.7 0 0 1-1.457-1.75q.574-1.706 1.656-2.727 1.078-1.024 2.274-1.023 1.342-.001 2.129.941c.523.625.785 1.356.785 2.184q0 1.376-.785 2.36.456.015 1.292.015h.606Zm0 0"/><path fill="#FFF" d="m186.73 566.594-1.636 2.535q-1.916.002-3.977-1.176l-.867 1.176q-1.56 0-2.93-1.16l-.18 1.16h-3.128l-.164-.164v-2.29l.164-.163h1.312l.57-3.961h2.243l-.524 3.453q.803.44 1.98.492l.477-3.945h2.207l-.406 3.601c.676.207 1.524.328 2.535.36a55 55 0 0 0-.816-4.469l2.258-.59a50 50 0 0 1 .882 5.14m4.782-2.652q-.344 0-.735.41c-.265.274-.48.66-.656 1.16q1.209.868 3.125.985-.182-1.196-.644-1.875-.47-.68-1.09-.68m5.008 2.782v2.097l-.165.309h-1.078c-.425 2.476-1.894 3.719-4.402 3.719-.7 0-1.441-.184-2.227-.543l-.261-2.16.144-.13q1.33.406 2.57.407.967 0 1.465-.293.5-.293.664-1.031-1.652-.166-3.011-.828t-2.258-1.727c.293-1.54.793-2.797 1.496-3.781q1.056-1.472 2.316-1.473 1.032 0 1.825.785.794.788 1.203 1.926.409 1.136.543 2.512h1.011Zm0 0"/><path fill="#FFF" d="m196.355 569.129-.328-.328v-2.059l.328-.23h1.965v-4.617h2.293v7.234Zm3.243 4.371-1.13-1.34-1.62 1.34-1.473-1.766 1.848-1.523 1.097 1.344 1.637-1.344 1.457 1.77Zm11.652-10.18a12.7 12.7 0 0 0-2.242-.215q-.603 0-1.047.051.246 1.424.785 2.16.904-.784 2.504-1.996m3.309 3.371v2.211l-.164.227h-1.997q-2.44.001-3.945-1.094-.785.915-.785 1.57 0 .703.57 1.047.575.344 1.934.344 1.705 0 3.469-.574l.148.101v2.094q-2.014.851-3.93.852-2.045 0-3.14-.89c-.735-.599-1.098-1.427-1.098-2.481q.001-1.44 1.637-3.309c-.59-.816-1.035-1.914-1.344-3.289l-.621.129-.164-.129.195-2.176a14.8 14.8 0 0 1 4.043-.574c1.258 0 2.543.184 3.867.555l.34 2.59c-1.437 1.011-2.52 1.808-3.238 2.386.578.157 1.46.23 2.652.23h1.407Zm0 0"/><path fill="#FFF" d="M219.29 564.48q-.36 0-.68.364-.318.359-.829 1.308l2.39 1.032q.214-.61.216-1.211 0-.658-.328-1.075-.33-.417-.77-.418m.488-2.585q1.133-.001 1.891 1.058.762 1.055.762 2.578 0 1.208-.54 2.387l-1.636 1.621-3.602-1.539q-.508.655-.98.895-.477.234-1.211.234h-.066l-.165-.211v-2.078l.165-.328h.246q.359.001.695-.403.336-.4.992-1.48c.531-.863 1.074-1.531 1.625-2.012q.827-.721 1.824-.722m8.368 4.812v2.242l-.165.18h-3.667v-12.274h2.292v9.657h1.375Zm0 0"/><path fill="#FFF" d="m233.023 569.59 1.457 1.765-1.82 1.524-1.488-1.77Zm-1.898-7.922c.727 0 1.559.262 2.484.793.93.527 2.102 1.406 3.52 2.625l-.555 2a18.6 18.6 0 0 1-3.379 1.512q-1.647.531-3.675.53h-1.54l-.312-.308v-1.98l.312-.328h2.012c1.028 0 1.863-.074 2.516-.223a9 9 0 0 0 2.004-.726q-1.34-.802-2.032-1.024-.686-.222-1.636-.223c-.5 0-1.098.11-1.781.329l-.18-.098v-2.309q1.223-.57 2.242-.57m15.547-.102-1.438-1.652 1.864-1.52 1.03 1.192 1.411-1.145 1.406 1.653-1.832 1.523-1.05-1.21Zm7.254.329v7.234h-7.89c-1.509 0-2.657-.363-3.454-1.086q-1.195-1.09-1.195-3.152 0-.967.39-2.145l1.688-.36.164.165q-.263 1.048-.262 1.785-.001 1.112.696 1.644.694.533 2.398.532h5.172v-4.617Zm5.957 4.812v2.242l-.164.18h-3.668v-12.274h2.293v9.657h1.375Zm0 0"/><path fill="#FFF" d="M264.336 563.629c-.473 0-.934.258-1.395.77a4.3 4.3 0 0 0 1.883 1.652q.738-.54.738-1.242c0-.34-.109-.618-.328-.844q-.329-.335-.898-.336m-1.59-4.059-1.441-1.652 1.867-1.523 1.031 1.195 1.41-1.145 1.407 1.653-1.832 1.523-1.051-1.21Zm6.156 7.09v2.324l-.164.145h-.605a7.2 7.2 0 0 1-3.617-.965 9.4 9.4 0 0 1-4.16.965h-.637l-.164-.211v-2.176l.164-.23h2.52a7.7 7.7 0 0 1-1.458-1.75q.574-1.706 1.656-2.727 1.08-1.024 2.274-1.023 1.342-.001 2.129.941c.523.625.785 1.356.785 2.184q0 1.376-.785 2.36.456.015 1.293.015h.605Zm0 0"/><path fill="#FFF" d="M274.648 566.691v2.274l-.164.164h-.164q-.46.002-.86-.195-.404-.196-.632-.418a11 11 0 0 1-.637-.696l-.8 1.309h-2.653l-.328-.324v-2.063l.328-.23h2.063l.031-9.66h2.293v9.332q.457.327 1.258.328h.101Zm0 0"/><path fill="#FFF" d="M277.625 561.668q1.095-.002 2.488.793c.93.527 2.102 1.406 3.52 2.625l-.559 2c-1.156.652-2.281 1.16-3.379 1.512q-1.644.531-3.675.53h-1.536l-.312-.308v-1.98l.312-.328h2.012q1.54 0 2.512-.223a9 9 0 0 0 2.004-.726c-.89-.536-1.57-.875-2.028-1.024q-.689-.222-1.636-.223-.755 0-1.786.329l-.18-.098v-2.309q1.227-.57 2.243-.57m14.585.719v5.86q.001 2.16-.917 3.39-.916 1.225-2.7 1.226-.69 0-1.44-.312l-.426-2.211.148-.13q.866.23 1.703.231c.914 0 1.375-.59 1.375-1.77v-6.284Zm5.712 4.32v2.242l-.164.18h-3.664v-12.274h2.289v9.657h1.375Zm0 0"/><path fill="#FFF" d="M305.14 563.777c-.609-.152-1.343-.23-2.19-.23-.427 0-.848.02-1.262.05.273 1.04.8 1.887 1.585 2.555q1.312-1.013 1.868-2.375m3.289 3.028v2.062l-.164.262h-1.52q-1.933 0-3.601-.867c-1.192.578-2.739.867-4.649.867h-.738l-.164-.227v-2.097l.164-.293h1.555q1.065-.001 1.62-.032c-.523-.632-.964-1.492-1.324-2.57l-.703.164-.148-.133.164-2.191c1.601-.45 3-.672 4.187-.672q1.541 0 3.766.555l.328 2.523a7.3 7.3 0 0 1-1.605 2.371l.507-.015h2.16Zm0 0"/><path fill="#FFF" d="m315.258 558.262-1.344-1.606 1.734-1.441 1.329 1.605Zm-1.457 2.683-1.39-1.652 1.796-1.504 1.05 1.258 1.473-1.195 1.375 1.652-1.785 1.476-1.078-1.261Zm7.183 5.649-1.636 2.535q-1.916.002-3.977-1.176l-.867 1.176q-1.56 0-2.93-1.16l-.18 1.16h-3.128l-.164-.16v-2.293l.164-.164h1.312l.57-3.961h2.243l-.524 3.453q.803.445 1.98.492l.477-3.945h2.207l-.406 3.601q1.016.311 2.535.36a55 55 0 0 0-.816-4.469l2.258-.59a50 50 0 0 1 .882 5.14m-178.402-23.905-116.996-.2.004-.883 116.996.196Zm175.128-.2H200.708v-.883h117.004Zm0 0"/></svg>`;
+const Q = {"n":["الفاتحة","البقرة","آل عمران","النساء","المائدة","الأنعام","الأعراف","الأنفال","التوبة","يونس","هود","يوسف","الرعد","إبراهيم","الحجر","النحل","الإسراء","الكهف","مريم","طه","الأنبياء","الحج","المؤمنون","النور","الفرقان","الشعراء","النمل","القصص","العنكبوت","الروم","لقمان","السجدة","الأحزاب","سبإ","فاطر","يس","الصافات","ص","الزمر","غافر","فصلت","الشورى","الزخرف","الدخان","الجاثية","الأحقاف","محمد","الفتح","الحجرات","ق","الذاريات","الطور","النجم","القمر","الرحمن","الواقعة","الحديد","المجادلة","الحشر","الممتحنة","الصف","الجمعة","المنافقون","التغابن","الطلاق","التحريم","الملك","القلم","الحاقة","المعارج","نوح","الجن","المزمل","المدثر","القيامة","الإنسان","المرسلات","النبإ","النازعات","عبس","التكوير","الانفطار","المطففين","الانشقاق","البروج","الطارق","الأعلى","الغاشية","الفجر","البلد","الشمس","الليل","الضحى","الشرح","التين","العلق","القدر","البينة","الزلزلة","العاديات","القارعة","التكاثر","العصر","الهمزة","الفيل","قريش","الماعون","الكوثر","الكافرون","النصر","المسد","الإخلاص","الفلق","الناس"],"c":[7,286,200,176,120,165,206,75,129,109,123,111,43,52,99,128,111,110,98,135,112,78,118,64,77,227,93,88,69,60,34,30,73,54,45,83,182,88,75,85,54,53,89,59,37,35,38,29,18,45,60,49,62,55,78,96,29,22,24,13,14,11,11,18,12,12,30,52,52,44,28,28,20,56,40,31,50,40,46,42,29,19,36,25,22,17,19,26,30,20,15,21,11,8,8,19,5,8,8,11,11,8,3,9,5,4,7,3,6,3,5,4,5,6],"p":[0,1,8,13,24,32,37,45,56,65,69,77,84,91,96,101,109,113,120,127,134,142,149,153,161,171,177,184,189,194,198,204,210,218,223,227,232,238,241,245,253,256,260,264,267,272,277,282,289,290,294,303,309,316,323,331,339,346,355,364,371,377,385,394,402,409,415,426,434,442,447,451,459,467,474,480,488,494,500,505,508,513,517,520,527,531,538,545,553,559,568,573,580,585,588,595,599,607,615,621,628,634,641,648,656,664,669,672,675,679,683,687,693,701,706,711,715,720,727,734,740,746,752,759,765,773,778,783,790,798,808,817,825,834,842,849,858,863,871,880,884,891,900,908,914,921,927,932,936,941,947,955,966,977,985,992,998,1006,1012,1022,1028,1036,1042,1050,1059,1075,1085,1092,1098,1104,1110,1114,1118,1125,1133,1142,1150,1161,1169,1177,1186,1194,1201,1206,1213,1222,1230,1236,1242,1249,1256,1262,1267,1272,1276,1283,1290,1297,1304,1308,1315,1322,1329,1335,1342,1347,1353,1358,1365,1371,1379,1385,1390,1398,1407,1418,1426,1435,1443,1453,1462,1471,1479,1486,1493,1502,1511,1519,1527,1536,1545,1555,1562,1571,1582,1591,1601,1611,1619,1627,1634,1640,1649,1660,1666,1675,1683,1692,1700,1708,1713,1721,1726,1736,1742,1750,1756,1761,1769,1775,1784,1793,1803,1818,1834,1854,1873,1893,1908,1916,1928,1936,1944,1956,1966,1974,1981,1989,1995,2004,2012,2020,2030,2037,2047,2057,2068,2079,2088,2096,2105,2116,2126,2134,2145,2156,2161,2168,2175,2186,2194,2202,2215,2224,2238,2251,2262,2276,2289,2302,2315,2327,2346,2361,2386,2400,2413,2425,2436,2447,2462,2474,2484,2494,2508,2519,2528,2541,2556,2565,2574,2585,2596,2601,2611,2619,2626,2634,2642,2651,2660,2668,2674,2691,2701,2716,2733,2748,2763,2778,2792,2802,2812,2819,2823,2828,2835,2845,2850,2853,2858,2867,2876,2888,2899,2911,2923,2933,2952,2972,2993,3016,3044,3069,3092,3116,3139,3160,3173,3182,3195,3204,3215,3223,3236,3248,3258,3266,3274,3281,3288,3296,3303,3312,3323,3330,3337,3347,3355,3364,3371,3379,3386,3393,3404,3415,3425,3434,3442,3451,3460,3470,3481,3489,3498,3504,3515,3524,3534,3540,3549,3556,3564,3569,3577,3584,3588,3596,3607,3614,3621,3629,3638,3646,3655,3664,3672,3679,3691,3699,3705,3718,3733,3746,3760,3776,3789,3813,3840,3865,3891,3915,3942,3971,3987,3997,4013,4032,4054,4064,4069,4080,4090,4099,4106,4115,4126,4133,4141,4150,4159,4167,4174,4183,4192,4200,4211,4219,4230,4239,4248,4257,4265,4273,4283,4288,4295,4304,4317,4324,4336,4348,4359,4373,4386,4399,4415,4433,4454,4474,4487,4496,4506,4516,4525,4531,4539,4546,4557,4565,4575,4584,4593,4599,4607,4612,4617,4624,4631,4646,4666,4682,4706,4727,4750,4767,4785,4811,4829,4853,4874,4896,4918,4942,4969,4996,5030,5056,5079,5087,5094,5100,5105,5111,5116,5126,5130,5136,5143,5151,5156,5162,5169,5178,5186,5193,5200,5209,5218,5223,5230,5237,5242,5254,5268,5287,5314,5332,5358,5386,5415,5430,5448,5461,5476,5495,5513,5543,5571,5597,5617,5642,5673,5703,5728,5759,5801,5830,5855,5883,5910,5932,5964,5994,6017,6044,6073,6099,6126,6138,6156,6177,6194,6208,6222,6237]};
+const SEED_NAMES = ["تميم بن علي الرميحي","علي بن حمد الرميحي","محمد بن حمد الرميحي","عبدالله بن فيصل الفضالة","خميس بن محمد الرميحي","حمد بن علي الرميحي","إبراهيم بن ثامر الرميحي","ناصر بن يوسف النجار","علي بن فيصل المنصوري","أحمد بن علي الرميحي","حمد بن أحمد الرميحي","عبدالعزيز بن راشد هرمس"];
+const KEY = "halaqat-jalahma";
+const MAX_PRIZES = 3;
+
+/* ---------- Quran pages (Madinah mushaf, 604 pages) ---------- */
+const FIRST = []; { let id = 1; for (let i = 0; i < 114; i++) { FIRST.push(id); id += Q.c[i]; } }
+const P = Q.p;
+function pageOf(id){ let lo=1, hi=604; while(lo<hi){ const m=(lo+hi+1)>>1; if(P[m]<=id) lo=m; else hi=m-1; } return lo; }
+function rangeOf(e){
+  if(!e || !e.s) return null;
+  const n = Q.c[e.s-1];
+  let f = e.full ? 1 : parseInt(e.f,10), t = e.full ? n : parseInt(e.t,10);
+  if(!f || !t) return null;
+  if(f>t) [f,t]=[t,f];
+  f=Math.max(1,f); t=Math.min(n,t);
+  return {f,t,n};
+}
+function entries(e){ return Array.isArray(e) ? e.filter(x=>x&&x.s) : (e&&e.s ? [e] : []); }
+function pages1(e){
+  const r = rangeOf(e); if(!r) return 0;
+  const a = FIRST[e.s-1]+r.f-1, b = FIRST[e.s-1]+r.t-1;
+  let sum = 0;
+  for(let p=pageOf(a); p<=pageOf(b); p++){
+    const st=P[p], en=P[p+1]-1;
+    sum += (Math.min(b,en)-Math.max(a,st)+1)/(en-st+1);
+  }
+  return sum;
+}
+function pagesFor(e){ return entries(e).reduce((a,x)=>a+pages1(x),0); }
+function fmtPages(v){
+  if(!v) return "0";
+  let r = Math.round(v*4)/4; if(r===0) r = .25;
+  const w = Math.floor(r), fr = r-w;
+  const g = fr===.25?"¼":fr===.5?"½":fr===.75?"¾":"";
+  return (w? String(w):"") + g || "0";
+}
+function recText1(e){
+  const r = rangeOf(e); if(!r) return "";
+  const name = Q.n[e.s-1];
+  return e.full || (r.f===1 && r.t===r.n) ? `سورة ${name} كاملة` : `${name} ${r.f}–${r.t}`;
+}
+
+function recText(e){ return entries(e).map(recText1).join(" + "); }
+/* ---------- Dates ---------- */
+const DAY = ["الأحد","الاثنين","الثلاثاء","الأربعاء","الخميس","الجمعة","السبت"];
+const iso = d => `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,"0")}-${String(d.getDate()).padStart(2,"0")}`;
+const parse = s => { const [y,m,d]=s.split("-").map(Number); return new Date(y,m-1,d); };
+const addDays = (d,n) => { const x=new Date(d.getFullYear(),d.getMonth(),d.getDate()); x.setDate(x.getDate()+n); return x; };
+const mondayOf = d => addDays(d, -((d.getDay()+6)%7));
+const NOW = new Date(); const TODAY = iso(NOW);
+const sessionDays = mon => [0,1,2].map(i => iso(addDays(parse(mon),i)));
+function activeDay(){ const g=NOW.getDay(); if(g>=1&&g<=3) return TODAY; return iso(addDays(mondayOf(NOW),2)); }
+const CUR_WEEK = iso(mondayOf(NOW));
+const monthKey = s => s.slice(0,7);
+const monthName = k => { const [y,m]=k.split("-").map(Number); return new Date(y,m-1,1).toLocaleDateString("ar-u-nu-latn",{month:"long"}); };
+const monthLong = k => `${monthName(k)} ${k.slice(0,4)}`;
+const dShort = s => { const d=parse(s); return `${d.getDate()}/${d.getMonth()+1}`; };
+function academicMonths(){
+  const y = NOW.getMonth()>=8 ? NOW.getFullYear() : NOW.getFullYear()-1;
+  const out=[]; for(let i=0;i<10;i++){ const d=new Date(y,8+i,1); out.push(`${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,"0")}`); } return out;
+}
+
+/* ---------- Store: Firebase (Firestore + Auth) ----------
+   public/main      — names, attendance (حضر/سمّع), prizes, knights, info. Anyone can read.
+   announcements/*  — one doc per announcement (text + optional image). Anyone can read.
+   teacher/data     — the full record. Teacher only.
+   iqra/{8 digits}  — one student's homework, recitation log and fees. Readable only by
+                      someone who knows that number (get allowed, list denied). */
+const DEFAULT_IBAN = "BH46ALSA00442574100100";
+function normPhone(p){ let v = String(p||"").replace(/\D/g,""); if(/^(00)?973\d{8}$/.test(v)) v = v.slice(-8); return v; }
+function emptyState(){ return { v:1, students: SEED_NAMES.map((n,i)=>({id:"s"+(i+1), name:n, iqra:""})), days:{}, prizes:{}, knights:{}, fees:{}, info: defaultInfo(), mirrorKeys:[] }; }
+function defaultInfo(){ return {
+  contacts:[{n:"مشرف الحلقات",p:""},{n:"مدرس الحلقة",p:""}],
+  wa:"",
+  iban:"BH46ALSA00442574100100",
+  rules:["الجائزة اليومية دينار واحد، تُعطى لثلاثة طلاب يجيبون عن أسئلة الفائدة.","يتم اختيار الفائزين الثلاثة عن طريق القرعة.","في آخر الشهر يُكرَّم جميع الطلاب، ويُعطى كل طالب بقدر ما حفظ.","يُكرَّم فارس الحفظ، وهو أكثر الطلاب حفظاً خلال الشهر.","يُكرَّم فارس الانضباط، وهو الطالب الأكثر انضباطاً في حضوره."].join("\n")
+}; }
+let S = { v:1, students:[], days:{}, prizes:{}, knights:{}, fees:{}, info: defaultInfo(), ann:[] };
+let loaded = false, annLoaded = false, teacher = false, fbOK = true;
+const clean = o => JSON.parse(JSON.stringify(o, (k,v)=> v===undefined ? undefined : v));
+function publicView(){
+  const days = {};
+  for(const [d,m] of Object.entries(S.days)) for(const [sid,r] of Object.entries(m||{})){
+    if(r && (r.a || r.d)){ (days[d] = days[d]||{})[sid] = Object.assign({}, r.a?{a:r.a}:{}, r.d?{d:true}:{}); }
+  }
+  return { students: S.students.map(({id,name})=>({id,name})), days, prizes:S.prizes, knights:S.knights, info:S.info };
+}
+function mirrorFor(s){
+  const days = {};
+  for(const [d,m] of Object.entries(S.days)){ const r=(m||{})[s.id]; if(r && (r.a || r.d || hasWork(r))) days[d]=r; }
+  return { sid:s.id, name:s.name, days, fees:S.fees[s.id]||{}, iqra:s.iqra||"", email:s.email||"", notes:s.notes||"" };
+}
+let saveT = null, inFlight = 0, lastMirror = {}, lastTeacherJSON = "", syncState = "ok";
+function setSync(st){ syncState = st; const el=$("#sync"); if(el){ el.className="sync "+st; el.innerHTML = `<i></i>${st==="ok"?"محفوظ":st==="pending"?"جاري الحفظ…":"بانتظار الاتصال"}`; } }
+function save(){ if(!teacher) return false; clearTimeout(saveT); saveT = setTimeout(flush, 450); setSync("pending"); return true; }
+async function flush(){
+  saveT = null;
+  const {db, doc, writeBatch} = FB;
+  const b = writeBatch(db);
+  const now = {}, groups = {};
+  for(const s of S.students){ const p = normPhone(s.phone); if(!/^\d{8,12}$/.test(p)) continue; (groups[p] = groups[p]||{})[s.id] = clean(mirrorFor(s)); }
+  for(const [p,g] of Object.entries(groups)){ const m = {students:g}, j = JSON.stringify(m); now[p] = j; if(lastMirror[p] !== j) b.set(doc(db,"parents",p), m); }
+  for(const k of new Set([...(S.parentKeys||[]), ...Object.keys(lastMirror)])) if(!(k in now)) b.delete(doc(db,"parents",k));
+  for(const k of (S.mirrorKeys||[])) b.delete(doc(db,"iqra",k));
+  lastMirror = now; S.parentKeys = Object.keys(now); S.mirrorKeys = [];
+  const t = clean(Object.assign({}, S, {ann:undefined}));
+  lastTeacherJSON = JSON.stringify(t);
+  b.set(doc(db,"teacher","data"), t);
+  b.set(doc(db,"public","main"), clean(publicView()));
+  inFlight++;
+  const slow = setTimeout(()=>{ if(inFlight) setSync("err"); }, 6000);
+  try { await b.commit(); clearTimeout(slow); inFlight--; if(!inFlight && !saveT) setSync("ok"); }
+  catch(e){ clearTimeout(slow); inFlight--; console.error(e); setSync("err"); lastMirror = {}; toast("تعذّر الحفظ، تأكد من صلاحية الحساب والاتصال"); }
+}
+function applyPublic(p){
+  if(teacher) return;
+  S.students = (p.students||[]).map(x=>({id:x.id, name:x.name, iqra:""}));
+  S.days = p.days||{}; S.prizes = p.prizes||{}; S.knights = p.knights||{}; S.info = Object.assign(defaultInfo(), p.info||{}); S.fees = {};
+  if(ui.stuDoc) mergeStudent(ui.stuDoc);
+}
+function mergeStudent(m){
+  { const s = stu(m.sid); if(s){ s.iqra = m.iqra||""; s.email = m.email||""; s.notes = m.notes||""; } }
+  for(const [d,r] of Object.entries(m.days||{})){ S.days[d] = Object.assign({}, S.days[d]||{}); S.days[d][m.sid] = r; }
+  S.fees[m.sid] = m.fees||{};
+}
+let pendingRender = false;
+function softRender(){
+  const a = document.activeElement;
+  if(a && /^(INPUT|TEXTAREA|SELECT)$/.test(a.tagName) && a.closest("#app") ){ pendingRender = true; return; }
+  render();
+}
+document.addEventListener("focusout", ()=>{ if(!pendingRender) return; setTimeout(()=>{ const a=document.activeElement; if(pendingRender && !(a && /^(INPUT|TEXTAREA|SELECT)$/.test(a.tagName))){ pendingRender=false; render(); } }, 250); });
+let unsubTeacher = null;
+function startData(){
+  const {db, auth, doc, getDoc, onSnapshot, collection, onAuthStateChanged} = FB;
+  onSnapshot(doc(db,"public","main"), snap=>{
+    if(snap.exists()) applyPublic(snap.data());
+    loaded = true; if(!teacher) softRender();
+  }, err=>{ console.error(err); loaded = true; softRender(); });
+  onSnapshot(collection(db,"announcements"), qs=>{
+    S.ann = qs.docs.map(d=>Object.assign({id:d.id}, d.data())); annLoaded = true; softRender();
+  }, err=>console.error(err));
+  onAuthStateChanged(auth, async user=>{
+    if(unsubTeacher){ unsubTeacher(); unsubTeacher = null; }
+    if(!user){ if(teacher){ teacher = false; ui.view = "home"; ui.week = CUR_WEEK; } render(); return; }
+    try{
+      const ref = doc(db,"teacher","data");
+      const snap = await getDoc(ref);
+      teacher = true;
+      if(snap.exists()){ const ann=S.ann; S = Object.assign(emptyState(), snap.data()); S.ann = ann; if(!S.info) S.info = defaultInfo(); lastTeacherJSON = JSON.stringify(snap.data()); }
+      else { const ann=S.ann; S = emptyState(); S.ann = ann; flush(); }
+      loaded = true;
+      unsubTeacher = onSnapshot(ref, sn=>{
+        if(!sn.exists() || sn.metadata.hasPendingWrites || saveT || inFlight) return;
+        const j = JSON.stringify(sn.data()); if(j === lastTeacherJSON) return;
+        const ann = S.ann; S = Object.assign(emptyState(), sn.data()); S.ann = ann; lastTeacherJSON = j; softRender();
+      });
+      if(ui.view === "login-pending"){ ui.view = "teacher"; ui.tab = "rec"; toast("أهلاً بك"); }
+      render(); window.scrollTo(0,0);
+    }catch(e){
+      console.error(e); teacher = false;
+      toast(e && e.code==="permission-denied" ? "هذا الحساب ما عنده صلاحية الأستاذ" : "تعذّر تحميل بيانات الأستاذ، تأكد من الاتصال");
+      FB.signOut(auth); render();
+    }
+  });
+}
+const stu = id => S.students.find(s=>s.id===id);
+const rec = (d,sid) => (S.days[d]||{})[sid];
+function ensure(d,sid){ S.days[d]=S.days[d]||{}; S.days[d][sid]=S.days[d][sid]||{}; return S.days[d][sid]; }
+const prizesOn = d => S.prizes[d]||[];
+function short3(n){ const w=String(n).trim().split(/\s+/).filter(x=>x!=="بن"&&x!=="بنت"); return w.length<=3 ? w.join(" ") : [w[0],w[1],w[w.length-1]].join(" "); }
+function nextSession(ds){ let x=addDays(parse(ds),1); while(![1,2,3].includes(x.getDay())) x=addDays(x,1); return iso(x); }
+const hasWork = r => !!(r && (entries(r.h).length||entries(r.m).length));
+function nextDue(sid){ for(const d of Object.keys(S.days).filter(d=>d>=TODAY).sort()){ const r=S.days[d][sid]; if(hasWork(r) && !r.d) return [d,r]; } return null; }
+const dueLine = (lbl,e) => entries(e).length ? `<div class="ln"><span class="k">${lbl}</span><span>${recText(e)}</span><span class="pg num">${fmtPages(pagesFor(e))} وجه</span></div>` : "";
+
+/* ---------- UI state ---------- */
+const ui = { slots:{}, slide:0, delTid:null, stuDoc:null, view:"home", sid:null, tab:"rec", week:CUR_WEEK, recDay:activeDay(), stuMonth:monthKey(activeDay()), open:new Set(), wheelSel:null, spinning:false, annDraft:false, delSid:null, editDue:new Set(), annImg:null, menu:false, knMonth:monthKey(TODAY) };
+
+const $ = s => document.querySelector(s);
+const esc = s => String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const I = {
+  check:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>',
+  cross:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><path d="M7 7l10 10M17 7L7 17"/></svg>',
+  lock:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg>',
+  back:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg>',
+  chev:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 6l-6 6 6 6"/></svg>',
+  star:'<svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.9 6.3 6.9.8-5.1 4.7 1.4 6.8L12 17.3 5.9 20.6l1.4-6.8L2.2 9.1l6.9-.8z"/></svg>',
+  book:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 6c-2-1.5-5-2-8-1.5V19c3-.5 6 0 8 1.5 2-1.5 5-2 8-1.5V4.5C17 4 14 4.5 12 6z"/><path d="M12 6v14.5"/></svg>',
+  check2:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M2.5 12.5l4.5 4.5 8.5-9.5"/><path d="M11.5 16.5l.5.5 9.5-9.5"/></svg>',
+  gift:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="8" width="18" height="4" rx="1"/><path d="M5 12v8h14v-8M12 8v12"/><path d="M12 8C10.5 4.5 6.5 4 6.8 6.6 7 8 9.5 8 12 8zM12 8c1.5-3.5 5.5-4 5.2-1.4C17 8 14.5 8 12 8z"/></svg>',
+  menu:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg>',
+  phone:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2"/></svg>',
+  chat:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 11.5a8 8 0 0 1-11.8 7L4 20l1.5-4A8 8 0 1 1 20 11.5z"/></svg>',
+  cash:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="6" width="20" height="12" rx="2"/><circle cx="12" cy="12" r="2.8"/><path d="M6 9.5v5M18 9.5v5"/></svg>',
+  trophy:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M8 4h8v5a4 4 0 0 1-8 0z"/><path d="M8 6H5a3 3 0 0 0 3 4M16 6h3a3 3 0 0 1-3 4M12 13v4M8.5 20h7M10 17h4v3h-4z"/></svg>',
+  plus:'<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>'
+};
+const coin = `<span class="coin" aria-label="جائزة">${I.gift}</span>`;
+
+function toast(msg){ const t=$("#toast"); t.textContent=msg; t.hidden=false; clearTimeout(toast._t); toast._t=setTimeout(()=>t.hidden=true,1600); }
+function go(view, extra={}){ Object.assign(ui,{view},extra); render(); window.scrollTo(0,0); }
+
+/* ---------- Masthead ---------- */
+function mast({title, sub, back}){
+  return `<header class="mast"><div class="mast-in">
+    <div class="logo" aria-label="شعار حلقات جامع يوسف بن شاهين الجلاهمة">${LOGO}</div>
+    <div class="mast-txt">
+      ${back?`<button class="back" data-act="home">${I.back} الرئيسية</button>`:`<div class="eyebrow">حلقات جامع يوسف بن شاهين الجلاهمة</div>`}
+      <h1>${title}</h1>
+      <div class="week">${sub||""}${teacher?` <span id="sync" class="sync ${syncState}"><i></i>${syncState==="ok"?"محفوظ":syncState==="pending"?"جاري الحفظ…":"بانتظار الاتصال"}</span>`:""}</div>
+    </div>
+    <div class="mast-act"><button class="icon-btn" data-act="menu" aria-label="القائمة">${I.menu}<span>القائمة</span></button>${teacher
+      ? `<button class="icon-btn" data-act="${ui.view==="teacher"?"home":"teacher"}">${ui.view==="teacher"?"الرئيسية":"لوحة الأستاذ"}</button>`
+      : `<button class="icon-btn" data-act="login" aria-label="دخول الأستاذ">${I.lock}<span>الأستاذ</span></button>`}</div>
+  </div></header>`;
+}
+const demoNote = "";
+
+/* ---------- Home ---------- */
+function weekLabel(w){ const d=sessionDays(w); return `${dShort(d[0])} – ${dShort(d[2])}`; }
+function renderHome(){
+  const days = sessionDays(ui.week);
+  const recDay = ui.week===CUR_WEEK ? activeDay() : days[2];
+  const nav = teacher ? `<button class="wk-nav" data-act="wk" data-d="-7" aria-label="الأسبوع السابق">${I.back}</button><button class="wk-nav" data-act="wk" data-d="7" aria-label="الأسبوع التالي" ${ui.week>=CUR_WEEK?"disabled":""}>${I.chev}</button>` : "";
+  const sub = `<span>أسبوع</span> <b class="num">${weekLabel(ui.week)}</b>${ui.week!==CUR_WEEK?' <span>(أرشيف)</span>':''} ${nav}`;
+
+  const ann = S.ann.slice().sort((a,b)=>(b.date||"").localeCompare(a.date||"") || (b.ts||0)-(a.ts||0));
+  const annHtml = `<section>
+    <div class="sec-h"><h2>الإعلانات</h2>${teacher?`<button class="add-btn" data-act="ann-new">${I.plus} إعلان</button>`:""}</div>
+    ${ui.annDraft&&teacher?`<div class="card" style="display:flex;flex-direction:column;gap:10px"><textarea id="ann-text" class="inp" rows="3" placeholder="اكتب الإعلان أو تعليقاً على الصورة"></textarea><img id="ann-prev" class="ann-prev" alt="معاينة الصورة" ${ui.annImg?`src="${ui.annImg}"`:"hidden"}><div class="row"><input type="file" accept="image/*" id="ann-img" hidden><label for="ann-img" class="btn ghost" style="cursor:pointer">${ui.annImg?"تغيير الصورة":"إضافة صورة"}</label><button class="btn pri" data-act="ann-save">نشر</button><button class="btn ghost" data-act="ann-cancel">إلغاء</button></div></div>`:""}
+    ${ann.length?`<div class="car" id="car" data-n="${ann.length}" aria-roledescription="carousel">
+      ${ann.map((a,i)=>`<figure class="slide ${i===(ui.slide%ann.length)?"on":""} ${a.img?"has-img":"txt"}" data-i="${i}">${a.img?`<img src="${esc(a.img)}" alt="${esc(a.text||"صورة الإعلان")}" loading="lazy">`:""}<figcaption>${a.text?`<p>${esc(a.text)}</p>`:""}<time class="num">${dShort(a.date)} · ${DAY[parse(a.date).getDay()]}</time>${teacher?`<button class="x" data-act="ann-del" data-id="${esc(a.id)}" aria-label="حذف الإعلان">✕</button>`:""}</figcaption></figure>`).join("")}
+      ${ann.length>1?`<button class="car-nav prev" data-act="car" data-d="-1" aria-label="السابق">${I.back}</button><button class="car-nav next" data-act="car" data-d="1" aria-label="التالي">${I.chev}</button><div class="dots">${ann.map((a,i)=>`<button class="dot ${i===(ui.slide%ann.length)?"on":""}" data-act="car-go" data-i="${i}" aria-label="الإعلان ${i+1}"></button>`).join("")}</div>`:""}
+    </div>`:`<div class="demo">لا توجد إعلانات حالياً.</div>`}
+  </section>`;
+
+  const kKeys = Object.keys(S.knights).filter(k=>(S.knights[k].h||[]).length||(S.knights[k].i||[]).length).sort();
+  const kk = kKeys[kKeys.length-1];
+  const names = ids => (ids||[]).map(id=>`<span>${esc(stu(id)?.name||"")}</span>`).join("") || `<span class="k-empty">—</span>`;
+  const knHtml = `<section class="knights">
+    <div class="k-head"><h2>فرسان الشهر</h2><small>${kk?monthLong(kk):""}</small></div>
+    ${kk?`<div class="k"><div class="k-lbl">${I.book} فارس الحفظ</div><div class="k-names">${names(S.knights[kk].h)}</div></div>
+    <div class="k"><div class="k-lbl">${I.star} فارس الانضباط</div><div class="k-names">${names(S.knights[kk].i)}</div></div>`:`<div class="k-empty" style="grid-column:1/-1">يُعلن آخر الشهر.</div>`}
+  </section>`;
+
+  const rows = S.students.map((s,ix)=>{
+    const cells = days.map(d=>{
+      const r = rec(d,s.id); const won = prizesOn(d).includes(s.id);
+      const fut = d>TODAY;
+      let cls="n", inner="·", st="لم يُسجَّل";
+      if(r&&r.a==="p"&&r.d){cls="p";inner=I.check2;st="حضر وسمّع";}
+      else if(r&&r.a==="p"){cls="q";inner=I.check;st="حضر ولم يسمّع";}
+      else if(r&&r.a==="a"){cls="a";inner=I.cross;st="غائب";}
+      else if(fut){cls="f";}
+      const lbl = `${DAY[parse(d).getDay()]}: ${st}${won?"، فاز بجائزة":""}`;
+      return `<td><button class="cell ${cls} ${teacher?"edit":""}" ${teacher?`data-act="cyc" data-d="${d}" data-sid="${s.id}"`:"tabindex=\"-1\""} aria-label="${lbl}">${inner}${won?coin:""}</button></td>`;
+    }).join("");
+    return `<tr><td class="nm"><button class="nm-btn" data-act="stu" data-sid="${s.id}"><span class="no num">${ix+1}</span>${esc(s.name)}<span class="chev">${I.chev}</span></button></td>${cells}</tr>`;
+  }).join("");
+  const present = S.students.filter(s=>rec(recDay,s.id)?.a==="p").length;
+  const recited = S.students.filter(s=>rec(recDay,s.id)?.d).length;
+  const rollHtml = `<section>
+    <div class="sec-h"><h2>كشف الحضور الأسبوعي</h2><small class="num">${DAY[parse(recDay).getDay()]}: حضر ${present} · سمّع ${recited} من ${S.students.length}</small></div>
+    <div class="roll-wrap"><table class="roll">
+      <thead><tr><th>الطالب</th>${days.map(d=>`<th class="${d===recDay?"today":""}">${DAY[parse(d).getDay()]}<span class="d num">${dShort(d)}</span></th>`).join("")}</tr></thead>
+      <tbody>${rows}</tbody>
+    </table>
+    <div class="legend"><span><i style="background:var(--ok-soft);color:var(--ok)">✓✓</i>حضر وسمّع</span><span><i style="background:var(--warn-soft);color:var(--warn)">✓</i>حضر ولم يسمّع</span><span><i style="background:var(--bad-soft);color:var(--bad)">✕</i>غائب</span><span>${coin}جائزة اليوم</span></div>
+    </div>
+    <p class="muted" style="margin:8px 0 0;font-size:12.5px">اضغط على اسم الطالب لعرض تفاصيل التسميع والرسوم.</p>
+  </section>`;
+
+  const tbar = teacher ? `<div class="tbar"><b>وضع الأستاذ</b><span>اضغط على خانة اليوم للتبديل: حضر وسمّع، ثم حضر بدون تسميع، ثم غائب.</span><span class="sp"></span><button class="btn ghost" data-act="tab" data-k="account">الحساب</button><button class="btn ghost" data-act="logout">خروج</button></div>` : "";
+  return mast({title:"سجل الطلاب", sub}) + `<main class="wrap">${tbar}${demoNote}${annHtml}${knHtml}${rollHtml}</main>`;
+}
+
+/* ---------- Student ---------- */
+function stuStats(sid, mk){
+  const dates = Object.keys(S.days).filter(d=>monthKey(d)===mk && d<=TODAY).sort();
+  let h=0,m=0,att=0,tot=0,pr=0;
+  for(const d of dates){ const r=S.days[d][sid]; if(r&&r.a){ tot++; if(r.a==="p") att++; } if(r && r.d){ h+=pagesFor(r.h); m+=pagesFor(r.m); } }
+  for(const d of Object.keys(S.prizes)) if(monthKey(d)===mk && S.prizes[d].includes(sid)) pr++;
+  return {dates,h,m,att,tot,pr};
+}
+function renderStudent(){
+  const s = stu(ui.sid);
+  const months = [...new Set([...Object.keys(S.days).filter(d=>d<=TODAY).map(monthKey), monthKey(activeDay())])].sort();
+  if(!months.includes(ui.stuMonth)) ui.stuMonth = months[months.length-1];
+  const st = stuStats(s.id, ui.stuMonth);
+  const seg = `<div class="seg">${months.map(k=>`<button class="${k===ui.stuMonth?"on":""}" data-act="smonth" data-k="${k}">${monthName(k)}</button>`).join("")}</div>`;
+  const tiles = `<div class="tiles">
+    <div class="tile hl"><div class="v num">${fmtPages(st.h)}</div><div class="l">أوجه الحفظ المسمّعة</div></div>
+    <div class="tile"><div class="v num">${fmtPages(st.m)}</div><div class="l">أوجه المراجعة</div></div>
+    <div class="tile"><div class="v num">${st.att}<span class="muted" style="font-size:15px"> / ${st.tot}</span></div><div class="l">أيام الحضور</div></div>
+    <div class="tile"><div class="v num">${st.pr}</div><div class="l">جوائز يومية (${st.pr} د.ب)</div></div>
+  </div>`;
+  const log = st.dates.slice().reverse().map(d=>{
+    const r = S.days[d][s.id]; if(!r||!r.a) return "";
+    const won = prizesOn(d).includes(s.id);
+    const body = r.a==="a" ? `<div class="ln"><span class="pill a">غائب</span></div>` : `
+      <div class="ln"><span class="pill p">حاضر</span>${r.d?`<span class="pill c">${I.check.replace('<svg','<svg width="12" height="12"')} تم التسميع</span>`:`<span class="pill" style="background:var(--sunk);color:var(--muted)">لم يُسمّع</span>`}${won?`<span class="pill c">جائزة دينار</span>`:""}</div>
+      ${entries(r.h).length?`<div class="ln"><span class="k">الحفظ</span><span>${recText(r.h)}</span><span class="pg num">${fmtPages(pagesFor(r.h))} وجه</span></div>`:""}
+      ${entries(r.m).length?`<div class="ln"><span class="k">المراجعة</span><span>${recText(r.m)}</span><span class="pg num">${fmtPages(pagesFor(r.m))} وجه</span></div>`:""}`;
+    return `<div class="log-day"><div class="log-date"><b>${DAY[parse(d).getDay()]}</b><span class="num">${dShort(d)}</span></div><div class="log-body">${body}</div></div>`;
+  }).join("") || `<p class="muted" style="margin:0">لا توجد سجلات في هذا الشهر.</p>`;
+  const curM = monthKey(TODAY), paidNow = (S.fees[s.id]||{})[curM];
+  const late = academicMonths().filter(k=>k<curM && !(S.fees[s.id]||{})[k]).map(monthName);
+  const feeCard = `<div class="fee-strip ${paidNow&&!late.length?"fs-paid":"fs-due"}">${I.cash}<b>رسوم ${monthName(curM)}: ${paidNow?"تم الدفع":"لم تُدفع"}</b>${late.length?`<span>متأخر: ${late.join("، ")}</span>`:""}${(!paidNow||late.length)&&S.info.iban?`<button class="btn sm" data-act="copy" data-v="${esc(S.info.iban)}">نسخ الآيبان</button>`:""}</div>`;
+  const kts = Object.keys(S.knights).sort().reverse().flatMap(m=>[["h","فارس الحفظ",I.book],["i","فارس الانضباط",I.star]].filter(([f])=>(S.knights[m][f]||[]).includes(s.id)).map(([f,l,ic])=>`<div class="knight">${I.trophy}<div><b>${l}</b><span>شهر ${monthLong(m)}، بارك الله فيه</span></div></div>`));
+  const knCard = kts.length ? `<div class="knights-me">${kts.join("")}</div>` : "";
+  const nd = nextDue(s.id);
+  const hw = `<section class="hw"><div class="sec-h" style="margin:0"><h2>المطلوب للحصة القادمة</h2>${nd?`<small class="num" style="color:var(--navy-muted)">${DAY[parse(nd[0]).getDay()]} ${dShort(nd[0])}</small>`:""}</div>
+    ${nd?`<div class="log-body">${dueLine("الحفظ",nd[1].h)}${dueLine("المراجعة",nd[1].m)}</div>`:`<p style="margin:0;color:var(--navy-muted)">لم يُحدَّد الواجب بعد.</p>`}</section>`;
+  const infoCard = teacher ? `<section class="card" style="display:flex;flex-direction:column;gap:10px"><div class="sec-h" style="margin:0"><h2>بيانات الطالب</h2><small>تظهر لولي الأمر</small></div>
+    <div class="fld"><label for="sq-${s.id}">رقم اقرأ</label><input class="inp num" dir="ltr" id="sq-${s.id}" inputmode="numeric" maxlength="12" value="${esc(s.iqra||"")}" data-stu="iqra" data-sid="${s.id}"></div>
+    <div class="fld"><label for="se-${s.id}">البريد الإلكتروني</label><input class="inp" type="email" dir="ltr" id="se-${s.id}" value="${esc(s.email||"")}" data-stu="email" data-sid="${s.id}"></div>
+    <div class="fld"><label for="sn-${s.id}">ملاحظات</label><textarea class="inp" rows="3" id="sn-${s.id}" data-stu="notes" data-sid="${s.id}">${esc(s.notes||"")}</textarea></div>
+    <div class="kv"><span>هاتف ولي الأمر</span><b class="num" dir="ltr">${esc(s.phone||"—")}</b></div></section>`
+    : ((s.iqra||s.email||s.notes) ? `<section class="card"><div class="sec-h" style="margin:0 0 4px"><h2>بيانات الطالب</h2></div>${s.iqra?`<div class="kv"><span>رقم اقرأ</span><b class="num" dir="ltr">${esc(s.iqra)}</b></div>`:""}${s.email?`<div class="kv"><span>البريد الإلكتروني</span><b dir="ltr" style="overflow-wrap:anywhere">${esc(s.email)}</b></div>`:""}${s.notes?`<div class="kv kv-notes"><span>ملاحظات</span><p>${esc(s.notes)}</p></div>`:""}</section>` : "");
+  return mast({title:esc(s.name), sub:`<span>سجل الطالب</span>`, back:true}) + `<main class="wrap">
+    ${demoNote}
+    ${knCard}
+    ${feeCard}
+    ${hw}
+    ${infoCard}
+    <div class="row" style="justify-content:space-between"><div class="sec-h" style="margin:0"><h2>${monthLong(ui.stuMonth)}</h2></div>${seg}</div>
+    ${tiles}
+    <section class="card"><div class="sec-h"><h2>السجل اليومي</h2></div><div class="log">${log}</div></section>
+  </main>`;
+}
+
+/* ---------- Teacher ---------- */
+const TABS = [["rec","التسجيل اليومي"],["wheel","القرعة"],["knights","الفرسان"],["fees","الرسوم"],["students","الطلاب"],["parents","أولياء الأمور"],["tatt","حضور المعلمين"],["info","معلومات الحلقة"],["account","الحساب"]];
+function surahOptions(sel){ return `<option value="">— السورة —</option>` + Q.n.map((n,i)=>`<option value="${i+1}" ${sel===i+1?"selected":""}>${i+1}. ${n}</option>`).join(""); }
+function recFields(sid,k,e,day){
+  const list = entries(e).slice(), key = sid+"|"+day+"|"+k, extra = ui.slots[key]||0;
+  for(let i=0; i<extra || !list.length; i++) list.push({});
+  const rows = list.map((x,i)=>{
+    const n = x.s?Q.c[x.s-1]:"", pg = pages1(x), id = `${sid}-${day}-${i}`;
+    const da = `data-sid="${sid}" data-day="${day}" data-k="${k}" data-i="${i}"`;
+    return `<div class="rec-item">
+      <div class="rec-row">
+        <select class="inp" id="${k}s-${id}" ${da} data-f="s" aria-label="السورة">${surahOptions(x.s)}</select>
+        <input class="inp num" type="number" inputmode="numeric" min="1" max="${n}" id="${k}f-${id}" placeholder="من" value="${x.full?"":esc(x.f??"")}" ${da} data-f="f" ${x.full||!x.s?"disabled":""} aria-label="من آية">
+        <input class="inp num" type="number" inputmode="numeric" min="1" max="${n}" id="${k}t-${id}" placeholder="إلى" value="${x.full?"":esc(x.t??"")}" ${da} data-f="t" ${x.full||!x.s?"disabled":""} aria-label="إلى آية">
+      </div>
+      <div class="row" style="justify-content:space-between"><label class="chk"><input type="checkbox" id="${k}c-${id}" ${da} data-f="full" ${x.full?"checked":""} ${!x.s?"disabled":""}> السورة كاملة${n?` (${n} آية)`:""}</label>
+      <span class="row" style="gap:8px"><span class="calc num">${pg?`= <b class="pg">${fmtPages(pg)} وجه</b>`:""}</span>${i>0?`<button type="button" class="x" data-act="rec-del" ${da} aria-label="حذف السورة">✕</button>`:""}</span></div>
+    </div>`;
+  }).join("");
+  const many = entries(e).length>1;
+  return `<div class="fld"><label>${k==="h"?"الحفظ":"المراجعة"}</label>${rows}
+    <div class="row" style="justify-content:space-between"><button type="button" class="lnk" data-act="rec-add" data-sid="${sid}" data-day="${day}" data-k="${k}">+ إضافة سورة</button><span class="calc num">${many?`المجموع = <b class="pg">${fmtPages(pagesFor(e))} وجه</b>`:""}</span></div>
+  </div>`;
+}
+function dueBox(sid,r){
+  const has = hasWork(r), editing = (!has && r.a!=="a") || ui.editDue.has(sid);
+  return `<div class="due"><div class="due-h"><b>المطلوب اليوم</b>${has?`<button class="lnk" data-act="edit-due" data-sid="${sid}">${editing?"إخفاء التعديل":"تعديل"}</button>`:(r.a==="a"?"":`<span class="muted" style="font-size:12.5px">ما تحدّد واجب مسبقاً، أدخله هنا</span>`)}</div>
+    ${has&&!editing?`<div class="log-body">${dueLine("الحفظ",r.h)}${dueLine("المراجعة",r.m)}</div>`:""}
+    ${editing?recFields(sid,"h",r.h,ui.recDay)+recFields(sid,"m",r.m,ui.recDay):""}
+    ${r.a==="a"?`<span class="pill a" style="align-self:flex-start">غائب</span>`:`<div><button class="done-btn ${r.d?"on":""}" data-act="done" data-d="${ui.recDay}" data-sid="${sid}">${I.check.replace('<svg','<svg width="16" height="16"')} ${r.d?"تم التسميع":"تأشير: تم التسميع"}</button></div>`}
+  </div>`;
+}
+function nextBox(sid){
+  const nd = nextSession(ui.recDay), nr = rec(nd,sid)||{};
+  return `<div class="due next"><div class="due-h"><b>الواجب للحصة القادمة</b><span class="muted num" style="font-size:12.5px">${DAY[parse(nd).getDay()]} ${dShort(nd)}</span></div>
+    ${recFields(sid,"h",nr.h,nd)}${recFields(sid,"m",nr.m,nd)}
+    <span class="muted" style="font-size:12.5px">يظهر مباشرة في صفحة الطالب ليحفظه في البيت.</span>
+  </div>`;
+}
+function tabRec(){
+  const days = sessionDays(ui.week);
+  if(!days.includes(ui.recDay)) ui.recDay = days[0];
+  const dsel = `<div class="row" style="justify-content:space-between">
+    <div class="row"><button class="btn ghost" data-act="rwk" data-d="-7" aria-label="الأسبوع السابق">${I.back.replace('<svg','<svg width="16" height="16"')}</button><span class="num muted">${weekLabel(ui.week)}</span><button class="btn ghost" data-act="rwk" data-d="7" ${ui.week>=CUR_WEEK?"disabled":""} aria-label="الأسبوع التالي">${I.chev.replace('<svg','<svg width="16" height="16"')}</button></div>
+    <div class="seg">${days.map(d=>`<button class="${d===ui.recDay?"on":""}" data-act="rday" data-d="${d}">${DAY[parse(d).getDay()]} <span class="num">${dShort(d)}</span></button>`).join("")}</div></div>`;
+  const all = `<div class="row"><button class="btn" data-act="allp">تسجيل حضور الجميع</button><span class="muted" style="font-size:13px">ثم عدّل الغائبين. وقت الحلقة اضغط "تم التسميع"، وسجّل واجب الحصة القادمة.</span></div>`;
+  const cards = S.students.map((s,ix)=>{
+    const r = rec(ui.recDay,s.id)||{};
+    const att = r.a==="p"?`<span class="pill p">حاضر</span>`:r.a==="a"?`<span class="pill a">غائب</span>`:`<span class="pill" style="background:var(--sunk);color:var(--muted)">لم يُسجَّل</span>`;
+    const pg = pagesFor(r.h);
+    return `<details class="st" data-sid="${s.id}" ${ui.open.has(s.id)?"open":""}>
+      <summary><span class="n"><span class="no num">${ix+1}</span>${esc(s.name)}</span><span class="meta">${pg?`<span class="pg num" style="font-size:13px">${fmtPages(pg)} وجه</span>`:""}${r.d?`<span class="pill c">تم</span>`:""}${att}</span></summary>
+      <div class="st-body">
+        <div class="seg"><button class="${r.a==="p"?"on":""}" data-act="att" data-sid="${s.id}" data-v="p">حاضر</button><button class="${r.a==="a"?"on":""}" data-act="att" data-sid="${s.id}" data-v="a">غائب</button><button class="${!r.a?"on":""}" data-act="att" data-sid="${s.id}" data-v="">بدون</button></div>
+        ${dueBox(s.id,r)}
+        ${nextBox(s.id)}
+      </div></details>`;
+  }).join("");
+  return `${dsel}${all}<div class="list">${cards}</div>`;
+}
+function tabWheel(){
+  const d = activeDay();
+  const winners = prizesOn(d);
+  if(!ui.wheelSel) ui.wheelSel = new Set(S.students.filter(s=>rec(d,s.id)?.a==="p" && !winners.includes(s.id)).map(s=>s.id));
+  winners.forEach(id=>ui.wheelSel.delete(id));
+  const full = winners.length>=MAX_PRIZES;
+  return `<div class="card" style="display:flex;flex-direction:column;gap:14px">
+    <div class="sec-h" style="margin:0"><h2>قرعة جوائز ${DAY[parse(d).getDay()]}</h2><small class="num">${winners.length} من ${MAX_PRIZES}</small></div>
+    <div><div class="muted" style="font-size:13px;margin-bottom:6px">اختر الطلاب المشاركين (اللي جاوبوا على الفائدة):</div>
+    <div class="chips">${S.students.map(s=>{ const won=winners.includes(s.id); return `<button class="chip ${ui.wheelSel.has(s.id)?"on":""} ${won?"won":""}" data-act="wsel" data-sid="${s.id}" ${won?"disabled":""}>${esc(short3(s.name))}</button>`; }).join("")}</div>
+    <div class="row" style="margin-top:8px"><button class="btn ghost" data-act="wall">تحديد الحاضرين</button><button class="btn ghost" data-act="wnone">إلغاء التحديد</button></div></div>
+    <div class="wheel-box"><span class="ptr"></span><canvas id="wheel" width="640" height="640" aria-label="عجلة الأسماء"></canvas></div>
+    <button class="btn cop" data-act="spin" ${full||ui.wheelSel.size<1||ui.spinning?"disabled":""}>${full?"اكتملت جوائز اليوم":"أدِر العجلة"}</button>
+    <div class="winners">${winners.map((id,i)=>`<div class="win">${coin}<b>${esc(stu(id).name)}</b><span class="muted num" style="font-size:12px">الجائزة ${i+1}</span><button class="x" data-act="wdel" data-sid="${id}" aria-label="إلغاء">✕</button></div>`).join("")}</div>
+  </div>`;
+}
+function tabKnights(){
+  const months = academicMonths().filter(k=>k<=monthKey(TODAY));
+  if(!months.includes(ui.knMonth)) ui.knMonth = months[months.length-1];
+  const k = S.knights[ui.knMonth] || {h:[],i:[]};
+  const grp = (f,label) => `<div class="fld"><label>${label} (اختر طالب أو أكثر)</label><div class="chips">${S.students.map(s=>`<button class="chip ${(k[f]||[]).includes(s.id)?"on":""}" data-act="kn" data-f="${f}" data-sid="${s.id}">${esc(s.name)}</button>`).join("")}</div></div>`;
+  const st = S.students.map(s=>({s,...stuStats(s.id,ui.knMonth)}));
+  const topH = st.slice().sort((a,b)=>b.h-a.h).slice(0,3).map(x=>`${esc(x.s.name.split(" ")[0])} (${fmtPages(x.h)})`).join("، ");
+  const topI = st.slice().sort((a,b)=>(b.att/(b.tot||1))-(a.att/(a.tot||1))||b.att-a.att).slice(0,3).map(x=>`${esc(x.s.name.split(" ")[0])} (${x.att}/${x.tot})`).join("، ");
+  return `<div class="card" style="display:flex;flex-direction:column;gap:14px">
+    <div class="row" style="justify-content:space-between"><div class="sec-h" style="margin:0"><h2>فرسان الشهر</h2></div><div class="seg">${months.map(m=>`<button class="${m===ui.knMonth?"on":""}" data-act="knm" data-k="${m}">${monthName(m)}</button>`).join("")}</div></div>
+    <div class="demo">للمساعدة فقط: الأعلى حفظاً ${topH||"—"}. الأعلى حضوراً ${topI||"—"}.</div>
+    ${grp("h","فارس الحفظ")}${grp("i","فارس الانضباط")}
+  </div>`;
+}
+function tabFees(){
+  const months = academicMonths();
+  return `<div class="sec-h"><h2>الرسوم الشهرية</h2><small>اضغط للتأشير على تم الدفع</small></div>
+  <div class="fee-tbl-wrap"><table class="fee-tbl"><thead><tr><th>الطالب</th>${months.map(m=>`<th>${monthName(m)}</th>`).join("")}</tr></thead><tbody>
+  ${S.students.map((s,ix)=>`<tr><td><span class="no num">${ix+1}</span>${esc(s.name)}</td>${months.map(m=>{const on=(S.fees[s.id]||{})[m];return `<td><button class="fbtn ${on?"on":""}" data-act="fee" data-sid="${s.id}" data-m="${m}" aria-label="${monthName(m)}: ${on?"تم الدفع":"لم يُدفع"}">${on?I.check:""}</button></td>`;}).join("")}</tr>`).join("")}
+  </tbody></table></div>`;
+}
+function tabStudents(){
+  return `<div class="card" style="display:flex;flex-direction:column;gap:12px">
+    <div class="sec-h" style="margin:0"><h2>الطلاب وأرقام أولياء الأمور</h2><small>${S.students.length} طالب</small></div>
+    <p class="muted" style="margin:0;font-size:13px">رقم هاتف ولي الأمر هو الرقم السري لصفحة الطالب. الإخوان يكتبون نفس الرقم. رقم اقرأ والبريد والملاحظات تُضاف من صفحة الطالب.</p>
+    <form class="add-row" id="add-stu"><input class="inp" id="new-name" placeholder="اسم الطالب الجديد (رباعي)" aria-label="اسم الطالب الجديد"><button class="btn pri" type="submit">${I.plus} إضافة</button></form>
+    ${S.students.map((s,ix)=>`<div class="stu-row"><span class="no num">${ix+1}</span><input class="inp" id="nm-${s.id}" value="${esc(s.name)}" data-act-in="name" data-sid="${s.id}" aria-label="اسم الطالب"><input class="inp num" dir="ltr" id="ph-${s.id}" type="tel" inputmode="tel" maxlength="15" placeholder="هاتف ولي الأمر" value="${esc(s.phone||"")}" data-act-in="phone" data-sid="${s.id}" aria-label="هاتف ولي الأمر"><button class="x" data-act="s-del" data-sid="${s.id}" aria-label="حذف الطالب">✕</button>${ui.delSid===s.id?`<div class="delc"><span style="flex:1;min-width:0">حذف <b>${esc(s.name)}</b> من القائمة؟</span><button class="btn sm danger" data-act="s-del-ok" data-sid="${s.id}">حذف</button><button class="btn sm ghost" data-act="s-del-no">إلغاء</button></div>`:""}</div>`).join("")}
+    <div class="err" id="iq-err"></div>
+  </div>`;
+}
+function tabParents(){
+  const rows = S.students.map((s,ix)=>{
+    const p = s.phone||"", intl = p.length===8 ? "973"+p : p, sib = p ? S.students.filter(o=>o.phone===p).length : 0;
+    return `<tr><td><span class="no num">${ix+1}</span>${esc(s.name)}${sib>1?` <span class="pill c" style="font-size:11px">إخوان</span>`:""}</td><td class="num" dir="ltr">${p?esc(p):'<span class="muted">—</span>'}</td><td>${p?`<div class="row" style="gap:6px;justify-content:flex-end;flex-wrap:nowrap"><a class="btn sm" href="tel:${esc(p)}">اتصال</a><a class="btn sm" href="https://wa.me/${esc(intl)}" target="_blank" rel="noopener">واتساب</a><button class="btn sm ghost" data-act="copy" data-v="${esc(p)}">نسخ</button></div>`:""}</td></tr>`;
+  }).join("");
+  const missing = S.students.filter(s=>!s.phone).length;
+  return `<div class="sec-h"><h2>كشف أرقام أولياء الأمور</h2><small>للأساتذة فقط</small></div>
+  ${missing?`<div class="demo">${missing} طالب بدون رقم ولي أمر. أضف الأرقام من تبويب الطلاب.</div>`:""}
+  <div class="fee-tbl-wrap"><table class="fee-tbl par-tbl"><thead><tr><th>الطالب</th><th>الهاتف</th><th></th></tr></thead><tbody>${rows}</tbody></table></div>`;
+}
+function tabTeachers(){
+  const T = S.teachers = S.teachers||[]; S.tatt = S.tatt||{};
+  const days = sessionDays(ui.week), mk = monthKey(activeDay());
+  const cnt = t => Object.entries(S.tatt).filter(([d])=>monthKey(d)===mk && d<=TODAY).reduce((a,[d,m])=>{ if(m[t.id]==="p") a.p++; else if(m[t.id]==="a") a.a++; return a; },{p:0,a:0});
+  const rows = T.map((t,ix)=>{ const c = cnt(t); return `<tr><td class="nm"><span class="no num">${ix+1}</span><b style="font-size:14.5px">${esc(t.name)}</b></td>${days.map(d=>{ const v=(S.tatt[d]||{})[t.id]; const cls = v==="p"?"p":v==="a"?"a":(d>TODAY?"f":"n"); return `<td><button class="cell ${cls} edit" data-act="tcyc" data-d="${d}" data-tid="${t.id}" aria-label="${esc(t.name)}، ${DAY[parse(d).getDay()]}: ${v==="p"?"حاضر":v==="a"?"غائب":"لم يُسجَّل"}">${v==="p"?I.check:v==="a"?I.cross:"·"}</button></td>`; }).join("")}<td class="num" style="font-size:12.5px;white-space:nowrap"><span style="color:var(--ok)">${c.p}</span> / <span style="color:var(--bad)">${c.a}</span></td></tr>`; }).join("");
+  return `<div class="card" style="display:flex;flex-direction:column;gap:12px">
+    <div class="sec-h" style="margin:0"><h2>كشف حضور المعلمين</h2><small>للأساتذة فقط</small></div>
+    <div class="row"><button class="btn ghost" data-act="rwk" data-d="-7" aria-label="الأسبوع السابق">${I.back.replace('<svg','<svg width="16" height="16"')}</button><span class="num muted">${weekLabel(ui.week)}</span><button class="btn ghost" data-act="rwk" data-d="7" ${ui.week>=CUR_WEEK?"disabled":""} aria-label="الأسبوع التالي">${I.chev.replace('<svg','<svg width="16" height="16"')}</button></div>
+    ${T.length?`<div class="roll-wrap" style="overflow-x:auto"><table class="roll"><thead><tr><th>المعلم</th>${days.map(d=>`<th>${DAY[parse(d).getDay()]}<span class="d num">${dShort(d)}</span></th>`).join("")}<th>${monthName(mk)}<span class="d">حضور / غياب</span></th></tr></thead><tbody>${rows}</tbody></table></div>
+    <p class="muted" style="margin:0;font-size:12.5px">اضغط على الخانة للتبديل: حاضر، ثم غائب، ثم بدون.</p>`:`<div class="demo">أضف أسماء المعلمين من الأسفل.</div>`}
+  </div>
+  <div class="card" style="display:flex;flex-direction:column;gap:10px">
+    <div class="sec-h" style="margin:0"><h2>المعلمون</h2><small>${T.length}</small></div>
+    <form class="add-row" id="add-teacher"><input class="inp" id="new-teacher" placeholder="اسم المعلم" aria-label="اسم المعلم"><button class="btn pri" type="submit">${I.plus} إضافة</button></form>
+    ${T.map(t=>`<div class="ct-row" style="grid-template-columns:minmax(0,1fr) 32px"><input class="inp" id="tn-${t.id}" value="${esc(t.name)}" data-tname="${t.id}" aria-label="اسم المعلم"><button class="x" data-act="t-del" data-tid="${t.id}" aria-label="حذف المعلم">✕</button></div>${ui.delTid===t.id?`<div class="row" style="background:var(--bad-soft);border-radius:9px;padding:8px 10px;font-size:13px"><span style="flex:1;min-width:0">حذف <b>${esc(t.name)}</b> وسجل حضوره من الكشف؟</span><button class="btn sm danger" data-act="t-del-ok" data-tid="${t.id}">حذف</button><button class="btn sm ghost" data-act="t-del-no">إلغاء</button></div>`:""}`).join("")}
+  </div>`;
+}
+function tabInfo(){
+  const f = S.info;
+  return `<div class="card" style="display:flex;flex-direction:column;gap:12px">
+    <div class="sec-h" style="margin:0"><h2>أرقام التواصل</h2><small>تظهر في القائمة الجانبية</small></div>
+    ${f.contacts.map((c,i)=>`<div class="ct-row"><input class="inp" id="cn-${i}" value="${esc(c.n)}" placeholder="الاسم أو الصفة" data-info="cn" data-i="${i}" aria-label="الاسم"><input class="inp num" id="cp-${i}" dir="ltr" inputmode="tel" value="${esc(c.p)}" placeholder="رقم الجوال" data-info="cp" data-i="${i}" aria-label="رقم الجوال"><button class="x" data-act="c-del" data-i="${i}" aria-label="حذف">✕</button></div>`).join("")}
+    <div><button class="add-btn" data-act="c-add">${I.plus} رقم جديد</button></div>
+  </div>
+  <div class="card" style="display:flex;flex-direction:column;gap:10px">
+    <div class="sec-h" style="margin:0"><h2>الحساب المصرفي للمركز (IBAN)</h2><small>يظهر مع زر نسخ</small></div>
+    <input class="inp num" id="iban-in" dir="ltr" placeholder="BH00XXXX0000000000000" value="${esc(f.iban||"")}" data-info="iban">
+  </div>
+  <div class="card" style="display:flex;flex-direction:column;gap:10px">
+    <div class="sec-h" style="margin:0"><h2>رابط مجموعة الواتساب</h2></div>
+    <input class="inp" id="wa-in" dir="ltr" placeholder="https://chat.whatsapp.com/..." value="${esc(f.wa)}" data-info="wa">
+    <div class="err" id="wa-err"></div>
+  </div>
+  <div class="card" style="display:flex;flex-direction:column;gap:10px">
+    <div class="sec-h" style="margin:0"><h2>ضوابط الجوائز</h2><small>كل سطر يظهر كبند</small></div>
+    <textarea class="inp" id="rules-in" rows="8" data-info="rules">${esc(f.rules)}</textarea>
+  </div>`;
+}
+function renderDrawer(){
+  if(!ui.menu) return "";
+  const f = S.info;
+  const contacts = f.contacts.filter(c=>c.n||c.p).map(c=>`<div class="contact"><div class="who"><b>${esc(c.n)}</b>${c.p?`<span class="ph num">${esc(c.p)}</span>`:`<span class="muted" style="font-size:13px">يُضاف الرقم من لوحة الأستاذ</span>`}</div>${c.p?`<a class="btn sm" href="tel:${esc(c.p.replace(/[^\d+]/g,""))}">اتصال</a><button class="btn sm ghost" data-act="copy" data-v="${esc(c.p)}">نسخ</button>`:""}</div>`).join("") || `<p class="muted" style="margin:0">لا توجد أرقام بعد.</p>`;
+  const rules = f.rules.split("\n").map(x=>x.trim()).filter(Boolean).map(x=>`<li>${esc(x)}</li>`).join("");
+  return `<div class="drawer-bg" data-act="menu-close"></div>
+  <aside class="drawer" role="dialog" aria-modal="true" aria-label="القائمة">
+    <div class="dr-head"><h2>معلومات الحلقة</h2><button class="x" data-act="menu-close" aria-label="إغلاق">✕</button></div>
+    <section class="dr-sec"><h3>${I.phone} أرقام التواصل</h3>${contacts}</section>
+    <section class="dr-sec"><h3>${I.chat} مجموعة الواتساب</h3>${f.wa?`<a class="wa" href="${esc(f.wa)}" target="_blank" rel="noopener">${I.chat} الانضمام لمجموعة الواتساب</a>`:`<p class="muted" style="margin:0;font-size:13px">يُضاف الرابط من لوحة الأستاذ.</p>`}</section>
+    <section class="dr-sec"><h3>${I.cash} الحساب المصرفي للمركز</h3>${f.iban?`<div class="iban"><span class="num" dir="ltr">${esc(f.iban.replace(/(.{4})/g,"$1 ").trim())}</span><button class="btn sm" data-act="copy" data-v="${esc(f.iban)}">نسخ</button></div><span class="muted" style="font-size:12.5px">رقم الآيبان (IBAN)</span>`:`<p class="muted" style="margin:0;font-size:13px">يُضاف من لوحة الأستاذ.</p>`}</section>
+    <section class="dr-sec"><h3>${I.gift} ضوابط الجوائز</h3><ol class="rules">${rules}</ol></section>
+    ${teacher?`<button class="btn" data-act="info-edit">تعديل المعلومات</button>`:""}
+  </aside>`;
+}
+function compress(file){ return new Promise((res,rej)=>{ const u=URL.createObjectURL(file), img=new Image();
+  img.onload=()=>{ const k=Math.min(1,1100/Math.max(img.width,img.height)); const c=document.createElement("canvas"); c.width=Math.round(img.width*k); c.height=Math.round(img.height*k); c.getContext("2d").drawImage(img,0,0,c.width,c.height); URL.revokeObjectURL(u); res(c.toDataURL("image/jpeg",.78)); };
+  img.onerror=()=>{ URL.revokeObjectURL(u); rej(); }; img.src=u; }); }
+function tabAccount(){
+  return `<form class="card" id="acc-pass-form" style="display:flex;flex-direction:column;gap:10px" autocomplete="off">
+    <div class="sec-h" style="margin:0"><h2>الرقم السري للأساتذة</h2></div>
+    <p class="muted" style="margin:0;font-size:13px">رقم واحد يدخل فيه كل الأساتذة. إذا غيّرته، بلّغ الباقين بالرقم الجديد.</p>
+    <input class="inp pin num" type="password" id="pw-cur" inputmode="numeric" autocomplete="current-password" placeholder="الرقم الحالي">
+    <input class="inp pin num" type="password" id="pw-new" inputmode="numeric" autocomplete="new-password" placeholder="الرقم الجديد (٦ أرقام)" maxlength="6">
+    <input class="inp pin num" type="password" id="pw-new2" inputmode="numeric" autocomplete="new-password" placeholder="تأكيد الرقم الجديد" maxlength="6">
+    <div class="err" id="pw-err" role="status"></div>
+    <div><button class="btn pri" type="submit">تغيير الرقم السري</button></div>
+  </form>`;
+}
+function renderTeacher(){
+  const body = {rec:tabRec,wheel:tabWheel,knights:tabKnights,fees:tabFees,students:tabStudents,parents:tabParents,tatt:tabTeachers,info:tabInfo,account:tabAccount}[ui.tab]();
+  return mast({title:"لوحة الأستاذ", sub:`<span>تسجيل اليوم، القرعة، الرسوم، والفرسان</span>`, back:true}) + `<main class="wrap">
+    <div class="tabs" role="tablist">${TABS.map(([k,l])=>`<button role="tab" class="${ui.tab===k?"on":""}" data-act="tab" data-k="${k}">${l}</button>`).join("")}</div>
+    ${body}
+    <div class="row"><button class="btn ghost" data-act="logout">خروج من وضع الأستاذ</button></div>
+  </main>`;
+}
+
+/* ---------- Wheel ---------- */
+let wheelRot = 0;
+function wheelNames(){ return S.students.filter(s=>ui.wheelSel && ui.wheelSel.has(s.id)); }
+function drawWheel(){
+  const c = $("#wheel"); if(!c) return;
+  const x = c.getContext("2d"), W=c.width, R=W/2-8, cs=getComputedStyle(document.documentElement);
+  const navy=cs.getPropertyValue("--navy").trim(), cop=cs.getPropertyValue("--copper").trim(), copD=cs.getPropertyValue("--copper-deep").trim(), sunk=cs.getPropertyValue("--sunk").trim(), muted=cs.getPropertyValue("--muted").trim();
+  x.clearRect(0,0,W,W);
+  const L = wheelNames();
+  x.save(); x.translate(W/2,W/2);
+  if(!L.length){ x.beginPath(); x.arc(0,0,R,0,Math.PI*2); x.fillStyle=sunk; x.fill(); x.fillStyle=muted; x.font="600 28px 'IBM Plex Sans Arabic',sans-serif"; x.textAlign="center"; x.fillText("اختر المشاركين",0,10); x.restore(); return; }
+  const seg = Math.PI*2/L.length;
+    L.forEach((s,i)=>{
+    x.beginPath(); x.moveTo(0,0); x.arc(0,0,R,wheelRot+i*seg,wheelRot+(i+1)*seg); x.closePath();
+    x.fillStyle = (L.length>1 && L.length%2===1 && i===L.length-1) ? cop : (i%2?copD:navy);
+    x.fill(); x.strokeStyle="rgba(255,255,255,.35)"; x.lineWidth=2; x.stroke();
+    const ang = wheelRot+(i+.5)*seg, flip = Math.cos(ang) < 0;
+    x.save(); x.rotate(flip ? ang+Math.PI : ang); x.textAlign = flip ? "left" : "right"; x.textBaseline="middle"; x.fillStyle="#fff";
+    const label = short3(s.name), room = R-74;
+    let fs = Math.max(18, Math.min(30, 300/L.length+10));
+    x.font=`600 ${fs}px 'IBM Plex Sans Arabic',sans-serif`;
+    while(x.measureText(label).width > room && fs > 13){ fs--; x.font=`600 ${fs}px 'IBM Plex Sans Arabic',sans-serif`; }
+    x.fillText(label, flip ? -(R-22) : R-22, 0); x.restore();
+  });
+  x.beginPath(); x.arc(0,0,R,0,Math.PI*2); x.lineWidth=8; x.strokeStyle=cop; x.stroke();
+  x.beginPath(); x.arc(0,0,34,0,Math.PI*2); x.fillStyle=navy; x.fill(); x.lineWidth=4; x.strokeStyle=cop; x.stroke();
+  x.strokeStyle=cop; x.lineWidth=3.5; x.lineJoin="round"; x.lineCap="round";
+  x.strokeRect(-14,-6,28,7); x.strokeRect(-11,1,22,14);
+  x.beginPath(); x.moveTo(0,-6); x.lineTo(0,15); x.stroke();
+  x.beginPath(); x.ellipse(-6,-10,6,3.5,.35,0,Math.PI*2); x.stroke();
+  x.beginPath(); x.ellipse(6,-10,6,3.5,-.35,0,Math.PI*2); x.stroke();
+  x.restore();
+}
+function spin(){
+  const L = wheelNames(); if(!L.length || ui.spinning) return;
+  const d = activeDay(); if(prizesOn(d).length>=MAX_PRIZES) return;
+  ui.spinning = true; $('[data-act="spin"]').disabled = true;
+  const idx = Math.floor(Math.random()*L.length), seg=Math.PI*2/L.length;
+  const want = -Math.PI/2 - (idx+.5)*seg;
+  const twoPi=Math.PI*2; let delta = ((want - wheelRot) % twoPi + twoPi) % twoPi;
+  const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const start=wheelRot, total = delta + (reduce?0:twoPi*6), dur = reduce?1:4200, t0=performance.now();
+  const step = now => {
+    const k = Math.min(1,(now-t0)/dur), e = 1-Math.pow(1-k,4);
+    wheelRot = start + total*e; drawWheel();
+    if(k<1) requestAnimationFrame(step); else finish(L[idx].id);
+  };
+  requestAnimationFrame(step);
+  function finish(id){
+    wheelRot %= twoPi;
+    S.prizes[d] = [...prizesOn(d), id]; ui.wheelSel.delete(id); save(); ui.spinning=false;
+    $("#modal").innerHTML = `<div class="modal" data-act="close"><div class="dlg" role="dialog" aria-modal="true"><div class="prize-big">${coin}<span class="muted">الجائزة ${prizesOn(d).length} من ${MAX_PRIZES}</span><b>${esc(stu(id).name)}</b><span class="muted">مبروك، دينار</span></div><button class="btn pri" data-act="close">تم</button></div></div>`;
+    render();
+  }
+}
+
+/* ---------- Modals ---------- */
+function rememberedIqra(sid){ try { return localStorage.getItem(KEY+":iq:"+sid)||""; } catch(e){ return ""; } }
+async function fetchStudent(sid, num){
+  const snap = await FB.getDoc(FB.doc(FB.db,"parents",normPhone(num)));
+  if(!snap.exists()) return null;
+  return (snap.data().students||{})[sid] || null;
+}
+async function openStudent(sid){
+  if(teacher){ go("student",{sid}); return; }
+  const r = rememberedIqra(sid);
+  if(r){ try { const m = await fetchStudent(sid, r); if(m){ ui.stuDoc = m; mergeStudent(m); go("student",{sid}); return; } } catch(e){} }
+  openPin(sid);
+}
+function openPin(sid){
+  const s = stu(sid);
+  $("#modal").innerHTML = `<div class="modal" data-act="close"><form class="dlg" id="pin-form" role="dialog" aria-modal="true">
+    <h3>${esc(s.name)}</h3><p>اكتب رقم هاتف ولي الأمر لعرض التسميع والرسوم.</p>
+    <input class="inp pin num" id="pin-in" type="tel" inputmode="tel" maxlength="15" autocomplete="off" placeholder="رقم هاتف ولي الأمر" style="letter-spacing:.08em">
+    <label class="chk"><input type="checkbox" id="pin-keep" checked> تذكّر الرقم على هذا الجهاز</label>
+    <div class="err" id="pin-err"></div>
+    <div class="row"><button class="btn pri" type="submit" id="pin-go">عرض</button><button class="btn ghost" type="button" data-act="close">إلغاء</button></div>
+  </form></div>`;
+  $("#pin-in").focus();
+  $("#pin-form").addEventListener("submit", async e=>{
+    e.preventDefault();
+    const v = normPhone($("#pin-in").value);
+    if(!/^\d{8,12}$/.test(v)){ $("#pin-err").textContent="اكتب رقم الهاتف كامل (٨ أرقام)."; return; }
+    $("#pin-go").disabled = true; $("#pin-err").textContent = "";
+    try{
+      const m = await fetchStudent(sid, v);
+      if(!m){ $("#pin-err").textContent="الرقم غير مطابق. تأكد منه وحاول مرة ثانية."; $("#pin-go").disabled=false; return; }
+      if($("#pin-keep").checked){ try { localStorage.setItem(KEY+":iq:"+sid, v); } catch(err){} }
+      ui.stuDoc = m; mergeStudent(m); closeModal(); go("student",{sid});
+    }catch(err){ console.error(err); $("#pin-err").textContent="تعذّر الاتصال. تأكد من الإنترنت وحاول مرة ثانية."; $("#pin-go").disabled=false; }
+  });
+}
+const EYE_OPEN = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg>';
+const EYE_SHUT = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3l18 18"/><path d="M10.6 5.1A10.8 10.8 0 0 1 12 5c6.4 0 10 7 10 7a17 17 0 0 1-3.2 4.1M6.6 6.6A17.4 17.4 0 0 0 2 12s3.6 7 10 7a9.9 9.9 0 0 0 5.4-1.6"/><path d="M9.9 9.9a3 3 0 0 0 4.2 4.2"/></svg>';
+function addEyes(root){
+  (root||document).querySelectorAll('input[type="password"]:not([data-eye])').forEach(inp=>{
+    inp.dataset.eye = "1";
+    const w = document.createElement("span"); w.className = "pw-wrap"; w.setAttribute("dir","ltr");
+    inp.parentNode.insertBefore(w, inp); w.appendChild(inp);
+    const b = document.createElement("button"); b.type = "button"; b.className = "eye"; b.setAttribute("aria-label","إظهار كلمة المرور"); b.innerHTML = EYE_OPEN;
+    b.addEventListener("click", ()=>{ const show = inp.type==="password"; inp.type = show ? "text" : "password"; b.innerHTML = show ? EYE_SHUT : EYE_OPEN; b.setAttribute("aria-label", show ? "إخفاء كلمة المرور" : "إظهار كلمة المرور"); inp.focus(); });
+    w.appendChild(b);
+  });
+}
+new MutationObserver(()=>addEyes()).observe(document.documentElement, {childList:true, subtree:true});
+function authMsg(err){
+  const c = (err && err.code) || "";
+  if(/wrong-password|invalid-credential|invalid-login/.test(c)) return "الرقم الحالي غير صحيح.";
+  if(c.includes("weak-password")) return "الرقم ضعيف، استخدم ٦ أرقام.";
+  if(c.includes("email-already-in-use")) return "هذا البريد مستخدم لحساب ثاني.";
+  if(c.includes("invalid-email")) return "صيغة البريد غير صحيحة.";
+  if(c.includes("too-many")) return "محاولات كثيرة، انتظر قليلاً ثم حاول.";
+  if(c.includes("network")) return "تعذّر الاتصال، تأكد من الإنترنت.";
+  if(c.includes("requires-recent-login")) return "سجّل خروج وادخل من جديد، ثم أعد المحاولة.";
+  if(c.includes("operation-not-allowed")) return "تغيير البريد غير مفعّل في إعدادات Firebase.";
+  return "تعذّرت العملية ("+c+").";
+}
+async function reauth(pw){
+  const u = FB.auth.currentUser;
+  await FB.reauthenticateWithCredential(u, FB.EmailAuthProvider.credential(u.email, pw));
+  return u;
+}
+document.addEventListener("submit", async e=>{
+  const id = e.target.id;
+  if(id!=="acc-pass-form" && id!=="acc-mail-form") return;
+  e.preventDefault();
+  const btn = e.target.querySelector('button[type="submit"]');
+  if(id==="acc-pass-form"){
+    const out=$("#pw-err"), cur=$("#pw-cur").value, n1=$("#pw-new").value, n2=$("#pw-new2").value;
+    out.className="err";
+    if(!cur || !n1){ out.textContent="عبّ كل الخانات."; return; }
+    if(!/^\d{6}$/.test(n1)){ out.textContent="الرقم الجديد لازم يكون ٦ أرقام."; return; }
+    if(n1!==n2){ out.textContent="تأكيد الرقم غير مطابق."; return; }
+    btn.disabled=true;
+    try{ const u=await reauth(cur); await FB.updatePassword(u, n1); e.target.reset(); out.className="err ok"; out.textContent="تم تغيير الرقم السري. بلّغ باقي الأساتذة بالرقم الجديد."; }
+    catch(err){ console.error(err); out.textContent=authMsg(err); }
+    btn.disabled=false;
+  } else {
+    const out=$("#em-err"), em=$("#em-new").value.trim(), cur=$("#em-cur").value;
+    out.className="err";
+    if(!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(em)){ out.textContent="اكتب بريد صحيح."; return; }
+    if(!cur){ out.textContent="اكتب كلمة المرور الحالية."; return; }
+    if(em.toLowerCase()===(FB.auth.currentUser.email||"").toLowerCase()){ out.textContent="هذا هو البريد الحالي."; return; }
+    btn.disabled=true;
+    try{ const u=await reauth(cur); await FB.verifyBeforeUpdateEmail(u, em); e.target.reset(); out.className="err ok"; out.textContent="أرسلنا رابط تأكيد إلى "+em+". افتحه لإتمام التغيير، ثم ادخل بالبريد الجديد."; }
+    catch(err){ console.error(err); out.textContent=authMsg(err); }
+    btn.disabled=false;
+  }
+});
+function openLogin(){
+  $("#modal").innerHTML = `<div class="modal" data-act="close"><form class="dlg" id="login-form" role="dialog" aria-modal="true" autocomplete="off">
+    <h3>دخول الأستاذ</h3><p>اكتب الرقم السري للأساتذة.</p>
+    <input class="inp pin num" id="pass-in" type="password" inputmode="numeric" autocomplete="current-password" placeholder="••••••" aria-label="الرقم السري">
+    <div class="err" id="pass-err" role="status"></div>
+    <div class="row"><button class="btn pri" type="submit" id="login-go" style="flex:1">دخول</button><button class="btn ghost" type="button" data-act="close">إلغاء</button></div>
+    <p class="muted" style="margin:0;font-size:12.5px">نسيت الرقم؟ <button class="lnk" type="button" data-act="forgot">أرسل رابط رقم جديد للمشرف</button></p>
+  </form></div>`;
+  $("#pass-in").focus();
+  $("#login-form").addEventListener("submit", async e=>{
+    e.preventDefault();
+    const pw = $("#pass-in").value.trim();
+    if(pw.length < 6){ $("#pass-err").textContent="الرقم السري ٦ أرقام."; return; }
+    if(!FB.teacherEmail){ $("#pass-err").textContent="حساب الأستاذ غير مضبوط في firebase-config.js."; return; }
+    $("#login-go").disabled = true; $("#pass-err").textContent = "";
+    try{ ui.view = "login-pending"; await FB.signInWithEmailAndPassword(FB.auth, FB.teacherEmail, pw); closeModal(); }
+    catch(err){
+      ui.view = "home"; $("#login-go").disabled = false; $("#pass-in").select();
+      const c = err && err.code || "";
+      $("#pass-err").textContent = /invalid|wrong-password|user-not-found/.test(c) ? "الرقم السري غير صحيح." : c.includes("too-many") ? "محاولات كثيرة، انتظر قليلاً ثم حاول." : c.includes("network") ? "تعذّر الاتصال، تأكد من الإنترنت." : "تعذّر الدخول ("+c+").";
+    }
+  });
+}
+function carShow(n){ const c = $("#car"); if(!c) return; const N = +c.dataset.n; ui.slide = ((n%N)+N)%N;
+  c.querySelectorAll(".slide").forEach((el,i)=>el.classList.toggle("on", i===ui.slide)); c.querySelectorAll(".dot").forEach((el,i)=>el.classList.toggle("on", i===ui.slide)); }
+let carPause = 0, carTx = null;
+setInterval(()=>{ const c = $("#car"); if(!c || +c.dataset.n<2 || Date.now()<carPause || document.hidden || matchMedia("(prefers-reduced-motion: reduce)").matches) return; carShow(ui.slide+1); }, 6000);
+document.addEventListener("touchstart", e=>{ if(e.target.closest && e.target.closest("#car")){ carTx = e.touches[0].clientX; carPause = Date.now()+12000; } }, {passive:true});
+document.addEventListener("touchend", e=>{ if(carTx===null) return; const dx = e.changedTouches[0].clientX - carTx; carTx = null; if(Math.abs(dx)>40){ carShow(ui.slide + (dx>0?1:-1)); carPause = Date.now()+12000; } }, {passive:true});
+document.addEventListener("mouseover", e=>{ if(e.target.closest && e.target.closest("#car")) carPause = Date.now()+8000; });
+function closeModal(){ $("#modal").innerHTML=""; }
+
+/* ---------- Render + events ---------- */
+function render(){
+  pendingRender = false;
+  if(Array.isArray(S.students)) S.students.sort((a,b)=>String(a.name).localeCompare(String(b.name),"ar"));
+  if(S.info && S.info.iban===undefined) S.info.iban = DEFAULT_IBAN;
+  if(!fbOK){ $("#app").innerHTML = mast({title:"سجل الطلاب"}) + `<main class="wrap"><div class="card"><b>الإعداد غير مكتمل</b><p class="muted">أضف بيانات مشروع Firebase في الملف firebase-config.js ثم أعد تحميل الصفحة.</p></div></main>`; return; }
+  if(!loaded){ $("#app").innerHTML = mast({title:"سجل الطلاب"}) + `<main class="wrap"><div class="loading"><div class="spinner"></div><span>جاري تحميل السجل…</span></div></main>`; return; }
+  let v = ui.view==="teacher"&&!teacher ? "home" : ui.view;
+  if(v==="login-pending") v = "home";
+  if(v==="student" && !stu(ui.sid)) v = ui.view = "home";
+  $("#app").innerHTML = v==="student" ? renderStudent() : v==="teacher" ? renderTeacher() : renderHome();
+  if(v==="teacher" && ui.tab==="wheel") drawWheel();
+  $("#drawer").innerHTML = renderDrawer();
+}
+document.addEventListener("toggle", e=>{ const d=e.target; if(d.matches && d.matches("details.st")){ d.open?ui.open.add(d.dataset.sid):ui.open.delete(d.dataset.sid); } }, true);
+document.addEventListener("click", e=>{
+  const b = e.target.closest("[data-act]"); if(!b) return;
+  const a = b.dataset.act, sid=b.dataset.sid, d=b.dataset.d;
+  switch(a){
+    case "home": if(!teacher){ ui.stuDoc = null; } go("home"); break;
+    case "teacher": go("teacher"); break;
+    case "login": openLogin(); break;
+    case "logout": FB.signOut(FB.auth); break;
+    case "forgot": {
+      const out = $("#pass-err");
+      if(!FB.teacherEmail){ out.className="err"; out.textContent="حساب الأستاذ غير مضبوط في firebase-config.js."; break; }
+      b.disabled = true;
+      FB.sendPasswordResetEmail(FB.auth, FB.teacherEmail).then(()=>{ out.className="err ok"; out.textContent="أرسلنا رابط تعيين رقم جديد إلى بريد المشرف. تواصل معه ليبلّغك بالرقم الجديد."; })
+        .catch(err=>{ out.className="err"; out.textContent = authMsg(err); }).finally(()=>{ b.disabled=false; });
+      break; }
+    case "close": if(e.target===b || b.tagName==="BUTTON") closeModal(); break;
+    case "stu": openStudent(sid); break;
+    case "wk": { const n=iso(addDays(parse(ui.week),+d)); if(n<=CUR_WEEK){ ui.week=n; render(); } break; }
+    case "rwk": { const n=iso(addDays(parse(ui.week),+d)); if(n<=CUR_WEEK){ ui.week=n; ui.recDay=sessionDays(n)[0]; render(); } break; }
+    case "rday": ui.recDay=d; render(); break;
+    case "cyc": { const r=ensure(d,sid); const cur = r.a==="p"&&r.d?1 : r.a==="p"?2 : r.a==="a"?3 : 0; const n=(cur+1)%4;
+      if(n===0){ delete r.a; r.d=false; } else if(n===1){ r.a="p"; r.d=true; } else if(n===2){ r.a="p"; r.d=false; } else { r.a="a"; r.d=false; }
+      save(); render(); break; }
+    case "done": { const r=ensure(d,sid); r.d=!r.d; if(r.d && !r.a) r.a="p"; save(); render(); toast(r.d?"تم التسميع ✓":"أُلغي التأشير"); break; }
+    case "att": { const r=ensure(ui.recDay,sid); if(b.dataset.v) r.a=b.dataset.v; else delete r.a; if(r.a!=="p") r.d=false; save(); ui.open.add(sid); render(); break; }
+    case "allp": S.students.forEach(s=>{ const r=ensure(ui.recDay,s.id); if(!r.a) r.a="p"; }); save(); render(); toast("سُجّل حضور الجميع"); break;
+    case "tab": if(ui.view!=="teacher") ui.view="teacher"; ui.tab=b.dataset.k; if(ui.tab==="wheel") ui.wheelSel=null; render(); break;
+    case "wsel": ui.wheelSel.has(sid)?ui.wheelSel.delete(sid):ui.wheelSel.add(sid); render(); break;
+    case "wall": { const dd=activeDay(); ui.wheelSel=new Set(S.students.filter(s=>rec(dd,s.id)?.a==="p" && !prizesOn(dd).includes(s.id)).map(s=>s.id)); render(); break; }
+    case "wnone": ui.wheelSel=new Set(); render(); break;
+    case "spin": spin(); break;
+    case "wdel": { const dd=activeDay(); S.prizes[dd]=prizesOn(dd).filter(x=>x!==sid); save(); render(); break; }
+    case "smonth": ui.stuMonth=b.dataset.k; render(); break;
+    case "knm": ui.knMonth=b.dataset.k; render(); break;
+    case "kn": { const k=S.knights[ui.knMonth]=S.knights[ui.knMonth]||{h:[],i:[]}; const f=b.dataset.f; k[f]=k[f]||[]; k[f]=k[f].includes(sid)?k[f].filter(x=>x!==sid):[...k[f],sid]; save(); render(); break; }
+    case "fee": { S.fees[sid]=S.fees[sid]||{}; const m=b.dataset.m; if(S.fees[sid][m]) delete S.fees[sid][m]; else S.fees[sid][m]=true; save(); render(); break; }
+    case "ann-new": ui.annDraft=true; render(); $("#ann-text")?.focus(); break;
+    case "ann-cancel": ui.annDraft=false; ui.annImg=null; render(); break;
+    case "ann-save": { const t=$("#ann-text").value.trim(); if(!t && !ui.annImg) return; const id="a"+Date.now(); const a={date:TODAY, text:t, ts:Date.now()}; if(ui.annImg) a.img=ui.annImg;
+      b.disabled = true;
+      FB.setDoc(FB.doc(FB.db,"announcements",id), a).then(()=>toast("نُشر الإعلان")).catch(err=>{ console.error(err); toast("تعذّر نشر الإعلان"); });
+      ui.annDraft=false; ui.annImg=null; render(); break; }
+    case "menu": ui.menu=true; render(); break;
+    case "rec-add": { const key=sid+"|"+b.dataset.day+"|"+b.dataset.k; ui.slots[key]=(ui.slots[key]||0)+1; if(b.dataset.day===ui.recDay) ui.editDue.add(sid); ui.open.add(sid); render(); break; }
+    case "rec-del": { const day=b.dataset.day, k=b.dataset.k, i=+b.dataset.i, key=sid+"|"+day+"|"+k, r=ensure(day,sid), arr=entries(r[k]).slice();
+      if(i<arr.length){ arr.splice(i,1); if(!arr.length) delete r[k]; else r[k]=arr.length===1?arr[0]:arr; save(); } else if(ui.slots[key]) ui.slots[key]--;
+      ui.open.add(sid); render(); break; }
+    case "car": carShow(ui.slide + (+d)); carPause = Date.now()+12000; break;
+    case "car-go": carShow(+b.dataset.i); carPause = Date.now()+12000; break;
+    case "tcyc": { const tid=b.dataset.tid; S.tatt=S.tatt||{}; const m=S.tatt[d]=S.tatt[d]||{}; const n = !m[tid]?"p":m[tid]==="p"?"a":""; if(n) m[tid]=n; else delete m[tid]; save(); render(); break; }
+    case "t-del": ui.delTid=b.dataset.tid; render(); break;
+    case "t-del-no": ui.delTid=null; render(); break;
+    case "t-del-ok": S.teachers=(S.teachers||[]).filter(t=>t.id!==b.dataset.tid); ui.delTid=null; save(); render(); toast("حُذف المعلم"); break;
+    case "s-del": ui.delSid=sid; render(); break;
+    case "s-del-no": ui.delSid=null; render(); break;
+    case "s-del-ok": { const nm=stu(sid)?.name||""; S.students=S.students.filter(x=>x.id!==sid); ui.delSid=null; save(); render(); toast(`حُذف ${nm.split(" ")[0]}`); break; }
+    case "edit-due": ui.editDue.has(sid)?ui.editDue.delete(sid):ui.editDue.add(sid); ui.open.add(sid); render(); break;
+    case "menu-close": ui.menu=false; render(); break;
+    case "info-edit": ui.menu=false; go("teacher",{tab:"info"}); break;
+    case "copy": { const v=b.dataset.v; try { navigator.clipboard.writeText(v).then(()=>toast("نُسخ"),()=>toast(v)); } catch(err){ toast(v); } break; }
+    case "c-add": S.info.contacts.push({n:"",p:""}); save(); render(); $(`#cn-${S.info.contacts.length-1}`)?.focus(); break;
+    case "c-del": S.info.contacts.splice(+b.dataset.i,1); save(); render(); break;
+    case "ann-del": { const id=b.dataset.id; S.ann=S.ann.filter(x=>x.id!==id); render(); FB.deleteDoc(FB.doc(FB.db,"announcements",id)).then(()=>toast("حُذف الإعلان")).catch(()=>toast("تعذّر حذف الإعلان")); break; }
+  }
+});
+document.addEventListener("change", e=>{
+  const t = e.target;
+  if(t.dataset.k && t.dataset.sid){
+    const day = t.dataset.day || ui.recDay, sid = t.dataset.sid;
+    const r = ensure(day, sid), k = t.dataset.k, f = t.dataset.f, i = +(t.dataset.i||0), key = sid+"|"+day+"|"+k;
+    const arr = entries(r[k]).map(x=>Object.assign({},x));
+    const wasNew = i >= arr.length;
+    let x = wasNew ? {} : arr[i];
+    if(f==="s"){ const v=parseInt(t.value,10); x = v?{s:v}:{}; }
+    else if(f==="full"){ x.full = t.checked; if(t.checked){ delete x.f; delete x.t; } }
+    else { const n=Q.c[x.s-1]||0; let v=parseInt(t.value,10); if(v){ v=Math.max(1,Math.min(n,v)); x[f]=v; } else delete x[f]; }
+    if(wasNew){ if(x.s){ arr.push(x); if(ui.slots[key]) ui.slots[key]--; } }
+    else if(x.s) arr[i] = x; else arr.splice(i,1);
+    if(!arr.length) delete r[k]; else r[k] = arr.length===1 ? arr[0] : arr;
+    if(!r.a && day===ui.recDay) r.a="p";
+    if(day===ui.recDay) ui.editDue.add(sid);
+    ui.open.add(sid); save();
+    if((f==="f" || f==="t") && !wasNew){
+      const c = t.closest(".rec-item")?.querySelector(".calc"), pg = pages1(x);
+      if(c) c.innerHTML = pg ? `= <b class="pg">${fmtPages(pg)} وجه</b>` : "";
+      if(x[f]!==undefined) t.value = x[f];
+      const tot = t.closest(".fld")?.lastElementChild?.querySelector(".calc");
+      if(tot) tot.innerHTML = entries(r[k]).length>1 ? `المجموع = <b class="pg">${fmtPages(pagesFor(r[k]))} وجه</b>` : "";
+    } else {
+      render();
+      if(f==="s" && x.s){ const idx = wasNew ? entries(r[k]).length-1 : i; $(`#${k}f-${sid}-${day}-${idx}`)?.focus(); }
+    }
+    toast("حُفظ");
+  }
+  if(t.id==="ann-img" && t.files[0]){
+    compress(t.files[0]).then(u=>{ if(u.length>900000){ toast("الصورة كبيرة، اختر صورة أصغر"); return; } ui.annImg=u; const p=$("#ann-prev"); p.src=u; p.hidden=false; const l=$('label[for="ann-img"]'); if(l) l.textContent="تغيير الصورة"; }).catch(()=>toast("تعذّر قراءة الصورة"));
+  }
+  if(t.dataset.info){
+    const f=S.info, k=t.dataset.info;
+    if(k==="cn") f.contacts[+t.dataset.i].n=t.value.trim();
+    else if(k==="cp") f.contacts[+t.dataset.i].p=t.value.trim();
+    else if(k==="rules") f.rules=t.value;
+    else if(k==="iban"){ f.iban = t.value.replace(/\s/g,"").toUpperCase(); t.value = f.iban; }
+    else if(k==="wa"){ const v=t.value.trim(); if(v && !/^https:\/\//.test(v)){ $("#wa-err").textContent="الرابط لازم يبدأ بـ https://"; return; } $("#wa-err").textContent=""; f.wa=v; }
+    save(); toast("حُفظ");
+  }
+  if(t.dataset.actIn==="phone"){
+    const s = stu(t.dataset.sid), v = normPhone(t.value), err = $("#iq-err");
+    if(v && !/^\d{8,12}$/.test(v)){ err.textContent = `رقم ولي أمر ${s.name.split(" ")[0]} غير صحيح، اكتب ٨ أرقام.`; return; }
+    err.textContent = ""; s.phone = v; t.value = v; save();
+    const sib = v ? S.students.filter(o=>o.id!==s.id && o.phone===v).length : 0;
+    toast(sib ? `حُفظ الرقم (مشترك مع ${sib} من الإخوان)` : "حُفظ الرقم");
+  }
+  if(t.dataset.stu){
+    const s = stu(t.dataset.sid), f = t.dataset.stu; let v = t.value.trim();
+    if(f==="iqra") v = v.replace(/\D/g,"");
+    if(f==="email" && v && !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(v)){ toast("صيغة البريد غير صحيحة"); return; }
+    s[f] = v; t.value = v; save(); toast("حُفظ");
+  }
+  if(t.dataset.tname){ const x = (S.teachers||[]).find(y=>y.id===t.dataset.tname), v = t.value.trim(); if(x && v){ x.name = v; save(); toast("حُفظ"); } }
+  if(t.dataset.actIn==="name"){ const s=stu(t.dataset.sid); const v=t.value.trim(); if(v){ s.name=v; save(); toast("حُفظ الاسم"); } }
+  if(t.dataset.actIn==="iqra"){
+    const s=stu(t.dataset.sid); const v=t.value.replace(/\D/g,"");
+    const err=$("#iq-err");
+    if(v && v.length!==8){ err.textContent=`رقم ${s.name.split(" ")[0]} لازم يكون ٨ أرقام.`; return; }
+    if(v && S.students.some(o=>o.id!==s.id && o.iqra===v)){ err.textContent="هذا الرقم مسجّل لطالب آخر."; return; }
+    err.textContent=""; s.iqra=v; t.value=v; save(); toast("حُفظ الرقم");
+  }
+});
+document.addEventListener("submit", e=>{
+  if(e.target.id!=="add-teacher") return;
+  e.preventDefault();
+  const v = $("#new-teacher").value.trim().replace(/\s+/g," ");
+  if(!v){ $("#new-teacher").focus(); return; }
+  S.teachers = S.teachers||[]; S.teachers.push({id:"t"+Date.now(), name:v}); save(); render(); toast("أُضيف المعلم"); $("#new-teacher")?.focus();
+});
+document.addEventListener("submit", e=>{
+  if(e.target.id!=="add-stu") return;
+  e.preventDefault();
+  const v=$("#new-name").value.trim().replace(/\s+/g," ");
+  if(!v){ $("#new-name").focus(); return; }
+  if(S.students.some(x=>x.name===v)){ toast("الاسم موجود في القائمة"); return; }
+  S.students.push({id:"s"+Date.now(), name:v, iqra:""}); save(); render(); toast("أُضيف الطالب"); $("#new-name")?.focus();
+});
+document.addEventListener("keydown", e=>{ if(e.key==="Escape"){ closeModal(); if(ui.menu){ ui.menu=false; render(); } } });
+render();
+window.addEventListener("fb-ready", ()=>{ try { startData(); } catch(e){ console.error(e); fbOK=false; render(); } });
+window.addEventListener("fb-missing", ()=>{ fbOK=false; render(); });
+if(window.FB) window.dispatchEvent(new Event("fb-ready"));
+document.addEventListener("visibilitychange", ()=>{ if(document.visibilityState==="visible" && iso(new Date())!==TODAY && !saveT && !inFlight) location.reload(); });
+document.fonts && document.fonts.ready.then(()=>{ if(ui.view==="teacher" && ui.tab==="wheel") drawWheel(); });
+</script>
+<script type="module">
+import * as CFG from "./firebase-config.js?v=1791993365";
+const FIREBASE_CONFIG = CFG.FIREBASE_CONFIG;
+if(!FIREBASE_CONFIG || !FIREBASE_CONFIG.apiKey || /PASTE/.test(FIREBASE_CONFIG.apiKey)){
+  window.dispatchEvent(new Event("fb-missing"));
+} else {
+  const V = "10.12.2";
+  const [{ initializeApp }, A, F] = await Promise.all([
+    import(`https://www.gstatic.com/firebasejs/${V}/firebase-app.js`),
+    import(`https://www.gstatic.com/firebasejs/${V}/firebase-auth.js`),
+    import(`https://www.gstatic.com/firebasejs/${V}/firebase-firestore.js`)
+  ]);
+  const app = initializeApp(FIREBASE_CONFIG);
+  const auth = A.getAuth(app);
+  auth.languageCode = "ar";
+  let db;
+  try { db = F.initializeFirestore(app, { localCache: F.persistentLocalCache({ tabManager: F.persistentMultipleTabManager() }) }); }
+  catch(e){ db = F.getFirestore(app); }
+  window.FB = { app, auth, db, teacherEmail: CFG.TEACHER_EMAIL || "",
+    onAuthStateChanged: A.onAuthStateChanged, signInWithEmailAndPassword: A.signInWithEmailAndPassword, signOut: A.signOut,
+    sendPasswordResetEmail: A.sendPasswordResetEmail, updatePassword: A.updatePassword, reauthenticateWithCredential: A.reauthenticateWithCredential,
+    EmailAuthProvider: A.EmailAuthProvider, verifyBeforeUpdateEmail: A.verifyBeforeUpdateEmail,
+    doc: F.doc, getDoc: F.getDoc, setDoc: F.setDoc, deleteDoc: F.deleteDoc, onSnapshot: F.onSnapshot, collection: F.collection, writeBatch: F.writeBatch };
+  window.dispatchEvent(new Event("fb-ready"));
+}
+</script>
+</html>
