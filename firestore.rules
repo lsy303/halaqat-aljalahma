@@ -32,6 +32,21 @@ service cloud.firestore {
       allow write: if isTeacher() && num.matches('^[0-9]{8,12}$');
     }
 
+    // صور الفعاليات: الصور المصغرة والصور الكاملة، يشوفها الجميع ويرفعها الأستاذ
+    match /gallery/{id} {
+      allow read: if true;
+      allow write: if isTeacher();
+    }
+    match /galleryFull/{id} {
+      allow read: if true;
+      allow write: if isTeacher();
+    }
+
+    // صور الطلاب الشخصية: للأستاذ فقط (ولي الأمر يشوف صورة ولده من ملف رقم هاتفه)
+    match /photos/{sid} {
+      allow read, write: if isTeacher();
+    }
+
     // ملفات النظام القديم (برقم اقرأ): مغلقة للقراءة، والأستاذ يحذفها تلقائياً
     match /iqra/{num} {
       allow read: if false;

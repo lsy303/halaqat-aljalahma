@@ -328,6 +328,74 @@ details.st summary .meta{display:flex;gap:6px;align-items:center;flex-wrap:wrap;
 .dots{position:absolute;bottom:12px;left:0;right:0;display:flex;justify-content:center;gap:6px}
 .dot{width:8px;height:8px;border-radius:4px;border:0;padding:0;background:var(--line);cursor:pointer;transition:width .2s}
 .dot.on{background:var(--copper);width:20px}
+.fee-strip.fs-warn{background:var(--warn-soft);color:var(--warn)}
+.profile{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:16px;display:grid;grid-template-columns:92px minmax(0,1fr);gap:14px 16px;align-items:start;position:relative;overflow:hidden}
+.profile::before{content:"";position:absolute;inset:0 0 auto 0;height:5px;background:linear-gradient(90deg,var(--copper-deep),var(--copper))}
+.avatar{width:92px;height:92px;border-radius:50%;background:var(--navy);color:var(--copper);display:grid;place-items:center;font-family:var(--title);font-size:34px;font-weight:700;position:relative;overflow:visible;box-shadow:0 0 0 3px var(--copper-soft)}
+.avatar img{width:100%;height:100%;object-fit:cover;border-radius:50%}
+.av-edit{position:absolute;bottom:-2px;inset-inline-start:-2px;width:32px;height:32px;border-radius:50%;background:var(--copper);color:#fff;display:grid;place-items:center;cursor:pointer;border:2px solid var(--surface)}
+.av-edit svg{width:16px;height:16px}
+.pf-main{min-width:0;display:flex;flex-direction:column;gap:8px}
+.pf-main h2{margin:2px 0 0;font-size:18px;line-height:1.4;text-wrap:balance}
+.pf-grid{display:grid;grid-template-columns:1fr;gap:6px}
+.pf-row{display:grid;grid-template-columns:110px minmax(0,1fr);gap:8px;align-items:center;font-size:14px}
+.pf-row>span{color:var(--muted);font-size:12.5px}
+.pf-row b{overflow-wrap:anywhere}
+.pf-row .inp{padding:6px 10px;font-size:14px}
+.pf-notes{grid-column:1/-1;display:flex;flex-direction:column;gap:6px;border-top:1px solid var(--line);padding-top:10px}
+.pf-notes>span{color:var(--muted);font-size:12.5px}
+.pf-notes p{margin:0;white-space:pre-wrap;overflow-wrap:anywhere}
+@media (max-width:420px){.profile{grid-template-columns:76px minmax(0,1fr)}.avatar{width:76px;height:76px;font-size:28px}.pf-row{grid-template-columns:1fr;gap:2px}}
+.note-in{font-size:13.5px}
+.rep-tbl{min-width:620px}
+.rep-tbl td,.rep-tbl th{white-space:nowrap}
+.rep-tbl td:first-child{white-space:normal;min-width:160px}
+.term-card{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+.term-card>div{background:var(--sunk);border-radius:10px;padding:8px 10px;text-align:center}
+.term-card b{display:block;font-size:18px}
+.term-card span{font-size:12px;color:var(--muted)}
+@media (max-width:420px){.term-card{grid-template-columns:repeat(2,1fr)}}
+.print-only{display:none}
+.alb-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:8px}
+.alb-card{position:relative;border-radius:12px;overflow:hidden;aspect-ratio:4/3;border:0;padding:0;background:var(--navy);cursor:pointer;display:block;width:100%}
+.alb-card img{width:100%;height:100%;object-fit:cover;display:block}
+.alb-card span{position:absolute;inset:auto 0 0 0;padding:22px 10px 8px;background:linear-gradient(transparent,rgba(10,13,26,.85));color:#fff;font-weight:600;font-size:13.5px;text-align:start;line-height:1.35}
+.alb-card span small{display:block;font-weight:400;font-size:11.5px;opacity:.85}
+.alb-card .alb-ic{position:absolute;top:8px;inset-inline-start:8px;width:28px;height:28px;border-radius:8px;background:rgba(10,13,26,.55);color:#fff;display:grid;place-items:center;padding:0}
+.alb-card .alb-ic svg{width:16px;height:16px}
+.slide-link{color:var(--copper);font-size:13px;font-weight:600}
+.grid-tbl{min-width:0}
+.grid-tbl td,.grid-tbl th{padding:4px 3px}
+.gc{display:inline-grid;place-items:center;min-width:24px;height:22px;border-radius:6px;font-size:11px;font-weight:700;color:var(--line)}
+.gc.p{background:var(--ok-soft);color:var(--ok)}
+.gc.q{background:var(--warn-soft);color:var(--warn)}
+.gc.a{background:var(--bad-soft);color:var(--bad)}
+.rep-dates{display:flex;gap:8px;flex-wrap:wrap}
+.rep-dates label{display:flex;align-items:center;gap:6px;font-size:13px;color:var(--muted)}
+.rep-dates .inp{width:auto}
+@media print{.grid-tbl{font-size:10px}.gc{min-width:16px;height:16px}}
+.gal-strip{display:grid;grid-template-columns:repeat(4,1fr);gap:6px}
+.gal-strip button,.gal-grid button{padding:0;border:0;border-radius:10px;overflow:hidden;aspect-ratio:1;background:var(--sunk);cursor:pointer;display:block;width:100%}
+.gal-strip img,.gal-grid img{width:100%;height:100%;object-fit:cover;display:block}
+.gal-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:6px}
+.album{display:flex;flex-direction:column;gap:8px}
+.album h3{margin:0;font-size:16px;display:flex;justify-content:space-between;align-items:baseline;gap:8px}
+.album h3 small{color:var(--muted);font-weight:400;font-size:12.5px}
+.lb{position:fixed;inset:0;background:rgba(8,10,20,.92);z-index:40;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:16px;gap:10px}
+.lb img{max-width:100%;max-height:72vh;border-radius:10px;object-fit:contain}
+.lb .cap{color:#fff;text-align:center;font-size:14px;max-width:640px}
+.lb .cap small{display:block;color:#AEB3C6;font-size:12px}
+.lb .lb-bar{display:flex;gap:8px;flex-wrap:wrap;justify-content:center}
+.lb .btn{background:rgba(255,255,255,.12);color:#fff;border-color:rgba(255,255,255,.2)}
+@media print{
+  body{background:#fff!important;color:#000}
+  .mast,.tabs,.tbar,.no-print,#toast,#drawer,.row>.btn,button{display:none!important}
+  .print-only{display:block!important}
+  .wrap{max-width:none;padding:0}
+  .card,.fee-tbl-wrap{border:0!important;box-shadow:none!important}
+  .fee-tbl-wrap{overflow:visible!important}
+  .rep-tbl{min-width:0}
+}
 .pw-wrap{position:relative;display:block}
 .pw-wrap .inp{padding-inline-end:46px;width:100%}
 .pw-wrap[dir="ltr"] .inp{padding-inline-end:46px}
@@ -353,7 +421,7 @@ const LOGO = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="289 14 239 496"><
 const Q = {"n":["الفاتحة","البقرة","آل عمران","النساء","المائدة","الأنعام","الأعراف","الأنفال","التوبة","يونس","هود","يوسف","الرعد","إبراهيم","الحجر","النحل","الإسراء","الكهف","مريم","طه","الأنبياء","الحج","المؤمنون","النور","الفرقان","الشعراء","النمل","القصص","العنكبوت","الروم","لقمان","السجدة","الأحزاب","سبإ","فاطر","يس","الصافات","ص","الزمر","غافر","فصلت","الشورى","الزخرف","الدخان","الجاثية","الأحقاف","محمد","الفتح","الحجرات","ق","الذاريات","الطور","النجم","القمر","الرحمن","الواقعة","الحديد","المجادلة","الحشر","الممتحنة","الصف","الجمعة","المنافقون","التغابن","الطلاق","التحريم","الملك","القلم","الحاقة","المعارج","نوح","الجن","المزمل","المدثر","القيامة","الإنسان","المرسلات","النبإ","النازعات","عبس","التكوير","الانفطار","المطففين","الانشقاق","البروج","الطارق","الأعلى","الغاشية","الفجر","البلد","الشمس","الليل","الضحى","الشرح","التين","العلق","القدر","البينة","الزلزلة","العاديات","القارعة","التكاثر","العصر","الهمزة","الفيل","قريش","الماعون","الكوثر","الكافرون","النصر","المسد","الإخلاص","الفلق","الناس"],"c":[7,286,200,176,120,165,206,75,129,109,123,111,43,52,99,128,111,110,98,135,112,78,118,64,77,227,93,88,69,60,34,30,73,54,45,83,182,88,75,85,54,53,89,59,37,35,38,29,18,45,60,49,62,55,78,96,29,22,24,13,14,11,11,18,12,12,30,52,52,44,28,28,20,56,40,31,50,40,46,42,29,19,36,25,22,17,19,26,30,20,15,21,11,8,8,19,5,8,8,11,11,8,3,9,5,4,7,3,6,3,5,4,5,6],"p":[0,1,8,13,24,32,37,45,56,65,69,77,84,91,96,101,109,113,120,127,134,142,149,153,161,171,177,184,189,194,198,204,210,218,223,227,232,238,241,245,253,256,260,264,267,272,277,282,289,290,294,303,309,316,323,331,339,346,355,364,371,377,385,394,402,409,415,426,434,442,447,451,459,467,474,480,488,494,500,505,508,513,517,520,527,531,538,545,553,559,568,573,580,585,588,595,599,607,615,621,628,634,641,648,656,664,669,672,675,679,683,687,693,701,706,711,715,720,727,734,740,746,752,759,765,773,778,783,790,798,808,817,825,834,842,849,858,863,871,880,884,891,900,908,914,921,927,932,936,941,947,955,966,977,985,992,998,1006,1012,1022,1028,1036,1042,1050,1059,1075,1085,1092,1098,1104,1110,1114,1118,1125,1133,1142,1150,1161,1169,1177,1186,1194,1201,1206,1213,1222,1230,1236,1242,1249,1256,1262,1267,1272,1276,1283,1290,1297,1304,1308,1315,1322,1329,1335,1342,1347,1353,1358,1365,1371,1379,1385,1390,1398,1407,1418,1426,1435,1443,1453,1462,1471,1479,1486,1493,1502,1511,1519,1527,1536,1545,1555,1562,1571,1582,1591,1601,1611,1619,1627,1634,1640,1649,1660,1666,1675,1683,1692,1700,1708,1713,1721,1726,1736,1742,1750,1756,1761,1769,1775,1784,1793,1803,1818,1834,1854,1873,1893,1908,1916,1928,1936,1944,1956,1966,1974,1981,1989,1995,2004,2012,2020,2030,2037,2047,2057,2068,2079,2088,2096,2105,2116,2126,2134,2145,2156,2161,2168,2175,2186,2194,2202,2215,2224,2238,2251,2262,2276,2289,2302,2315,2327,2346,2361,2386,2400,2413,2425,2436,2447,2462,2474,2484,2494,2508,2519,2528,2541,2556,2565,2574,2585,2596,2601,2611,2619,2626,2634,2642,2651,2660,2668,2674,2691,2701,2716,2733,2748,2763,2778,2792,2802,2812,2819,2823,2828,2835,2845,2850,2853,2858,2867,2876,2888,2899,2911,2923,2933,2952,2972,2993,3016,3044,3069,3092,3116,3139,3160,3173,3182,3195,3204,3215,3223,3236,3248,3258,3266,3274,3281,3288,3296,3303,3312,3323,3330,3337,3347,3355,3364,3371,3379,3386,3393,3404,3415,3425,3434,3442,3451,3460,3470,3481,3489,3498,3504,3515,3524,3534,3540,3549,3556,3564,3569,3577,3584,3588,3596,3607,3614,3621,3629,3638,3646,3655,3664,3672,3679,3691,3699,3705,3718,3733,3746,3760,3776,3789,3813,3840,3865,3891,3915,3942,3971,3987,3997,4013,4032,4054,4064,4069,4080,4090,4099,4106,4115,4126,4133,4141,4150,4159,4167,4174,4183,4192,4200,4211,4219,4230,4239,4248,4257,4265,4273,4283,4288,4295,4304,4317,4324,4336,4348,4359,4373,4386,4399,4415,4433,4454,4474,4487,4496,4506,4516,4525,4531,4539,4546,4557,4565,4575,4584,4593,4599,4607,4612,4617,4624,4631,4646,4666,4682,4706,4727,4750,4767,4785,4811,4829,4853,4874,4896,4918,4942,4969,4996,5030,5056,5079,5087,5094,5100,5105,5111,5116,5126,5130,5136,5143,5151,5156,5162,5169,5178,5186,5193,5200,5209,5218,5223,5230,5237,5242,5254,5268,5287,5314,5332,5358,5386,5415,5430,5448,5461,5476,5495,5513,5543,5571,5597,5617,5642,5673,5703,5728,5759,5801,5830,5855,5883,5910,5932,5964,5994,6017,6044,6073,6099,6126,6138,6156,6177,6194,6208,6222,6237]};
 const SEED_NAMES = ["تميم بن علي الرميحي","علي بن حمد الرميحي","محمد بن حمد الرميحي","عبدالله بن فيصل الفضالة","خميس بن محمد الرميحي","حمد بن علي الرميحي","إبراهيم بن ثامر الرميحي","ناصر بن يوسف النجار","علي بن فيصل المنصوري","أحمد بن علي الرميحي","حمد بن أحمد الرميحي","عبدالعزيز بن راشد هرمس"];
 const KEY = "halaqat-jalahma";
-const BUILD = "1791994201";
+const BUILD = "1792044114";
 const MAX_PRIZES = 3;
 
 /* ---------- Quran pages (Madinah mushaf, 604 pages) ---------- */
@@ -386,7 +454,7 @@ function fmtPages(v){
   let r = Math.round(v*4)/4; if(r===0) r = .25;
   const w = Math.floor(r), fr = r-w;
   const g = fr===.25?"¼":fr===.5?"½":fr===.75?"¾":"";
-  return (w? String(w):"") + g || "0";
+  return "\u2066" + ((w? String(w):"") + g || "0") + "\u2069";
 }
 function recText1(e){
   const r = rangeOf(e); if(!r) return "";
@@ -421,6 +489,9 @@ function academicMonths(){
    iqra/{8 digits}  — one student's homework, recitation log and fees. Readable only by
                       someone who knows that number (get allowed, list denied). */
 const DEFAULT_IBAN = "BH46ALSA00442574100100";
+const DEFAULT_START = "2026-10-12";
+const START = () => (S.info && S.info.start) || DEFAULT_START;
+const inProg = d => d >= START();
 function normPhone(p){ let v = String(p||"").replace(/\D/g,""); if(/^(00)?973\d{8}$/.test(v)) v = v.slice(-8); return v; }
 function emptyState(){ return { v:1, students: SEED_NAMES.map((n,i)=>({id:"s"+(i+1), name:n, iqra:""})), days:{}, prizes:{}, knights:{}, fees:{}, info: defaultInfo(), mirrorKeys:[] }; }
 function defaultInfo(){ return {
@@ -441,13 +512,14 @@ function publicView(){
 }
 function mirrorFor(s){
   const days = {};
-  for(const [d,m] of Object.entries(S.days)){ const r=(m||{})[s.id]; if(r && (r.a || r.d || hasWork(r))) days[d]=r; }
-  return { sid:s.id, name:s.name, days, fees:S.fees[s.id]||{}, iqra:s.iqra||"", email:s.email||"", notes:s.notes||"" };
+  for(const [d,m] of Object.entries(S.days)){ const r=(m||{})[s.id]; if(r && (r.a || r.d || r.note || hasWork(r))) days[d]=r; }
+  return { sid:s.id, name:s.name, days, fees:S.fees[s.id]||{}, iqra:s.iqra||"", email:s.email||"", notes:s.notes||"", phone:s.phone||"", photo:(S.photos||{})[s.id]||"" };
 }
 let saveT = null, inFlight = 0, lastMirror = {}, lastTeacherJSON = "", syncState = "ok";
 function setSync(st){ syncState = st; const el=$("#sync"); if(el){ el.className="sync "+st; el.innerHTML = `<i></i>${st==="ok"?"محفوظ":st==="pending"?"جاري الحفظ…":"بانتظار الاتصال"}`; } }
 function save(){ if(!teacher) return false; clearTimeout(saveT); saveT = setTimeout(flush, 450); setSync("pending"); return true; }
 async function flush(){
+  if(teacher && !photosLoaded){ saveT = setTimeout(flush, 400); return; }
   saveT = null;
   const {db, doc, writeBatch} = FB;
   const b = writeBatch(db);
@@ -457,7 +529,7 @@ async function flush(){
   for(const k of new Set([...(S.parentKeys||[]), ...Object.keys(lastMirror)])) if(!(k in now)) b.delete(doc(db,"parents",k));
   for(const k of (S.mirrorKeys||[])) b.delete(doc(db,"iqra",k));
   lastMirror = now; S.parentKeys = Object.keys(now); S.mirrorKeys = [];
-  const t = clean(Object.assign({}, S, {ann:undefined}));
+  const t = clean(Object.assign({}, S, {ann:undefined, photos:undefined, galTop:undefined, gallery:undefined}));
   lastTeacherJSON = JSON.stringify(t);
   b.set(doc(db,"teacher","data"), t);
   b.set(doc(db,"public","main"), clean(publicView()));
@@ -473,7 +545,7 @@ function applyPublic(p){
   if(ui.stuDoc) mergeStudent(ui.stuDoc);
 }
 function mergeStudent(m){
-  { const s = stu(m.sid); if(s){ s.iqra = m.iqra||""; s.email = m.email||""; s.notes = m.notes||""; } }
+  { const s = stu(m.sid); if(s){ s.iqra = m.iqra||""; s.email = m.email||""; s.notes = m.notes||""; s.phone = m.phone||""; S.photos = S.photos||{}; S.photos[m.sid] = m.photo||""; } }
   for(const [d,r] of Object.entries(m.days||{})){ S.days[d] = Object.assign({}, S.days[d]||{}); S.days[d][m.sid] = r; }
   S.fees[m.sid] = m.fees||{};
 }
@@ -491,23 +563,28 @@ function startData(){
     if(snap.exists()) applyPublic(snap.data());
     loaded = true; if(!teacher) softRender();
   }, err=>{ console.error(err); loaded = true; softRender(); });
+  onSnapshot(FB.query(collection(db,"gallery"), FB.orderBy("ts","desc"), FB.limit(8)), qs=>{
+    S.galTop = qs.docs.map(d=>Object.assign({id:d.id}, d.data())); softRender();
+  }, err=>console.error(err));
   onSnapshot(collection(db,"announcements"), qs=>{
     S.ann = qs.docs.map(d=>Object.assign({id:d.id}, d.data())); annLoaded = true; softRender();
   }, err=>console.error(err));
   onAuthStateChanged(auth, async user=>{
     if(unsubTeacher){ unsubTeacher(); unsubTeacher = null; }
-    if(!user){ if(teacher){ teacher = false; ui.view = "home"; ui.week = CUR_WEEK; } render(); return; }
+    if(!user){ if(unsubPhotos){ unsubPhotos(); unsubPhotos = null; photosLoaded = false; } if(teacher){ teacher = false; ui.view = "home"; ui.week = CUR_WEEK; } render(); return; }
     try{
       const ref = doc(db,"teacher","data");
       const snap = await getDoc(ref);
       teacher = true;
-      if(snap.exists()){ const ann=S.ann; S = Object.assign(emptyState(), snap.data()); S.ann = ann; if(!S.info) S.info = defaultInfo(); lastTeacherJSON = JSON.stringify(snap.data()); }
-      else { const ann=S.ann; S = emptyState(); S.ann = ann; flush(); }
+      if(snap.exists()){ const ann=S.ann, gt=S.galTop; S = Object.assign(emptyState(), snap.data()); S.ann = ann; S.galTop = gt; if(!S.info) S.info = defaultInfo(); lastTeacherJSON = JSON.stringify(snap.data()); }
+      else { const ann=S.ann, gt=S.galTop; S = emptyState(); S.ann = ann; S.galTop = gt; flush(); }
       loaded = true;
+      if(migrate()) save();
+      startTeacherExtras();
       unsubTeacher = onSnapshot(ref, sn=>{
         if(!sn.exists() || sn.metadata.hasPendingWrites || saveT || inFlight) return;
         const j = JSON.stringify(sn.data()); if(j === lastTeacherJSON) return;
-        const ann = S.ann; S = Object.assign(emptyState(), sn.data()); S.ann = ann; lastTeacherJSON = j; softRender();
+        const ann = S.ann, ph = S.photos, gt = S.galTop; S = Object.assign(emptyState(), sn.data()); S.ann = ann; S.photos = ph; S.galTop = gt; lastTeacherJSON = j; softRender();
       });
       if(ui.view === "login-pending"){ ui.view = "teacher"; ui.tab = "rec"; toast("أهلاً بك"); }
       render(); window.scrollTo(0,0);
@@ -517,6 +594,21 @@ function startData(){
       FB.signOut(auth); render();
     }
   });
+}
+function migrate(){
+  if(S.migr1) return false;
+  for(const s of S.students){
+    const iq = normPhone(s.iqra);
+    if(/^\d{8}$/.test(iq)){ if(!s.phone) s.phone = iq; if(normPhone(s.phone)===iq) s.iqra = ""; }
+  }
+  S.migr1 = true; return true;
+}
+let photosLoaded = false, unsubPhotos = null;
+function startTeacherExtras(){
+  if(unsubPhotos) return;
+  unsubPhotos = FB.onSnapshot(FB.collection(FB.db,"photos"), qs=>{
+    S.photos = {}; qs.docs.forEach(d=>{ S.photos[d.id] = d.data().img; }); photosLoaded = true; softRender();
+  }, err=>{ console.error(err); photosLoaded = true; });
 }
 const stu = id => S.students.find(s=>s.id===id);
 const rec = (d,sid) => (S.days[d]||{})[sid];
@@ -548,6 +640,8 @@ const I = {
   chat:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 11.5a8 8 0 0 1-11.8 7L4 20l1.5-4A8 8 0 1 1 20 11.5z"/></svg>',
   cash:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="6" width="20" height="12" rx="2"/><circle cx="12" cy="12" r="2.8"/><path d="M6 9.5v5M18 9.5v5"/></svg>',
   trophy:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M8 4h8v5a4 4 0 0 1-8 0z"/><path d="M8 6H5a3 3 0 0 0 3 4M16 6h3a3 3 0 0 1-3 4M12 13v4M8.5 20h7M10 17h4v3h-4z"/></svg>',
+  cam:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 8h3l2-3h6l2 3h3v11H4z"/><circle cx="12" cy="13" r="3.5"/></svg>',
+  img:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="2"/><circle cx="9" cy="10" r="2"/><path d="M21 16l-5-5-9 9"/></svg>',
   plus:'<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>'
 };
 const coin = `<span class="coin" aria-label="جائزة">${I.gift}</span>`;
@@ -582,9 +676,9 @@ function renderHome(){
   const ann = S.ann.slice().sort((a,b)=>(b.date||"").localeCompare(a.date||"") || (b.ts||0)-(a.ts||0));
   const annHtml = `<section>
     <div class="sec-h"><h2>الإعلانات</h2>${teacher?`<button class="add-btn" data-act="ann-new">${I.plus} إعلان</button>`:""}</div>
-    ${ui.annDraft&&teacher?`<div class="card" style="display:flex;flex-direction:column;gap:10px"><textarea id="ann-text" class="inp" rows="3" placeholder="اكتب الإعلان أو تعليقاً على الصورة"></textarea><img id="ann-prev" class="ann-prev" alt="معاينة الصورة" ${ui.annImg?`src="${ui.annImg}"`:"hidden"}><div class="row"><input type="file" accept="image/*" id="ann-img" hidden><label for="ann-img" class="btn ghost" style="cursor:pointer">${ui.annImg?"تغيير الصورة":"إضافة صورة"}</label><button class="btn pri" data-act="ann-save">نشر</button><button class="btn ghost" data-act="ann-cancel">إلغاء</button></div></div>`:""}
+    ${ui.annDraft&&teacher?`<div class="card" style="display:flex;flex-direction:column;gap:10px"><textarea id="ann-text" class="inp" rows="3" placeholder="اكتب الإعلان أو تعليقاً على الصورة"></textarea><input class="inp" id="ann-album" list="ann-albums" placeholder="ربط بمجلد صور النشاط (اختياري)"><datalist id="ann-albums">${albumNames().map(n=>`<option value="${esc(n)}">`).join("")}</datalist><img id="ann-prev" class="ann-prev" alt="معاينة الصورة" ${ui.annImg?`src="${ui.annImg}"`:"hidden"}><div class="row"><input type="file" accept="image/*" id="ann-img" hidden><label for="ann-img" class="btn ghost" style="cursor:pointer">${ui.annImg?"تغيير الصورة":"إضافة صورة"}</label><button class="btn pri" data-act="ann-save">نشر</button><button class="btn ghost" data-act="ann-cancel">إلغاء</button></div></div>`:""}
     ${ann.length?`<div class="car" id="car" data-n="${ann.length}" aria-roledescription="carousel">
-      ${ann.map((a,i)=>`<figure class="slide ${i===(ui.slide%ann.length)?"on":""} ${a.img?"has-img":"txt"}" data-i="${i}">${a.img?`<img src="${esc(a.img)}" alt="${esc(a.text||"صورة الإعلان")}" loading="lazy">`:""}<figcaption>${a.text?`<p>${esc(a.text)}</p>`:""}<time class="num">${dShort(a.date)} · ${DAY[parse(a.date).getDay()]}</time>${teacher?`<button class="x" data-act="ann-del" data-id="${esc(a.id)}" aria-label="حذف الإعلان">✕</button>`:""}</figcaption></figure>`).join("")}
+      ${ann.map((a,i)=>`<figure class="slide ${i===(ui.slide%ann.length)?"on":""} ${a.img?"has-img":"txt"}" data-i="${i}"${a.album?` data-act="album" data-album="${esc(a.album)}" style="cursor:pointer" role="link" aria-label="صور ${esc(a.album)}"`:""}>${a.img?`<img src="${esc(a.img)}" alt="${esc(a.text||"صورة الإعلان")}" loading="lazy">`:""}<figcaption>${a.text?`<p>${esc(a.text)}</p>`:""}${a.album?`<span class="slide-link">صور النشاط: ${esc(a.album)} ←</span>`:""}<time class="num">${dShort(a.date)} · ${DAY[parse(a.date).getDay()]}</time>${teacher?`<button class="x" data-act="ann-del" data-id="${esc(a.id)}" aria-label="حذف الإعلان">✕</button>`:""}</figcaption></figure>`).join("")}
       ${ann.length>1?`<button class="car-nav prev" data-act="car" data-d="-1" aria-label="السابق">${I.back}</button><button class="car-nav next" data-act="car" data-d="1" aria-label="التالي">${I.chev}</button><div class="dots">${ann.map((a,i)=>`<button class="dot ${i===(ui.slide%ann.length)?"on":""}" data-act="car-go" data-i="${i}" aria-label="الإعلان ${i+1}"></button>`).join("")}</div>`:""}
     </div>`:`<div class="demo">لا توجد إعلانات حالياً.</div>`}
   </section>`;
@@ -626,20 +720,89 @@ function renderHome(){
   </section>`;
 
   const tbar = teacher ? `<div class="tbar"><b>وضع الأستاذ</b><span>اضغط على خانة اليوم للتبديل: حضر وسمّع، ثم حضر بدون تسميع، ثم غائب.</span><span class="sp"></span><button class="btn ghost" data-act="tab" data-k="account">الحساب</button><button class="btn ghost" data-act="logout">خروج</button></div>` : "";
-  return mast({title:"سجل الطلاب", sub}) + `<main class="wrap">${tbar}${demoNote}${annHtml}${knHtml}${rollHtml}</main>`;
+  const gt = S.galTop||[];
+  const albs = []; gt.forEach(p=>{ const k = p.album||"بدون عنوان"; if(!albs.find(x=>x.n===k)) albs.push({n:k, cover:p.thumb, date:p.date}); });
+  const galHtml = (gt.length || teacher) ? `<section>
+    <div class="sec-h"><h2>صور الأنشطة</h2><button class="lnk" data-act="gallery">${gt.length?"كل المجلدات":"إضافة صور"}</button></div>
+    ${albs.length?`<div class="alb-grid">${albs.slice(0,4).map(x=>`<button class="alb-card" data-act="album" data-album="${esc(x.n)}"><img src="${esc(x.cover)}" alt="" loading="lazy"><i class="alb-ic">${I.img}</i><span>${esc(x.n)}<small class="num">${dShort(x.date||TODAY)}</small></span></button>`).join("")}</div>`:`<div class="demo">لا توجد صور بعد.</div>`}
+  </section>` : "";
+  return mast({title:"سجل الطلاب", sub}) + `<main class="wrap">${tbar}${demoNote}${annHtml}${galHtml}${knHtml}${rollHtml}</main>`;
 }
 
+/* ---------- Gallery ---------- */
+let galAll = null, galLoading = false;
+function loadGallery(){
+  galLoading = true; render();
+  FB.getDocs(FB.query(FB.collection(FB.db,"gallery"), FB.orderBy("ts","desc"))).then(qs=>{ galAll = qs.docs.map(d=>Object.assign({id:d.id}, d.data())); }).catch(e=>{ console.error(e); toast("تعذّر تحميل الصور"); }).finally(()=>{ galLoading = false; if(ui.view==="gallery") render(); });
+}
+function albumNames(){ return [...new Set([...(galAll||[]), ...(S.galTop||[])].map(p=>p.album).filter(Boolean))]; }
+function renderGallery(){
+  const list = galAll || S.galTop || [];
+  const albums = {}; list.forEach(p=>{ const k = p.album||"بدون عنوان"; (albums[k] = albums[k]||[]).push(p); });
+  const up = teacher ? `<section class="card" style="display:flex;flex-direction:column;gap:10px">
+    <div class="sec-h" style="margin:0"><h2>${ui.album?"إضافة صور لهذا المجلد":"رفع صور / مجلد جديد"}</h2></div>
+    <input class="inp" id="gal-album" list="gal-albums" placeholder="اسم المجلد (الفعالية): رحلة الكورة، تكريم الطلاب…" value="${esc(ui.album||ui.galAlbum||"")}">
+    <datalist id="gal-albums">${albumNames().map(n=>`<option value="${esc(n)}">`).join("")}</datalist>
+    <input class="inp" id="gal-cap" placeholder="تعليق يظهر تحت الصور (اختياري)">
+    <div class="row"><input type="file" id="gal-files" accept="image/*" multiple hidden><label for="gal-files" class="btn pri" style="cursor:pointer">${I.img.replace('<svg','<svg width="16" height="16"')} اختر الصور</label><span class="muted" id="gal-prog" style="font-size:13px">اكتب اسم جديد لإنشاء مجلد جديد، وتقدر تختار أكثر من صورة.</span></div>
+  </section>` : "";
+  let body;
+  if(galLoading && !galAll) body = `<div class="loading"><div class="spinner"></div><span>جاري تحميل الصور…</span></div>`;
+  else if(ui.album){
+    const ps = albums[ui.album] || [];
+    body = `<div class="row"><button class="btn ghost" data-act="albums">${I.back.replace('<svg','<svg width="16" height="16"')} كل المجلدات</button></div>
+    <section class="album"><h3>${esc(ui.album)}<small class="num">${ps.length} صورة${ps[0]?` · ${dShort(ps[0].date||TODAY)}`:""}</small></h3>${ps[0]&&ps[0].caption?`<p class="muted" style="margin:0">${esc(ps[0].caption)}</p>`:""}
+    ${ps.length?`<div class="gal-grid">${ps.map(p=>`<button data-act="gal-open" data-id="${esc(p.id)}" aria-label="${esc(p.caption||ui.album)}"><img src="${esc(p.thumb)}" alt="${esc(p.caption||ui.album)}" loading="lazy"></button>`).join("")}</div>`:`<div class="demo">لا توجد صور في هذا المجلد بعد.</div>`}</section>`;
+  } else {
+    const names = Object.keys(albums);
+    body = names.length ? `<div class="alb-grid">${names.map(n=>{ const ps = albums[n]; return `<button class="alb-card" data-act="album" data-album="${esc(n)}"><img src="${esc(ps[0].thumb)}" alt="" loading="lazy"><i class="alb-ic">${I.img}</i><span>${esc(n)}<small class="num">${ps.length} صورة · ${dShort(ps[0].date||TODAY)}</small></span></button>`; }).join("")}</div>` : `<div class="demo">لا توجد صور بعد.</div>`;
+  }
+  return mast({title:ui.album?esc(ui.album):"صور الأنشطة", sub:`<span>الرحلات والأنشطة والتكريم</span>`, back:true}) + `<main class="wrap">${up}${body}</main>`;
+}
+async function uploadGallery(files){
+  const album = ($("#gal-album")?.value||"").trim(), cap = ($("#gal-cap")?.value||"").trim();
+  if(!album){ toast("اكتب اسم الفعالية أولاً"); $("#gal-album")?.focus(); return; }
+  ui.galAlbum = album; const prog = $("#gal-prog"); let ok = 0;
+  for(let i=0;i<files.length;i++){
+    if(prog) prog.textContent = `جاري رفع ${i+1} من ${files.length}…`;
+    try{
+      const full = await compress(files[i], 1280, .72), thumb = await compress(files[i], 360, .7);
+      if(full.length > 950000){ toast("صورة كبيرة جداً تم تخطيها"); continue; }
+      const id = "g"+Date.now()+"_"+i, meta = {album, caption:cap, date:TODAY, ts:Date.now()+i, thumb};
+      await FB.setDoc(FB.doc(FB.db,"galleryFull",id), {img:full});
+      await FB.setDoc(FB.doc(FB.db,"gallery",id), meta);
+      ok++;
+    }catch(e){ console.error(e); }
+  }
+  toast(`رُفعت ${ok} صورة`); ui.album = album; loadGallery();
+}
+let lbList = [];
+async function openPhoto(id){
+  lbList = (ui.view==="gallery" && galAll) ? galAll.filter(p=>!ui.album || (p.album||"بدون عنوان")===ui.album) : (S.galTop||[]);
+  const i = lbList.findIndex(p=>p.id===id), p = lbList[i]; if(!p) return;
+  const prev = lbList[i-1], next = lbList[i+1];
+  const box = $("#modal");
+  box.innerHTML = `<div class="lb" role="dialog" aria-modal="true" aria-label="صورة"><img id="lb-img" src="${esc(p.thumb)}" alt="${esc(p.caption||p.album||"")}"><div class="cap">${esc(p.caption||"")}<small>${esc(p.album||"")} · <span class="num">${dShort(p.date||TODAY)}</span></small></div>
+    <div class="lb-bar">${next?`<button class="btn" data-act="lb-nav" data-id="${esc(next.id)}">${I.back.replace('<svg','<svg width="16" height="16"')} التالية</button>`:""}<button class="btn" data-act="lb-close">إغلاق</button>${prev?`<button class="btn" data-act="lb-nav" data-id="${esc(prev.id)}">السابقة ${I.chev.replace('<svg','<svg width="16" height="16"')}</button>`:""}${teacher?`<button class="btn" data-act="gal-del" data-id="${esc(p.id)}" style="color:#E07B6D">حذف</button>`:""}</div></div>`;
+  try{ const snap = await FB.getDoc(FB.doc(FB.db,"galleryFull",id)); if(snap.exists()){ const im = $("#lb-img"); if(im && box.contains(im)) im.src = snap.data().img; } }catch(e){}
+}
+function closeLightbox(){ $("#modal").innerHTML = ""; }
+async function delPhoto(id){
+  closeLightbox();
+  try{ await FB.deleteDoc(FB.doc(FB.db,"gallery",id)); await FB.deleteDoc(FB.doc(FB.db,"galleryFull",id)); toast("حُذفت الصورة"); }catch(e){ toast("تعذّر الحذف"); }
+  if(galAll) galAll = galAll.filter(p=>p.id!==id); render();
+}
 /* ---------- Student ---------- */
 function stuStats(sid, mk){
-  const dates = Object.keys(S.days).filter(d=>monthKey(d)===mk && d<=TODAY).sort();
+  const dates = Object.keys(S.days).filter(d=>monthKey(d)===mk && d<=TODAY && inProg(d)).sort();
   let h=0,m=0,att=0,tot=0,pr=0;
   for(const d of dates){ const r=S.days[d][sid]; if(r&&r.a){ tot++; if(r.a==="p") att++; } if(r && r.d){ h+=pagesFor(r.h); m+=pagesFor(r.m); } }
-  for(const d of Object.keys(S.prizes)) if(monthKey(d)===mk && S.prizes[d].includes(sid)) pr++;
+  for(const d of Object.keys(S.prizes)) if(monthKey(d)===mk && inProg(d) && S.prizes[d].includes(sid)) pr++;
   return {dates,h,m,att,tot,pr};
 }
 function renderStudent(){
   const s = stu(ui.sid);
-  const months = [...new Set([...Object.keys(S.days).filter(d=>d<=TODAY).map(monthKey), monthKey(activeDay())])].sort();
+  const months = [...new Set([...Object.keys(S.days).filter(d=>d<=TODAY && inProg(d)).map(monthKey), monthKey(activeDay())])].sort();
   if(!months.includes(ui.stuMonth)) ui.stuMonth = months[months.length-1];
   const st = stuStats(s.id, ui.stuMonth);
   const seg = `<div class="seg">${months.map(k=>`<button class="${k===ui.stuMonth?"on":""}" data-act="smonth" data-k="${k}">${monthName(k)}</button>`).join("")}</div>`;
@@ -656,28 +819,40 @@ function renderStudent(){
       <div class="ln"><span class="pill p">حاضر</span>${r.d?`<span class="pill c">${I.check.replace('<svg','<svg width="12" height="12"')} تم التسميع</span>`:`<span class="pill" style="background:var(--sunk);color:var(--muted)">لم يُسمّع</span>`}${won?`<span class="pill c">جائزة دينار</span>`:""}</div>
       ${entries(r.h).length?`<div class="ln"><span class="k">الحفظ</span><span>${recText(r.h)}</span><span class="pg num">${fmtPages(pagesFor(r.h))} وجه</span></div>`:""}
       ${entries(r.m).length?`<div class="ln"><span class="k">المراجعة</span><span>${recText(r.m)}</span><span class="pg num">${fmtPages(pagesFor(r.m))} وجه</span></div>`:""}`;
-    return `<div class="log-day"><div class="log-date"><b>${DAY[parse(d).getDay()]}</b><span class="num">${dShort(d)}</span></div><div class="log-body">${body}</div></div>`;
+    return `<div class="log-day"><div class="log-date"><b>${DAY[parse(d).getDay()]}</b><span class="num">${dShort(d)}</span></div><div class="log-body">${body}${r.note?`<div class="ln"><span class="k">ملاحظة</span><span>${esc(r.note)}</span></div>`:""}</div></div>`;
   }).join("") || `<p class="muted" style="margin:0">لا توجد سجلات في هذا الشهر.</p>`;
   const curM = monthKey(TODAY), paidNow = (S.fees[s.id]||{})[curM];
   const late = academicMonths().filter(k=>k<curM && !(S.fees[s.id]||{})[k]).map(monthName);
-  const feeCard = `<div class="fee-strip ${paidNow&&!late.length?"fs-paid":"fs-due"}">${I.cash}<b>رسوم ${monthName(curM)}: ${paidNow?"تم الدفع":"لم تُدفع"}</b>${late.length?`<span>متأخر: ${late.join("، ")}</span>`:""}${(!paidNow||late.length)&&S.info.iban?`<button class="btn sm" data-act="copy" data-v="${esc(S.info.iban)}">نسخ الآيبان</button>`:""}</div>`;
+  const feeCard = `<div class="fee-strip ${paidNow&&!late.length?"fs-paid":paidNow?"fs-warn":"fs-due"}">${I.cash}<b>رسوم ${monthName(curM)}: ${paidNow?"تم الدفع":"لم تُدفع"}</b>${late.length?`<span>متأخر: ${late.join("، ")}</span>`:""}${(!paidNow||late.length)&&S.info.iban?`<button class="btn sm" data-act="copy" data-v="${esc(S.info.iban)}">نسخ الآيبان</button>`:""}</div>`;
   const kts = Object.keys(S.knights).sort().reverse().flatMap(m=>[["h","فارس الحفظ",I.book],["i","فارس الانضباط",I.star]].filter(([f])=>(S.knights[m][f]||[]).includes(s.id)).map(([f,l,ic])=>`<div class="knight">${I.trophy}<div><b>${l}</b><span>شهر ${monthLong(m)}، بارك الله فيه</span></div></div>`));
   const knCard = kts.length ? `<div class="knights-me">${kts.join("")}</div>` : "";
   const nd = nextDue(s.id);
   const hw = `<section class="hw"><div class="sec-h" style="margin:0"><h2>المطلوب للحصة القادمة</h2>${nd?`<small class="num" style="color:var(--navy-muted)">${DAY[parse(nd[0]).getDay()]} ${dShort(nd[0])}</small>`:""}</div>
     ${nd?`<div class="log-body">${dueLine("الحفظ",nd[1].h)}${dueLine("المراجعة",nd[1].m)}</div>`:`<p style="margin:0;color:var(--navy-muted)">لم يُحدَّد الواجب بعد.</p>`}</section>`;
-  const infoCard = teacher ? `<section class="card" style="display:flex;flex-direction:column;gap:10px"><div class="sec-h" style="margin:0"><h2>بيانات الطالب</h2><small>تظهر لولي الأمر</small></div>
-    <div class="fld"><label for="sq-${s.id}">رقم اقرأ</label><input class="inp num" dir="ltr" id="sq-${s.id}" inputmode="numeric" maxlength="12" value="${esc(s.iqra||"")}" data-stu="iqra" data-sid="${s.id}"></div>
-    <div class="fld"><label for="se-${s.id}">البريد الإلكتروني</label><input class="inp" type="email" dir="ltr" id="se-${s.id}" value="${esc(s.email||"")}" data-stu="email" data-sid="${s.id}"></div>
-    <div class="fld"><label for="sn-${s.id}">ملاحظات</label><textarea class="inp" rows="3" id="sn-${s.id}" data-stu="notes" data-sid="${s.id}">${esc(s.notes||"")}</textarea></div>
-    <div class="kv"><span>هاتف ولي الأمر</span><b class="num" dir="ltr">${esc(s.phone||"—")}</b></div></section>`
-    : ((s.iqra||s.email||s.notes) ? `<section class="card"><div class="sec-h" style="margin:0 0 4px"><h2>بيانات الطالب</h2></div>${s.iqra?`<div class="kv"><span>رقم اقرأ</span><b class="num" dir="ltr">${esc(s.iqra)}</b></div>`:""}${s.email?`<div class="kv"><span>البريد الإلكتروني</span><b dir="ltr" style="overflow-wrap:anywhere">${esc(s.email)}</b></div>`:""}${s.notes?`<div class="kv kv-notes"><span>ملاحظات</span><p>${esc(s.notes)}</p></div>`:""}</section>` : "");
+  const photo = (S.photos||{})[s.id] || "";
+  const initials = esc(String(s.name).trim().charAt(0));
+  const pfRow = (label, val, field, attrs) => teacher
+    ? `<div class="pf-row"><span>${label}</span><input class="inp ${field==="email"?"":"num"}" dir="ltr" ${attrs} value="${esc(val||"")}"></div>`
+    : (val ? `<div class="pf-row"><span>${label}</span><b class="${field==="email"?"":"num"}" dir="ltr">${esc(val)}</b></div>` : "");
+  const profile = `<section class="profile" aria-label="بطاقة الطالب">
+    <div class="avatar">${photo?`<img src="${esc(photo)}" alt="صورة ${esc(s.name)}">`:initials}${teacher?`<label class="av-edit" for="pfimg-${s.id}" title="تغيير الصورة">${I.cam}</label><input type="file" accept="image/*" id="pfimg-${s.id}" data-photo="${s.id}" hidden>`:""}</div>
+    <div class="pf-main"><h2>${esc(s.name)}</h2><div class="pf-grid">
+      ${pfRow("هاتف ولي الأمر", s.phone, "phone", `id="pfph-${s.id}" type="tel" inputmode="tel" maxlength="15" data-act-in="phone" data-sid="${s.id}"`)}
+      ${pfRow("رقم اقرأ", s.iqra, "iqra", `id="sq-${s.id}" inputmode="numeric" maxlength="12" data-stu="iqra" data-sid="${s.id}"`)}
+      ${pfRow("البريد الإلكتروني", s.email, "email", `id="se-${s.id}" type="email" data-stu="email" data-sid="${s.id}"`)}
+    </div></div>
+    ${teacher?`<div class="pf-notes"><span>ملاحظات (تظهر لولي الأمر)</span><textarea class="inp" rows="2" id="sn-${s.id}" data-stu="notes" data-sid="${s.id}">${esc(s.notes||"")}</textarea></div>`:(s.notes?`<div class="pf-notes"><span>ملاحظات</span><p>${esc(s.notes)}</p></div>`:"")}
+  </section>`;
+  const tr = periodRange(currentTerm()), ts = rangeStats(s.id, tr[0], tr[1]);
+  const termCard = `<section class="card" style="display:flex;flex-direction:column;gap:10px"><div class="sec-h" style="margin:0"><h2>${tr[2]}</h2><small>حصيلة الفصل</small></div>
+    <div class="term-card"><div><b class="num">${ts.att}</b><span>حضور</span></div><div><b class="num" style="color:var(--bad)">${ts.abs}</b><span>غياب</span></div><div><b class="num">${fmtPages(ts.h)}</b><span>أوجه حفظ</span></div><div><b class="num">${fmtPages(ts.m)}</b><span>أوجه مراجعة</span></div></div></section>`;
   return mast({title:esc(s.name), sub:`<span>سجل الطالب</span>`, back:true}) + `<main class="wrap">
     ${demoNote}
+    ${profile}
     ${knCard}
     ${feeCard}
     ${hw}
-    ${infoCard}
+    ${termCard}
     <div class="row" style="justify-content:space-between"><div class="sec-h" style="margin:0"><h2>${monthLong(ui.stuMonth)}</h2></div>${seg}</div>
     ${tiles}
     <section class="card"><div class="sec-h"><h2>السجل اليومي</h2></div><div class="log">${log}</div></section>
@@ -685,7 +860,7 @@ function renderStudent(){
 }
 
 /* ---------- Teacher ---------- */
-const TABS = [["rec","التسجيل اليومي"],["wheel","القرعة"],["knights","الفرسان"],["fees","الرسوم"],["students","الطلاب"],["parents","أولياء الأمور"],["tatt","حضور المعلمين"],["info","معلومات الحلقة"],["account","الحساب"]];
+const TABS = [["rec","التسجيل اليومي"],["wheel","القرعة"],["knights","الفرسان"],["fees","الرسوم"],["reports","التقارير"],["students","الطلاب"],["parents","أولياء الأمور"],["tatt","حضور المعلمين"],["info","معلومات الحلقة"],["account","الحساب"]];
 function surahOptions(sel){ return `<option value="">— السورة —</option>` + Q.n.map((n,i)=>`<option value="${i+1}" ${sel===i+1?"selected":""}>${i+1}. ${n}</option>`).join(""); }
 function recFields(sid,k,e,day){
   const list = entries(e).slice(), key = sid+"|"+day+"|"+k, extra = ui.slots[key]||0;
@@ -713,6 +888,7 @@ function dueBox(sid,r){
   return `<div class="due"><div class="due-h"><b>المطلوب اليوم</b>${has?`<button class="lnk" data-act="edit-due" data-sid="${sid}">${editing?"إخفاء التعديل":"تعديل"}</button>`:(r.a==="a"?"":`<span class="muted" style="font-size:12.5px">ما تحدّد واجب مسبقاً، أدخله هنا</span>`)}</div>
     ${has&&!editing?`<div class="log-body">${dueLine("الحفظ",r.h)}${dueLine("المراجعة",r.m)}</div>`:""}
     ${editing?recFields(sid,"h",r.h,ui.recDay)+recFields(sid,"m",r.m,ui.recDay):""}
+    <input class="inp note-in" id="nt-${sid}-${ui.recDay}" placeholder="ملاحظة اليوم (مثلاً: اختبار، تسميع جزء كامل)" value="${esc(r.note||"")}" data-note="${sid}" data-day="${ui.recDay}" aria-label="ملاحظة اليوم">
     ${r.a==="a"?`<span class="pill a" style="align-self:flex-start">غائب</span>`:`<div><button class="done-btn ${r.d?"on":""}" data-act="done" data-d="${ui.recDay}" data-sid="${sid}">${I.check.replace('<svg','<svg width="16" height="16"')} ${r.d?"تم التسميع":"تأشير: تم التسميع"}</button></div>`}
   </div>`;
 }
@@ -735,7 +911,7 @@ function tabRec(){
     const att = r.a==="p"?`<span class="pill p">حاضر</span>`:r.a==="a"?`<span class="pill a">غائب</span>`:`<span class="pill" style="background:var(--sunk);color:var(--muted)">لم يُسجَّل</span>`;
     const pg = pagesFor(r.h);
     return `<details class="st" data-sid="${s.id}" ${ui.open.has(s.id)?"open":""}>
-      <summary><span class="n"><span class="no num">${ix+1}</span>${esc(s.name)}</span><span class="meta">${pg?`<span class="pg num" style="font-size:13px">${fmtPages(pg)} وجه</span>`:""}${r.d?`<span class="pill c">تم</span>`:""}${att}</span></summary>
+      <summary><span class="n"><span class="no num">${ix+1}</span>${esc(s.name)}</span><span class="meta">${r.note?`<span class="pill" style="background:var(--sunk);color:var(--muted)" title="${esc(r.note)}">ملاحظة</span>`:""}${pg?`<span class="pg num" style="font-size:13px">${fmtPages(pg)} وجه</span>`:""}${r.d?`<span class="pill c">تم</span>`:""}${att}</span></summary>
       <div class="st-body">
         <div class="seg"><button class="${r.a==="p"?"on":""}" data-act="att" data-sid="${s.id}" data-v="p">حاضر</button><button class="${r.a==="a"?"on":""}" data-act="att" data-sid="${s.id}" data-v="a">غائب</button><button class="${!r.a?"on":""}" data-act="att" data-sid="${s.id}" data-v="">بدون</button></div>
         ${dueBox(s.id,r)}
@@ -790,6 +966,74 @@ function tabStudents(){
     <div class="err" id="iq-err"></div>
   </div>`;
 }
+function currentTerm(){ const m = NOW.getMonth()+1; return (m>=9 || m===1) ? "t1" : (m>=2 && m<=6) ? "t2" : "year"; }
+function periodRange(p){
+  const y = NOW.getMonth()>=8 ? NOW.getFullYear() : NOW.getFullYear()-1;
+  if(p==="t1") return [`${y}-09-01`, `${y+1}-01-31`, "الفصل الأول"];
+  if(p==="t2") return [`${y+1}-02-01`, `${y+1}-06-30`, "الفصل الثاني"];
+  if(p==="year") return [`${y}-09-01`, `${y+1}-08-31`, "السنة الدراسية"];
+  if(p==="custom"){ const f = ui.repFrom||START(), t = ui.repTo||TODAY; return [f, t, "من "+dShort(f)+" إلى "+dShort(t)]; }
+  const mk = monthKey(TODAY); return [mk+"-01", mk+"-31", "شهر "+monthLong(mk)];
+}
+function rangeStats(sid, a, b){
+  let att=0, abs=0, h=0, m=0, pr=0, rec=0; const notes=[], months={};
+  for(const d of Object.keys(S.days).filter(d=>d>=a && d<=b && d<=TODAY && inProg(d)).sort()){
+    const r = S.days[d][sid]; if(!r) continue;
+    const mo = months[monthKey(d)] = months[monthKey(d)] || {att:0,abs:0,h:0,m:0};
+    if(r.a==="p"){ att++; mo.att++; } else if(r.a==="a"){ abs++; mo.abs++; }
+    if(r.d){ rec++; const ph=pagesFor(r.h), pm=pagesFor(r.m); h+=ph; m+=pm; mo.h+=ph; mo.m+=pm; }
+    if(r.note) notes.push([d, r.note]);
+  }
+  for(const d of Object.keys(S.prizes)) if(d>=a && d<=b && inProg(d) && S.prizes[d].includes(sid)) pr++;
+  return {att, abs, h, m, pr, rec, notes, months, pct: (att+abs) ? Math.round(att*100/(att+abs)) : 0};
+}
+function tabReports(){
+  ui.repFrom = ui.repFrom || START(); ui.repTo = ui.repTo || TODAY;
+  const P = ui.rep = ui.rep || currentTerm(), [a, b, label] = periodRange(P);
+  const seg = `<div class="seg no-print">${[["t1","الفصل الأول"],["t2","الفصل الثاني"],["month","الشهر الحالي"],["year","السنة"],["custom","فترة محددة"]].map(([k,l])=>`<button class="${P===k?"on":""}" data-act="rep" data-k="${k}">${l}</button>`).join("")}</div>
+  ${P==="custom"?`<div class="rep-dates no-print"><label>من <input class="inp" type="date" id="rep-from" data-rep="from" value="${esc(ui.repFrom)}"></label><label>إلى <input class="inp" type="date" id="rep-to" data-rep="to" value="${esc(ui.repTo)}"></label></div>`:""}
+  ${ui.repSid?"":`<div class="seg no-print"><button class="${ui.repView!=="grid"?"on":""}" data-act="repv" data-k="sum">الملخص</button><button class="${ui.repView==="grid"?"on":""}" data-act="repv" data-k="grid">كشف الحضور (الطلاب والمعلمين)</button></div>`}`;
+  const head = `<div class="print-only" style="margin-bottom:10px"><b>حلقات جامع يوسف بن شاهين الجلاهمة</b><div>${label} · ${dShort(a)} – ${dShort(b)}</div></div>`;
+  if(!ui.repSid && ui.repView==="grid") return `${head}<div class="row no-print" style="justify-content:space-between"><div class="sec-h" style="margin:0"><h2>كشف الحضور</h2></div><button class="btn" data-act="print">طباعة / حفظ PDF</button></div>${seg}${attGrid(a,b,label)}`;
+  if(ui.repSid && stu(ui.repSid)){
+    const s = stu(ui.repSid), st = rangeStats(s.id, a, b);
+    const mrows = Object.entries(st.months).sort().map(([k,v])=>`<tr><td>${monthLong(k)}</td><td class="num">${v.att}</td><td class="num">${v.abs}</td><td class="num">${fmtPages(v.h)}</td><td class="num">${fmtPages(v.m)}</td></tr>`).join("") || `<tr><td colspan="5" class="muted">لا توجد سجلات في هذه الفترة.</td></tr>`;
+    return `${head}<div class="row no-print" style="justify-content:space-between"><button class="btn ghost" data-act="rep-back">${I.back.replace('<svg','<svg width="16" height="16"')} كل الطلاب</button><button class="btn" data-act="print">طباعة / حفظ PDF</button></div>
+    ${seg}
+    <section class="card" style="display:flex;flex-direction:column;gap:12px">
+      <div class="sec-h" style="margin:0"><h2>تقرير ${esc(s.name)}</h2><small>${label}</small></div>
+      <div class="term-card"><div><b class="num">${st.att}</b><span>حضور</span></div><div><b class="num" style="color:var(--bad)">${st.abs}</b><span>غياب</span></div><div><b class="num">${st.pct}%</b><span>نسبة الحضور</span></div><div><b class="num">${st.pr}</b><span>جوائز</span></div></div>
+      <div class="term-card"><div><b class="num">${fmtPages(st.h)}</b><span>أوجه الحفظ المسمّعة</span></div><div><b class="num">${fmtPages(st.m)}</b><span>أوجه المراجعة</span></div><div><b class="num">${st.rec}</b><span>أيام التسميع</span></div><div><b class="num">${st.notes.length}</b><span>ملاحظات</span></div></div>
+      <div class="fee-tbl-wrap"><table class="fee-tbl" style="min-width:0"><thead><tr><th>الشهر</th><th>حضور</th><th>غياب</th><th>حفظ (وجه)</th><th>مراجعة (وجه)</th></tr></thead><tbody>${mrows}</tbody></table></div>
+      ${st.notes.length?`<div><b style="font-size:14px">ملاحظات المعلم</b>${st.notes.map(([d,n])=>`<div class="kv"><span class="num">${DAY[parse(d).getDay()]} ${dShort(d)}</span><span style="color:var(--ink);text-align:start;flex:1">${esc(n)}</span></div>`).join("")}</div>`:""}
+      ${s.notes?`<div class="pf-notes" style="border-top:1px solid var(--line)"><span>ملاحظات عامة</span><p>${esc(s.notes)}</p></div>`:""}
+    </section>`;
+  }
+  const rows = S.students.map((s,ix)=>{ const st = rangeStats(s.id, a, b);
+    return `<tr><td><span class="no num">${ix+1}</span>${esc(s.name)}</td><td class="num">${st.att}</td><td class="num" style="color:${st.abs?"var(--bad)":"inherit"}">${st.abs}</td><td class="num">${st.pct}%</td><td class="num">${fmtPages(st.h)}</td><td class="num">${fmtPages(st.m)}</td><td class="num">${st.pr}</td><td class="no-print"><button class="btn sm" data-act="rep-stu" data-sid="${s.id}">التفاصيل</button></td></tr>`; }).join("");
+  return `${head}<div class="row no-print" style="justify-content:space-between"><div class="sec-h" style="margin:0"><h2>تقارير الطلاب</h2></div><button class="btn" data-act="print">طباعة / حفظ PDF</button></div>
+  ${seg}
+  <p class="muted no-print" style="margin:0;font-size:12.5px">${label}: من ${dShort(a<START()?START():a)} إلى ${dShort(b)}. الأوجه تُحسب للتسميع المؤشَّر عليه "تم" فقط.</p>
+  <div class="fee-tbl-wrap"><table class="fee-tbl rep-tbl"><thead><tr><th>الطالب</th><th>حضور</th><th>غياب</th><th>النسبة</th><th>حفظ (وجه)</th><th>مراجعة (وجه)</th><th>جوائز</th><th class="no-print"></th></tr></thead><tbody>${rows}</tbody></table></div>`;
+}
+function attGrid(a, b, label){
+  const lo = a<START()?START():a, hi = b<TODAY?b:TODAY, dates = [];
+  for(let x=parse(lo); iso(x)<=hi; x=addDays(x,1)) if([1,2,3].includes(x.getDay())) dates.push(iso(x));
+  if(!dates.length) return `<div class="demo">لا توجد أيام حلقة في هذه الفترة.</div>`;
+  const C = {pd:'<span class="gc p">✓✓</span>', p:'<span class="gc q">✓</span>', tp:'<span class="gc p">✓</span>', a:'<span class="gc a">✕</span>', "":'<span class="gc">·</span>'};
+  const th = n => `<th>${n}</th>${dates.map(d=>`<th class="num" style="font-size:11px;line-height:1.3">${DAY[parse(d).getDay()].replace("ال","")}<br>${dShort(d)}</th>`).join("")}<th>حضور</th><th>غياب</th>`;
+  const tot = (p,ab) => `<td class="num" style="color:var(--ok);font-weight:700">${p}</td><td class="num" style="color:var(--bad);font-weight:700">${ab}</td>`;
+  const srows = S.students.map((s,ix)=>{ let p=0, ab=0; const cs = dates.map(d=>{ const r = rec(d,s.id); let k=""; if(r&&r.a==="p"){ p++; k = r.d?"pd":"p"; } else if(r&&r.a==="a"){ ab++; k="a"; } return `<td>${C[k]}</td>`; }).join("");
+    return `<tr><td><span class="no num">${ix+1}</span>${esc(s.name)}</td>${cs}${tot(p,ab)}</tr>`; }).join("");
+  const T = S.teachers||[], TA = S.tatt||{};
+  const trows = T.map((t,ix)=>{ let p=0, ab=0; const cs = dates.map(d=>{ const v = (TA[d]||{})[t.id]; if(v==="p") p++; else if(v==="a") ab++; return `<td>${C[v==="p"?"tp":v==="a"?"a":""]}</td>`; }).join("");
+    return `<tr><td><span class="no num">${ix+1}</span>${esc(t.name)}</td>${cs}${tot(p,ab)}</tr>`; }).join("");
+  return `<section class="card" style="display:flex;flex-direction:column;gap:10px"><div class="sec-h" style="margin:0"><h2>كشف حضور الطلاب</h2><small>${label} · ${dates.length} يوم</small></div>
+    <div class="fee-tbl-wrap"><table class="fee-tbl grid-tbl"><thead><tr>${th("الطالب")}</tr></thead><tbody>${srows}</tbody></table></div>
+    <div class="muted" style="font-size:12px">✓✓ حضر وسمّع · ✓ حضر ولم يسمّع · ✕ غائب</div></section>
+  <section class="card" style="display:flex;flex-direction:column;gap:10px"><div class="sec-h" style="margin:0"><h2>كشف حضور المعلمين</h2><small>${label}</small></div>
+    ${T.length?`<div class="fee-tbl-wrap"><table class="fee-tbl grid-tbl"><thead><tr>${th("المعلم")}</tr></thead><tbody>${trows}</tbody></table></div>`:`<div class="demo">ما فيه معلمين مسجّلين. أضفهم من تبويب حضور المعلمين.</div>`}</section>`;
+}
 function tabParents(){
   const rows = S.students.map((s,ix)=>{
     const p = s.phone||"", intl = p.length===8 ? "973"+p : p, sib = p ? S.students.filter(o=>o.phone===p).length : 0;
@@ -803,7 +1047,7 @@ function tabParents(){
 function tabTeachers(){
   const T = S.teachers = S.teachers||[]; S.tatt = S.tatt||{};
   const days = sessionDays(ui.week), mk = monthKey(activeDay());
-  const cnt = t => Object.entries(S.tatt).filter(([d])=>monthKey(d)===mk && d<=TODAY).reduce((a,[d,m])=>{ if(m[t.id]==="p") a.p++; else if(m[t.id]==="a") a.a++; return a; },{p:0,a:0});
+  const cnt = t => Object.entries(S.tatt).filter(([d])=>monthKey(d)===mk && d<=TODAY && inProg(d)).reduce((a,[d,m])=>{ if(m[t.id]==="p") a.p++; else if(m[t.id]==="a") a.a++; return a; },{p:0,a:0});
   const rows = T.map((t,ix)=>{ const c = cnt(t); return `<tr><td class="nm"><span class="no num">${ix+1}</span><b style="font-size:14.5px">${esc(t.name)}</b></td>${days.map(d=>{ const v=(S.tatt[d]||{})[t.id]; const cls = v==="p"?"p":v==="a"?"a":(d>TODAY?"f":"n"); return `<td><button class="cell ${cls} edit" data-act="tcyc" data-d="${d}" data-tid="${t.id}" aria-label="${esc(t.name)}، ${DAY[parse(d).getDay()]}: ${v==="p"?"حاضر":v==="a"?"غائب":"لم يُسجَّل"}">${v==="p"?I.check:v==="a"?I.cross:"·"}</button></td>`; }).join("")}<td class="num" style="font-size:12.5px;white-space:nowrap"><span style="color:var(--ok)">${c.p}</span> / <span style="color:var(--bad)">${c.a}</span></td></tr>`; }).join("");
   return `<div class="card" style="display:flex;flex-direction:column;gap:12px">
     <div class="sec-h" style="margin:0"><h2>كشف حضور المعلمين</h2><small>للأساتذة فقط</small></div>
@@ -823,6 +1067,10 @@ function tabInfo(){
     <div class="sec-h" style="margin:0"><h2>أرقام التواصل</h2><small>تظهر في القائمة الجانبية</small></div>
     ${f.contacts.map((c,i)=>`<div class="ct-row"><input class="inp" id="cn-${i}" value="${esc(c.n)}" placeholder="الاسم أو الصفة" data-info="cn" data-i="${i}" aria-label="الاسم"><input class="inp num" id="cp-${i}" dir="ltr" inputmode="tel" value="${esc(c.p)}" placeholder="رقم الجوال" data-info="cp" data-i="${i}" aria-label="رقم الجوال"><button class="x" data-act="c-del" data-i="${i}" aria-label="حذف">✕</button></div>`).join("")}
     <div><button class="add-btn" data-act="c-add">${I.plus} رقم جديد</button></div>
+  </div>
+  <div class="card" style="display:flex;flex-direction:column;gap:10px">
+    <div class="sec-h" style="margin:0"><h2>تاريخ بداية البرنامج</h2><small>الأيام قبله ما تدخل في التقارير والحصيلة</small></div>
+    <input class="inp" type="date" id="start-in" value="${esc(f.start||DEFAULT_START)}" data-info="start">
   </div>
   <div class="card" style="display:flex;flex-direction:column;gap:10px">
     <div class="sec-h" style="margin:0"><h2>الحساب المصرفي للمركز (IBAN)</h2><small>يظهر مع زر نسخ</small></div>
@@ -853,8 +1101,8 @@ function renderDrawer(){
     ${teacher?`<button class="btn" data-act="info-edit">تعديل المعلومات</button>`:""}
   </aside>`;
 }
-function compress(file){ return new Promise((res,rej)=>{ const u=URL.createObjectURL(file), img=new Image();
-  img.onload=()=>{ const k=Math.min(1,1100/Math.max(img.width,img.height)); const c=document.createElement("canvas"); c.width=Math.round(img.width*k); c.height=Math.round(img.height*k); c.getContext("2d").drawImage(img,0,0,c.width,c.height); URL.revokeObjectURL(u); res(c.toDataURL("image/jpeg",.78)); };
+function compress(file, max=1100, q=.78){ return new Promise((res,rej)=>{ const u=URL.createObjectURL(file), img=new Image();
+  img.onload=()=>{ const k=Math.min(1,max/Math.max(img.width,img.height)); const c=document.createElement("canvas"); c.width=Math.round(img.width*k); c.height=Math.round(img.height*k); c.getContext("2d").drawImage(img,0,0,c.width,c.height); URL.revokeObjectURL(u); res(c.toDataURL("image/jpeg",q)); };
   img.onerror=()=>{ URL.revokeObjectURL(u); rej(); }; img.src=u; }); }
 function tabAccount(){
   return `<form class="card" id="acc-pass-form" style="display:flex;flex-direction:column;gap:10px" autocomplete="off">
@@ -868,7 +1116,7 @@ function tabAccount(){
   </form>`;
 }
 function renderTeacher(){
-  const body = {rec:tabRec,wheel:tabWheel,knights:tabKnights,fees:tabFees,students:tabStudents,parents:tabParents,tatt:tabTeachers,info:tabInfo,account:tabAccount}[ui.tab]();
+  const body = {rec:tabRec,wheel:tabWheel,knights:tabKnights,fees:tabFees,reports:tabReports,students:tabStudents,parents:tabParents,tatt:tabTeachers,info:tabInfo,account:tabAccount}[ui.tab]();
   return mast({title:"لوحة الأستاذ", sub:`<span>تسجيل اليوم، القرعة، الرسوم، والفرسان</span>`, back:true}) + `<main class="wrap">
     <div class="tabs" role="tablist">${TABS.map(([k,l])=>`<button role="tab" class="${ui.tab===k?"on":""}" data-act="tab" data-k="${k}">${l}</button>`).join("")}</div>
     ${body}
@@ -1067,7 +1315,7 @@ function render(){
   let v = ui.view==="teacher"&&!teacher ? "home" : ui.view;
   if(v==="login-pending") v = "home";
   if(v==="student" && !stu(ui.sid)) v = ui.view = "home";
-  $("#app").innerHTML = v==="student" ? renderStudent() : v==="teacher" ? renderTeacher() : renderHome();
+  $("#app").innerHTML = v==="student" ? renderStudent() : v==="teacher" ? renderTeacher() : v==="gallery" ? renderGallery() : renderHome();
   if(v==="teacher" && ui.tab==="wheel") drawWheel();
   $("#drawer").innerHTML = renderDrawer();
 }
@@ -1108,13 +1356,25 @@ document.addEventListener("click", e=>{
     case "knm": ui.knMonth=b.dataset.k; render(); break;
     case "kn": { const k=S.knights[ui.knMonth]=S.knights[ui.knMonth]||{h:[],i:[]}; const f=b.dataset.f; k[f]=k[f]||[]; k[f]=k[f].includes(sid)?k[f].filter(x=>x!==sid):[...k[f],sid]; save(); render(); break; }
     case "fee": { S.fees[sid]=S.fees[sid]||{}; const m=b.dataset.m; if(S.fees[sid][m]) delete S.fees[sid][m]; else S.fees[sid][m]=true; save(); render(); break; }
-    case "ann-new": ui.annDraft=true; render(); $("#ann-text")?.focus(); break;
+    case "ann-new": ui.annDraft=true; if(!galAll) FB.getDocs(FB.query(FB.collection(FB.db,"gallery"), FB.orderBy("ts","desc"))).then(qs=>{ galAll = qs.docs.map(d=>Object.assign({id:d.id}, d.data())); const dl=$("#ann-albums"); if(dl) dl.innerHTML = albumNames().map(n=>`<option value="${esc(n)}">`).join(""); }).catch(()=>{}); render(); $("#ann-text")?.focus(); break;
     case "ann-cancel": ui.annDraft=false; ui.annImg=null; render(); break;
-    case "ann-save": { const t=$("#ann-text").value.trim(); if(!t && !ui.annImg) return; const id="a"+Date.now(); const a={date:TODAY, text:t, ts:Date.now()}; if(ui.annImg) a.img=ui.annImg;
+    case "ann-save": { const t=$("#ann-text").value.trim(); if(!t && !ui.annImg) return; const id="a"+Date.now(); const a={date:TODAY, text:t, ts:Date.now()}; const al=($("#ann-album")?.value||"").trim(); if(al) a.album=al; if(ui.annImg) a.img=ui.annImg;
       b.disabled = true;
       FB.setDoc(FB.doc(FB.db,"announcements",id), a).then(()=>toast("نُشر الإعلان")).catch(err=>{ console.error(err); toast("تعذّر نشر الإعلان"); });
       ui.annDraft=false; ui.annImg=null; render(); break; }
     case "menu": ui.menu=true; render(); break;
+    case "rep": ui.rep=b.dataset.k; render(); break;
+    case "repv": ui.repView=b.dataset.k; render(); break;
+    case "album": ui.album=b.dataset.album; if(ui.view!=="gallery"){ go("gallery"); loadGallery(); } else { render(); window.scrollTo(0,0); } break;
+    case "albums": ui.album=null; render(); break;
+    case "rep-stu": ui.repSid=sid; render(); window.scrollTo(0,0); break;
+    case "rep-back": ui.repSid=null; render(); break;
+    case "print": window.print(); break;
+    case "gallery": ui.album=null; go("gallery"); loadGallery(); break;
+    case "gal-open": openPhoto(b.dataset.id); break;
+    case "gal-del": delPhoto(b.dataset.id); break;
+    case "lb-close": closeLightbox(); break;
+    case "lb-nav": openPhoto(b.dataset.id); break;
     case "rec-add": { const key=sid+"|"+b.dataset.day+"|"+b.dataset.k; ui.slots[key]=(ui.slots[key]||0)+1; if(b.dataset.day===ui.recDay) ui.editDue.add(sid); ui.open.add(sid); render(); break; }
     case "rec-del": { const day=b.dataset.day, k=b.dataset.k, i=+b.dataset.i, key=sid+"|"+day+"|"+k, r=ensure(day,sid), arr=entries(r[k]).slice();
       if(i<arr.length){ arr.splice(i,1); if(!arr.length) delete r[k]; else r[k]=arr.length===1?arr[0]:arr; save(); } else if(ui.slots[key]) ui.slots[key]--;
@@ -1166,6 +1426,14 @@ document.addEventListener("change", e=>{
     }
     toast("حُفظ");
   }
+  if(t.dataset.photo && t.files && t.files[0]){
+    const sid = t.dataset.photo;
+    compress(t.files[0], 360, .82).then(u=>{
+      S.photos = S.photos||{}; S.photos[sid] = u; render();
+      FB.setDoc(FB.doc(FB.db,"photos",sid), {img:u}).then(()=>{ save(); toast("حُفظت الصورة"); }).catch(err=>{ console.error(err); toast("تعذّر حفظ الصورة"); });
+    }).catch(()=>toast("تعذّر قراءة الصورة"));
+  }
+  if(t.id==="gal-files" && t.files && t.files.length){ uploadGallery([...t.files]); }
   if(t.id==="ann-img" && t.files[0]){
     compress(t.files[0]).then(u=>{ if(u.length>900000){ toast("الصورة كبيرة، اختر صورة أصغر"); return; } ui.annImg=u; const p=$("#ann-prev"); p.src=u; p.hidden=false; const l=$('label[for="ann-img"]'); if(l) l.textContent="تغيير الصورة"; }).catch(()=>toast("تعذّر قراءة الصورة"));
   }
@@ -1174,12 +1442,13 @@ document.addEventListener("change", e=>{
     if(k==="cn") f.contacts[+t.dataset.i].n=t.value.trim();
     else if(k==="cp") f.contacts[+t.dataset.i].p=t.value.trim();
     else if(k==="rules") f.rules=t.value;
+    else if(k==="start"){ f.start = t.value || DEFAULT_START; }
     else if(k==="iban"){ f.iban = t.value.replace(/\s/g,"").toUpperCase(); t.value = f.iban; }
     else if(k==="wa"){ const v=t.value.trim(); if(v && !/^https:\/\//.test(v)){ $("#wa-err").textContent="الرابط لازم يبدأ بـ https://"; return; } $("#wa-err").textContent=""; f.wa=v; }
     save(); toast("حُفظ");
   }
   if(t.dataset.actIn==="phone"){
-    const s = stu(t.dataset.sid), v = normPhone(t.value), err = $("#iq-err");
+    const s = stu(t.dataset.sid), v = normPhone(t.value), err = $("#iq-err") || {};
     if(v && !/^\d{8,12}$/.test(v)){ err.textContent = `رقم ولي أمر ${s.name.split(" ")[0]} غير صحيح، اكتب ٨ أرقام.`; return; }
     err.textContent = ""; s.phone = v; t.value = v; save();
     const sib = v ? S.students.filter(o=>o.id!==s.id && o.phone===v).length : 0;
@@ -1191,6 +1460,8 @@ document.addEventListener("change", e=>{
     if(f==="email" && v && !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(v)){ toast("صيغة البريد غير صحيحة"); return; }
     s[f] = v; t.value = v; save(); toast("حُفظ");
   }
+  if(t.dataset.rep){ if(t.dataset.rep==="from") ui.repFrom = t.value; else ui.repTo = t.value; render(); }
+  if(t.dataset.note){ const r = ensure(t.dataset.day, t.dataset.note), v = t.value.trim(); if(v) r.note = v; else delete r.note; ui.open.add(t.dataset.note); save(); toast("حُفظت الملاحظة"); }
   if(t.dataset.tname){ const x = (S.teachers||[]).find(y=>y.id===t.dataset.tname), v = t.value.trim(); if(x && v){ x.name = v; save(); toast("حُفظ"); } }
   if(t.dataset.actIn==="name"){ const s=stu(t.dataset.sid); const v=t.value.trim(); if(v){ s.name=v; save(); toast("حُفظ الاسم"); } }
   if(t.dataset.actIn==="iqra"){
@@ -1216,7 +1487,7 @@ document.addEventListener("submit", e=>{
   if(S.students.some(x=>x.name===v)){ toast("الاسم موجود في القائمة"); return; }
   S.students.push({id:"s"+Date.now(), name:v, iqra:""}); save(); render(); toast("أُضيف الطالب"); $("#new-name")?.focus();
 });
-document.addEventListener("keydown", e=>{ if(e.key==="Escape"){ closeModal(); if(ui.menu){ ui.menu=false; render(); } } });
+document.addEventListener("keydown", e=>{ if(e.key==="Escape" && $(".lb")){ closeLightbox(); return; } if(e.key==="Escape"){ closeModal(); if(ui.menu){ ui.menu=false; render(); } } });
 render();
 window.addEventListener("fb-ready", ()=>{ try { startData(); } catch(e){ console.error(e); fbOK=false; render(); } });
 window.addEventListener("fb-missing", ()=>{ fbOK=false; render(); });
@@ -1237,7 +1508,7 @@ document.addEventListener("visibilitychange", ()=>{ if(document.visibilityState=
 document.fonts && document.fonts.ready.then(()=>{ if(ui.view==="teacher" && ui.tab==="wheel") drawWheel(); });
 </script>
 <script type="module">
-import * as CFG from "./firebase-config.js?v=1791994201";
+import * as CFG from "./firebase-config.js?v=1792044114";
 const FIREBASE_CONFIG = CFG.FIREBASE_CONFIG;
 if(!FIREBASE_CONFIG || !FIREBASE_CONFIG.apiKey || /PASTE/.test(FIREBASE_CONFIG.apiKey)){
   window.dispatchEvent(new Event("fb-missing"));
@@ -1258,7 +1529,8 @@ if(!FIREBASE_CONFIG || !FIREBASE_CONFIG.apiKey || /PASTE/.test(FIREBASE_CONFIG.a
     onAuthStateChanged: A.onAuthStateChanged, signInWithEmailAndPassword: A.signInWithEmailAndPassword, signOut: A.signOut,
     sendPasswordResetEmail: A.sendPasswordResetEmail, updatePassword: A.updatePassword, reauthenticateWithCredential: A.reauthenticateWithCredential,
     EmailAuthProvider: A.EmailAuthProvider, verifyBeforeUpdateEmail: A.verifyBeforeUpdateEmail,
-    doc: F.doc, getDoc: F.getDoc, setDoc: F.setDoc, deleteDoc: F.deleteDoc, onSnapshot: F.onSnapshot, collection: F.collection, writeBatch: F.writeBatch };
+    doc: F.doc, getDoc: F.getDoc, setDoc: F.setDoc, deleteDoc: F.deleteDoc, onSnapshot: F.onSnapshot, collection: F.collection, writeBatch: F.writeBatch,
+    query: F.query, orderBy: F.orderBy, limit: F.limit, getDocs: F.getDocs };
   window.dispatchEvent(new Event("fb-ready"));
 }
 </script>
