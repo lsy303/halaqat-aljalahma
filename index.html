@@ -312,7 +312,7 @@ details.st summary .meta{display:flex;gap:6px;align-items:center;flex-wrap:wrap;
 .slide{display:none;margin:0}
 .slide.on{display:block;animation:fadein .5s ease}
 @keyframes fadein{from{opacity:.25}to{opacity:1}}
-.slide img{display:block;width:100%;max-width:100%;aspect-ratio:4/3;object-fit:cover;background:var(--sunk)}
+.slide img{display:block;width:100%;max-width:100%;aspect-ratio:4/3;object-fit:contain;background:var(--sunk)}
 .slide figcaption{padding:12px 16px 36px;display:flex;flex-direction:column;gap:4px;position:relative}
 .slide figcaption p{margin:0;font-size:15px;white-space:pre-wrap;overflow-wrap:anywhere}
 .slide.txt figcaption{padding:24px 18px 40px;border-inline-start:4px solid var(--copper);min-height:132px;justify-content:center}
@@ -356,6 +356,21 @@ details.st summary .meta{display:flex;gap:6px;align-items:center;flex-wrap:wrap;
 .term-card span{font-size:12px;color:var(--muted)}
 @media (max-width:420px){.term-card{grid-template-columns:repeat(2,1fr)}}
 .print-only{display:none}
+.co-tbl{min-width:0}
+.co-tbl tfoot td{background:var(--sunk);border-top:2px solid var(--line)}
+.co-tbl td:first-child{white-space:normal;min-width:130px}
+.co-amt{width:96px;text-align:center;padding:6px 8px;margin:0 auto}
+.gal-grid button,.gal-strip button{position:relative}
+.gal-grid button.vid{background:var(--navy)}
+.play{position:absolute;inset:0;display:grid;place-items:center;pointer-events:none;padding:0}
+.play svg{width:40px;height:40px;padding:10px;border-radius:50%;background:rgba(10,13,26,.62);color:#fff}
+.alb-card .play svg{width:46px;height:46px}
+.lb-vid{width:min(100%,900px);aspect-ratio:16/9}
+.lb-vid iframe{width:100%;height:100%;border:0;border-radius:10px;background:#000}
+.lb video{max-width:100%;max-height:72vh;border-radius:10px;background:#000}
+.vid-add{display:flex;flex-direction:column;gap:8px;border-top:1px dashed var(--line);padding-top:12px}
+.vid-add .vrow{display:flex;gap:8px}
+.vid-add .vrow .inp{flex:1;min-width:0}
 .alb-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:8px}
 .alb-card{position:relative;border-radius:12px;overflow:hidden;aspect-ratio:4/3;border:0;padding:0;background:var(--navy);cursor:pointer;display:block;width:100%}
 .alb-card img{width:100%;height:100%;object-fit:cover;display:block}
@@ -421,7 +436,7 @@ const LOGO = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="289 14 239 496"><
 const Q = {"n":["الفاتحة","البقرة","آل عمران","النساء","المائدة","الأنعام","الأعراف","الأنفال","التوبة","يونس","هود","يوسف","الرعد","إبراهيم","الحجر","النحل","الإسراء","الكهف","مريم","طه","الأنبياء","الحج","المؤمنون","النور","الفرقان","الشعراء","النمل","القصص","العنكبوت","الروم","لقمان","السجدة","الأحزاب","سبإ","فاطر","يس","الصافات","ص","الزمر","غافر","فصلت","الشورى","الزخرف","الدخان","الجاثية","الأحقاف","محمد","الفتح","الحجرات","ق","الذاريات","الطور","النجم","القمر","الرحمن","الواقعة","الحديد","المجادلة","الحشر","الممتحنة","الصف","الجمعة","المنافقون","التغابن","الطلاق","التحريم","الملك","القلم","الحاقة","المعارج","نوح","الجن","المزمل","المدثر","القيامة","الإنسان","المرسلات","النبإ","النازعات","عبس","التكوير","الانفطار","المطففين","الانشقاق","البروج","الطارق","الأعلى","الغاشية","الفجر","البلد","الشمس","الليل","الضحى","الشرح","التين","العلق","القدر","البينة","الزلزلة","العاديات","القارعة","التكاثر","العصر","الهمزة","الفيل","قريش","الماعون","الكوثر","الكافرون","النصر","المسد","الإخلاص","الفلق","الناس"],"c":[7,286,200,176,120,165,206,75,129,109,123,111,43,52,99,128,111,110,98,135,112,78,118,64,77,227,93,88,69,60,34,30,73,54,45,83,182,88,75,85,54,53,89,59,37,35,38,29,18,45,60,49,62,55,78,96,29,22,24,13,14,11,11,18,12,12,30,52,52,44,28,28,20,56,40,31,50,40,46,42,29,19,36,25,22,17,19,26,30,20,15,21,11,8,8,19,5,8,8,11,11,8,3,9,5,4,7,3,6,3,5,4,5,6],"p":[0,1,8,13,24,32,37,45,56,65,69,77,84,91,96,101,109,113,120,127,134,142,149,153,161,171,177,184,189,194,198,204,210,218,223,227,232,238,241,245,253,256,260,264,267,272,277,282,289,290,294,303,309,316,323,331,339,346,355,364,371,377,385,394,402,409,415,426,434,442,447,451,459,467,474,480,488,494,500,505,508,513,517,520,527,531,538,545,553,559,568,573,580,585,588,595,599,607,615,621,628,634,641,648,656,664,669,672,675,679,683,687,693,701,706,711,715,720,727,734,740,746,752,759,765,773,778,783,790,798,808,817,825,834,842,849,858,863,871,880,884,891,900,908,914,921,927,932,936,941,947,955,966,977,985,992,998,1006,1012,1022,1028,1036,1042,1050,1059,1075,1085,1092,1098,1104,1110,1114,1118,1125,1133,1142,1150,1161,1169,1177,1186,1194,1201,1206,1213,1222,1230,1236,1242,1249,1256,1262,1267,1272,1276,1283,1290,1297,1304,1308,1315,1322,1329,1335,1342,1347,1353,1358,1365,1371,1379,1385,1390,1398,1407,1418,1426,1435,1443,1453,1462,1471,1479,1486,1493,1502,1511,1519,1527,1536,1545,1555,1562,1571,1582,1591,1601,1611,1619,1627,1634,1640,1649,1660,1666,1675,1683,1692,1700,1708,1713,1721,1726,1736,1742,1750,1756,1761,1769,1775,1784,1793,1803,1818,1834,1854,1873,1893,1908,1916,1928,1936,1944,1956,1966,1974,1981,1989,1995,2004,2012,2020,2030,2037,2047,2057,2068,2079,2088,2096,2105,2116,2126,2134,2145,2156,2161,2168,2175,2186,2194,2202,2215,2224,2238,2251,2262,2276,2289,2302,2315,2327,2346,2361,2386,2400,2413,2425,2436,2447,2462,2474,2484,2494,2508,2519,2528,2541,2556,2565,2574,2585,2596,2601,2611,2619,2626,2634,2642,2651,2660,2668,2674,2691,2701,2716,2733,2748,2763,2778,2792,2802,2812,2819,2823,2828,2835,2845,2850,2853,2858,2867,2876,2888,2899,2911,2923,2933,2952,2972,2993,3016,3044,3069,3092,3116,3139,3160,3173,3182,3195,3204,3215,3223,3236,3248,3258,3266,3274,3281,3288,3296,3303,3312,3323,3330,3337,3347,3355,3364,3371,3379,3386,3393,3404,3415,3425,3434,3442,3451,3460,3470,3481,3489,3498,3504,3515,3524,3534,3540,3549,3556,3564,3569,3577,3584,3588,3596,3607,3614,3621,3629,3638,3646,3655,3664,3672,3679,3691,3699,3705,3718,3733,3746,3760,3776,3789,3813,3840,3865,3891,3915,3942,3971,3987,3997,4013,4032,4054,4064,4069,4080,4090,4099,4106,4115,4126,4133,4141,4150,4159,4167,4174,4183,4192,4200,4211,4219,4230,4239,4248,4257,4265,4273,4283,4288,4295,4304,4317,4324,4336,4348,4359,4373,4386,4399,4415,4433,4454,4474,4487,4496,4506,4516,4525,4531,4539,4546,4557,4565,4575,4584,4593,4599,4607,4612,4617,4624,4631,4646,4666,4682,4706,4727,4750,4767,4785,4811,4829,4853,4874,4896,4918,4942,4969,4996,5030,5056,5079,5087,5094,5100,5105,5111,5116,5126,5130,5136,5143,5151,5156,5162,5169,5178,5186,5193,5200,5209,5218,5223,5230,5237,5242,5254,5268,5287,5314,5332,5358,5386,5415,5430,5448,5461,5476,5495,5513,5543,5571,5597,5617,5642,5673,5703,5728,5759,5801,5830,5855,5883,5910,5932,5964,5994,6017,6044,6073,6099,6126,6138,6156,6177,6194,6208,6222,6237]};
 const SEED_NAMES = ["تميم بن علي الرميحي","علي بن حمد الرميحي","محمد بن حمد الرميحي","عبدالله بن فيصل الفضالة","خميس بن محمد الرميحي","حمد بن علي الرميحي","إبراهيم بن ثامر الرميحي","ناصر بن يوسف النجار","علي بن فيصل المنصوري","أحمد بن علي الرميحي","حمد بن أحمد الرميحي","عبدالعزيز بن راشد هرمس"];
 const KEY = "halaqat-jalahma";
-const BUILD = "1792045285";
+const BUILD = "1792168074";
 const MAX_PRIZES = 3;
 
 /* ---------- Quran pages (Madinah mushaf, 604 pages) ---------- */
@@ -721,10 +736,10 @@ function renderHome(){
 
   const tbar = teacher ? `<div class="tbar"><b>وضع الأستاذ</b><span>اضغط على خانة اليوم للتبديل: حضر وسمّع، ثم حضر بدون تسميع، ثم غائب.</span><span class="sp"></span><button class="btn ghost" data-act="tab" data-k="account">الحساب</button><button class="btn ghost" data-act="logout">خروج</button></div>` : "";
   const gt = S.galTop||[];
-  const albs = []; gt.forEach(p=>{ const k = p.album||"بدون عنوان"; if(!albs.find(x=>x.n===k)) albs.push({n:k, cover:p.thumb, date:p.date}); });
+  const albs = []; gt.forEach(p=>{ const k = p.album||"بدون عنوان"; let x = albs.find(y=>y.n===k); if(!x) albs.push(x = {n:k, cover:"", date:p.date}); if(!x.cover && p.thumb) x.cover = p.thumb; });
   const galHtml = (gt.length || teacher) ? `<section>
     <div class="sec-h"><h2>صور الأنشطة</h2><button class="lnk" data-act="gallery">${gt.length?"كل المجلدات":"إضافة صور"}</button></div>
-    ${albs.length?`<div class="alb-grid">${albs.slice(0,4).map(x=>`<button class="alb-card" data-act="album" data-album="${esc(x.n)}"><img src="${esc(x.cover)}" alt="" loading="lazy"><i class="alb-ic">${I.img}</i><span>${esc(x.n)}<small class="num">${dShort(x.date||TODAY)}</small></span></button>`).join("")}</div>`:`<div class="demo">لا توجد صور بعد.</div>`}
+    ${albs.length?`<div class="alb-grid">${albs.slice(0,4).map(x=>`<button class="alb-card" data-act="album" data-album="${esc(x.n)}">${x.cover?`<img src="${esc(x.cover)}" alt="" loading="lazy">`:`<i class="play">${PLAY_IC}</i>`}<i class="alb-ic">${I.img}</i><span>${esc(x.n)}<small class="num">${dShort(x.date||TODAY)}</small></span></button>`).join("")}</div>`:`<div class="demo">لا توجد صور بعد.</div>`}
   </section>` : "";
   return mast({title:"سجل الطلاب", sub}) + `<main class="wrap">${tbar}${demoNote}${annHtml}${galHtml}${knHtml}${rollHtml}</main>`;
 }
@@ -740,22 +755,28 @@ function renderGallery(){
   const list = galAll || S.galTop || [];
   const albums = {}; list.forEach(p=>{ const k = p.album||"بدون عنوان"; (albums[k] = albums[k]||[]).push(p); });
   const up = teacher ? `<section class="card" style="display:flex;flex-direction:column;gap:10px">
-    <div class="sec-h" style="margin:0"><h2>${ui.album?"إضافة صور لهذا المجلد":"رفع صور / مجلد جديد"}</h2></div>
+    <div class="sec-h" style="margin:0"><h2>${ui.album?"إضافة صور أو فيديو لهذا المجلد":"رفع صور وفيديو / مجلد جديد"}</h2></div>
     <input class="inp" id="gal-album" list="gal-albums" placeholder="اسم المجلد (الفعالية): رحلة الكورة، تكريم الطلاب…" value="${esc(ui.album||ui.galAlbum||"")}">
     <datalist id="gal-albums">${albumNames().map(n=>`<option value="${esc(n)}">`).join("")}</datalist>
     <input class="inp" id="gal-cap" placeholder="تعليق يظهر تحت الصور (اختياري)">
     <div class="row"><input type="file" id="gal-files" accept="image/*" multiple hidden><label for="gal-files" class="btn pri" style="cursor:pointer">${I.img.replace('<svg','<svg width="16" height="16"')} اختر الصور</label><span class="muted" id="gal-prog" style="font-size:13px">اكتب اسم جديد لإنشاء مجلد جديد، وتقدر تختار أكثر من صورة.</span></div>
+    <div class="vid-add">
+      <b style="font-size:14px">إضافة فيديو</b>
+      <div class="vrow"><input class="inp" id="vid-url" dir="ltr" type="url" placeholder="رابط يوتيوب أو Google Drive" aria-label="رابط الفيديو"><button class="btn" data-act="vid-link">إضافة الرابط</button></div>
+      <span class="muted" style="font-size:12.5px">يوتيوب: ارفعه كـ"غير مدرج". Drive: شارك الملف لـ"أي شخص لديه الرابط".</span>
+      <div class="row"><input type="file" id="vid-file" accept="video/*" hidden><label for="vid-file" class="btn ghost" style="cursor:pointer">${PLAY_IC.replace('<svg','<svg width="16" height="16"')} رفع فيديو من الجهاز</label><span class="muted" id="vid-prog" style="font-size:12.5px">حتى 200 ميغا.</span></div>
+    </div>
   </section>` : "";
   let body;
   if(galLoading && !galAll) body = `<div class="loading"><div class="spinner"></div><span>جاري تحميل الصور…</span></div>`;
   else if(ui.album){
     const ps = albums[ui.album] || [];
     body = `<div class="row"><button class="btn ghost" data-act="albums">${I.back.replace('<svg','<svg width="16" height="16"')} كل المجلدات</button></div>
-    <section class="album"><h3>${esc(ui.album)}<small class="num">${ps.length} صورة${ps[0]?` · ${dShort(ps[0].date||TODAY)}`:""}</small></h3>${ps[0]&&ps[0].caption?`<p class="muted" style="margin:0">${esc(ps[0].caption)}</p>`:""}
-    ${ps.length?`<div class="gal-grid">${ps.map(p=>`<button data-act="gal-open" data-id="${esc(p.id)}" aria-label="${esc(p.caption||ui.album)}"><img src="${esc(p.thumb)}" alt="${esc(p.caption||ui.album)}" loading="lazy"></button>`).join("")}</div>`:`<div class="demo">لا توجد صور في هذا المجلد بعد.</div>`}</section>`;
+    <section class="album"><h3>${esc(ui.album)}<small class="num">${countLabel(ps)}${ps[0]?` · ${dShort(ps[0].date||TODAY)}`:""}</small></h3>${ps[0]&&ps[0].caption?`<p class="muted" style="margin:0">${esc(ps[0].caption)}</p>`:""}
+    ${ps.length?`<div class="gal-grid">${ps.map(p=>galTile(p, p.caption||ui.album)).join("")}</div>`:`<div class="demo">لا توجد صور في هذا المجلد بعد.</div>`}</section>`;
   } else {
     const names = Object.keys(albums);
-    body = names.length ? `<div class="alb-grid">${names.map(n=>{ const ps = albums[n]; return `<button class="alb-card" data-act="album" data-album="${esc(n)}"><img src="${esc(ps[0].thumb)}" alt="" loading="lazy"><i class="alb-ic">${I.img}</i><span>${esc(n)}<small class="num">${ps.length} صورة · ${dShort(ps[0].date||TODAY)}</small></span></button>`; }).join("")}</div>` : `<div class="demo">لا توجد صور بعد.</div>`;
+    body = names.length ? `<div class="alb-grid">${names.map(n=>{ const ps = albums[n]; return `<button class="alb-card" data-act="album" data-album="${esc(n)}">${coverOf(ps)}<i class="alb-ic">${I.img}</i><span>${esc(n)}<small class="num">${countLabel(ps)} · ${dShort(ps[0].date||TODAY)}</small></span></button>`; }).join("")}</div>` : `<div class="demo">لا توجد صور بعد.</div>`;
   }
   return mast({title:ui.album?esc(ui.album):"صور الأنشطة", sub:`<span>الرحلات والأنشطة والتكريم</span>`, back:true}) + `<main class="wrap">${up}${body}</main>`;
 }
@@ -776,20 +797,89 @@ async function uploadGallery(files){
   }
   toast(`رُفعت ${ok} صورة`); ui.album = album; loadGallery();
 }
+const PLAY_IC = '<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5.5v13l11-6.5z"/></svg>';
+function parseVideo(u){
+  u = (u||"").trim(); if(!/^https:\/\/\S+$/i.test(u)) return null;
+  let m = u.match(/(?:youtube\.com\/(?:watch\?(?:\S*&)?v=|shorts\/|embed\/|live\/)|youtu\.be\/)([\w-]{11})/i);
+  if(m) return {src:"yt", vid:m[1], url:u, thumb:`https://i.ytimg.com/vi/${m[1]}/hqdefault.jpg`};
+  m = u.match(/drive\.google\.com\/(?:file\/d\/|open\?id=|uc\?(?:\S*&)?id=)([\w-]{20,})/i);
+  if(m) return {src:"drive", vid:m[1], url:u};
+  return {src:"link", url:u};
+}
+function videoEmbed(p){ if(p.src==="yt") return `https://www.youtube-nocookie.com/embed/${p.vid}?rel=0`; if(p.src==="drive") return `https://drive.google.com/file/d/${p.vid}/preview`; return ""; }
+function videoMedia(p){
+  const e = videoEmbed(p), t = esc(p.caption||p.album||"فيديو");
+  if(e) return `<div class="lb-vid"><iframe src="${esc(e)}" title="${t}" allow="autoplay; encrypted-media; picture-in-picture; fullscreen" allowfullscreen></iframe></div>`;
+  if(p.src==="file") return `<video src="${esc(p.url)}" controls playsinline preload="metadata" ${p.thumb?`poster="${esc(p.thumb)}"`:""}></video>`;
+  return `${p.thumb?`<img src="${esc(p.thumb)}" alt="${t}">`:""}<a class="btn" href="${esc(p.url)}" target="_blank" rel="noopener">فتح الفيديو</a>`;
+}
+function galTile(p, label){
+  const v = p.kind==="video";
+  return `<button class="${v?"vid":""}" data-act="gal-open" data-id="${esc(p.id)}" aria-label="${v?"فيديو: ":""}${esc(label)}">${p.thumb?`<img src="${esc(p.thumb)}" alt="${esc(label)}" loading="lazy" onerror="this.remove()">`:""}${v?`<i class="play">${PLAY_IC}</i>`:""}</button>`;
+}
+function countLabel(ps){ const v = ps.filter(p=>p.kind==="video").length, n = ps.length-v; return [n?`${n} صورة`:"", v?`${v} فيديو`:""].filter(Boolean).join(" · ") || "فارغ"; }
+function coverOf(ps){ const p = ps.find(x=>x.thumb); return p ? `<img src="${esc(p.thumb)}" alt="" loading="lazy">` : `<i class="play">${PLAY_IC}</i>`; }
+function galAlbumInput(){
+  const album = ($("#gal-album")?.value||"").trim(), cap = ($("#gal-cap")?.value||"").trim();
+  if(!album){ toast("اكتب اسم الفعالية أولاً"); $("#gal-album")?.focus(); return null; }
+  ui.galAlbum = album; return {album, cap};
+}
+async function addVideoLink(){
+  const a = galAlbumInput(); if(!a) return;
+  const inp = $("#vid-url"), pv = parseVideo(inp && inp.value);
+  if(!pv){ toast("الصق رابط الفيديو كاملاً، يبدأ بـ https://"); inp?.focus(); return; }
+  const id = "v"+Date.now(), meta = Object.assign({album:a.album, caption:a.cap, date:TODAY, ts:Date.now(), kind:"video"}, pv);
+  try{ await FB.setDoc(FB.doc(FB.db,"gallery",id), meta); toast("أُضيف الفيديو"); ui.album = a.album; loadGallery(); }
+  catch(e){ console.error(e); toast("تعذّر إضافة الفيديو"); }
+}
+function videoThumb(file){ return new Promise((res,rej)=>{
+  const u = URL.createObjectURL(file), v = document.createElement("video"); let fin = false;
+  const end = (ok, val) => { if(fin) return; fin = true; clearTimeout(to); URL.revokeObjectURL(u); ok ? res(val) : rej(val); };
+  const to = setTimeout(()=>end(false), 8000);
+  v.muted = true; v.playsInline = true; v.preload = "auto";
+  v.onloadeddata = () => { try{ v.currentTime = Math.min(1, (v.duration||2)/2); }catch(e){ end(false, e); } };
+  v.onseeked = () => { try{ const k = Math.min(1, 360/Math.max(v.videoWidth, v.videoHeight)), c = document.createElement("canvas"); c.width = Math.round(v.videoWidth*k); c.height = Math.round(v.videoHeight*k); c.getContext("2d").drawImage(v,0,0,c.width,c.height); end(true, c.toDataURL("image/jpeg",.7)); }catch(e){ end(false, e); } };
+  v.onerror = () => end(false);
+  v.src = u; }); }
+async function uploadVideo(file){
+  const a = galAlbumInput(); if(!a) return;
+  const prog = $("#vid-prog"), say = t => { const el = $("#vid-prog"); if(el) el.textContent = t; };
+  if(file.size > 200*1024*1024){ toast("الفيديو أكبر من 200 ميغا"); say("الفيديو أكبر من 200 ميغا. ارفعه على يوتيوب وأضف الرابط."); return; }
+  let ST; try{ ST = await FB.storage(); }catch(e){ console.error(e); say("خدمة رفع الفيديو غير متاحة، استخدم رابط يوتيوب."); return; }
+  const id = "v"+Date.now(), ext = ((file.name||"").split(".").pop()||"").toLowerCase().replace(/[^a-z0-9]/g,"").slice(0,5) || "mp4", path = `videos/${id}.${ext}`;
+  say("جاري تجهيز الفيديو…");
+  const thumb = await videoThumb(file).catch(()=>"");
+  try{
+    const r = ST.ref(ST.st, path);
+    const task = ST.uploadBytesResumable(r, file, {contentType: file.type || "video/mp4"});
+    await new Promise((res,rej)=>task.on("state_changed", s=>say(`جاري رفع الفيديو… ${Math.round(s.bytesTransferred*100/(s.totalBytes||1))}%`), rej, res));
+    const url = await ST.getDownloadURL(r);
+    const meta = {album:a.album, caption:a.cap, date:TODAY, ts:Date.now(), kind:"video", src:"file", url, path}; if(thumb) meta.thumb = thumb;
+    await FB.setDoc(FB.doc(FB.db,"gallery",id), meta);
+    toast("رُفع الفيديو"); ui.album = a.album; loadGallery();
+  }catch(e){
+    console.error(e); const c = (e && e.code) || "";
+    say(/unauthorized|bucket|not-found|project|unknown|retry-limit/.test(c) ? "رفع الفيديو من الجهاز غير مفعّل بعد في Firebase. استخدم رابط يوتيوب أو Drive." : "تعذّر رفع الفيديو، حاول مرة ثانية.");
+    toast("تعذّر رفع الفيديو");
+  }
+}
 let lbList = [];
 async function openPhoto(id){
   lbList = (ui.view==="gallery" && galAll) ? galAll.filter(p=>!ui.album || (p.album||"بدون عنوان")===ui.album) : (S.galTop||[]);
   const i = lbList.findIndex(p=>p.id===id), p = lbList[i]; if(!p) return;
   const prev = lbList[i-1], next = lbList[i+1];
   const box = $("#modal");
-  box.innerHTML = `<div class="lb" role="dialog" aria-modal="true" aria-label="صورة"><img id="lb-img" src="${esc(p.thumb)}" alt="${esc(p.caption||p.album||"")}"><div class="cap">${esc(p.caption||"")}<small>${esc(p.album||"")} · <span class="num">${dShort(p.date||TODAY)}</span></small></div>
+  const media = p.kind==="video" ? videoMedia(p) : `<img id="lb-img" src="${esc(p.thumb)}" alt="${esc(p.caption||p.album||"")}">`;
+  box.innerHTML = `<div class="lb" role="dialog" aria-modal="true" aria-label="${p.kind==="video"?"فيديو":"صورة"}">${media}<div class="cap">${esc(p.caption||"")}<small>${esc(p.album||"")} · <span class="num">${dShort(p.date||TODAY)}</span></small></div>
     <div class="lb-bar">${next?`<button class="btn" data-act="lb-nav" data-id="${esc(next.id)}">${I.back.replace('<svg','<svg width="16" height="16"')} التالية</button>`:""}<button class="btn" data-act="lb-close">إغلاق</button>${prev?`<button class="btn" data-act="lb-nav" data-id="${esc(prev.id)}">السابقة ${I.chev.replace('<svg','<svg width="16" height="16"')}</button>`:""}${teacher?`<button class="btn" data-act="gal-del" data-id="${esc(p.id)}" style="color:#E07B6D">حذف</button>`:""}</div></div>`;
-  try{ const snap = await FB.getDoc(FB.doc(FB.db,"galleryFull",id)); if(snap.exists()){ const im = $("#lb-img"); if(im && box.contains(im)) im.src = snap.data().img; } }catch(e){}
+  if(p.kind!=="video") try{ const snap = await FB.getDoc(FB.doc(FB.db,"galleryFull",id)); if(snap.exists()){ const im = $("#lb-img"); if(im && box.contains(im)) im.src = snap.data().img; } }catch(e){}
 }
 function closeLightbox(){ $("#modal").innerHTML = ""; }
 async function delPhoto(id){
   closeLightbox();
-  try{ await FB.deleteDoc(FB.doc(FB.db,"gallery",id)); await FB.deleteDoc(FB.doc(FB.db,"galleryFull",id)); toast("حُذفت الصورة"); }catch(e){ toast("تعذّر الحذف"); }
+  const gp = (galAll||[]).concat(S.galTop||[]).find(x=>x.id===id);
+  if(gp && gp.path) FB.storage().then(ST=>ST.deleteObject(ST.ref(ST.st, gp.path))).catch(e=>console.error(e));
+  try{ await FB.deleteDoc(FB.doc(FB.db,"gallery",id)); await FB.deleteDoc(FB.doc(FB.db,"galleryFull",id)); toast(gp && gp.kind==="video" ? "حُذف الفيديو" : "حُذفت الصورة"); }catch(e){ toast("تعذّر الحذف"); }
   if(galAll) galAll = galAll.filter(p=>p.id!==id); render();
 }
 /* ---------- Student ---------- */
@@ -860,7 +950,7 @@ function renderStudent(){
 }
 
 /* ---------- Teacher ---------- */
-const TABS = [["rec","التسجيل اليومي"],["wheel","القرعة"],["knights","الفرسان"],["fees","الرسوم"],["reports","التقارير"],["students","الطلاب"],["parents","أولياء الأمور"],["tatt","حضور المعلمين"],["info","معلومات الحلقة"],["account","الحساب"]];
+const TABS = [["rec","التسجيل اليومي"],["wheel","القرعة"],["knights","الفرسان"],["fees","الرسوم"],["reports","التقارير"],["students","الطلاب"],["parents","أولياء الأمور"],["tatt","حضور المعلمين"],["info","معلومات الحلقة"],["coord","المنسق"],["account","الحساب"]];
 function surahOptions(sel){ return `<option value="">— السورة —</option>` + Q.n.map((n,i)=>`<option value="${i+1}" ${sel===i+1?"selected":""}>${i+1}. ${n}</option>`).join(""); }
 function recFields(sid,k,e,day){
   const list = entries(e).slice(), key = sid+"|"+day+"|"+k, extra = ui.slots[key]||0;
@@ -1124,8 +1214,116 @@ function tabAccount(){
     <div><button class="btn pri" type="submit">تغيير الرقم السري</button></div>
   </form>`;
 }
+/* ---------- Coordinator (prizes & teacher rewards) ---------- */
+async function sha(t){ const b = await crypto.subtle.digest("SHA-256", new TextEncoder().encode(t)); return [...new Uint8Array(b)].map(x=>x.toString(16).padStart(2,"0")).join(""); }
+const randHex = () => [...crypto.getRandomValues(new Uint8Array(12))].map(x=>x.toString(16).padStart(2,"0")).join("");
+function coordState(){ return S.coord = S.coord || {}; }
+function fmtBD(n){ n = Math.round((+n||0)*1000)/1000; return (n%1 ? n.toFixed(3).replace(/0+$/,"") : String(n)) + " د.ب"; }
+function coMonths(){ const ms = academicMonths().filter(k=>k<=monthKey(TODAY) && k>=monthKey(START())); return ms.length ? ms : [monthKey(TODAY)]; }
+function coordLock(C){
+  const first = !C.hash;
+  return `<form class="card" id="coord-form" style="display:flex;flex-direction:column;gap:10px" autocomplete="off">
+    <div class="sec-h" style="margin:0"><h2>قسم المنسق</h2><small>كشف مبالغ الجوائز ومكافآت المعلمين</small></div>
+    <p class="muted" style="margin:0;font-size:13px">${first?"أول دخول: عيّن رمزاً خاصاً بالمنسق (من ٤ إلى ٨ أرقام). هذا الرمز غير الرقم السري للأساتذة، ولا يُعطى إلا للمنسق.":"هذا القسم خاص بالمنسق. اكتب رمز المنسق للدخول."}</p>
+    <input class="inp pin num" type="password" id="co-pin" inputmode="numeric" maxlength="8" autocomplete="off" placeholder="رمز المنسق" aria-label="رمز المنسق">
+    ${first?`<input class="inp pin num" type="password" id="co-pin2" inputmode="numeric" maxlength="8" autocomplete="off" placeholder="تأكيد الرمز" aria-label="تأكيد رمز المنسق">`:""}
+    <div class="err" id="co-err" role="status"></div>
+    <div><button class="btn pri" type="submit" id="co-go">${first?"تعيين الرمز والدخول":"دخول"}</button></div>
+    ${first?"":`<p class="muted" style="margin:0;font-size:12.5px">نسيت الرمز؟ تواصل مع مطوّر البرنامج لمسحه.</p>`}
+  </form>`;
+}
+function coPrizes(C, mk){
+  const val = +C.prizeVal || 1;
+  const dates = Object.keys(S.prizes||{}).filter(d=>monthKey(d)===mk && inProg(d) && (S.prizes[d]||[]).length).sort();
+  const per = {}; dates.forEach(d=>S.prizes[d].forEach(id=>{ (per[id] = per[id]||[]).push(d); }));
+  const name = id => (stu(id)||{}).name || "طالب محذوف";
+  const ids = [...S.students.map(s=>s.id).filter(id=>per[id]), ...Object.keys(per).filter(id=>!stu(id))];
+  const total = dates.reduce((a,d)=>a+S.prizes[d].length, 0);
+  const rows = ids.map((id,ix)=>`<tr><td><span class="no num">${ix+1}</span>${esc(name(id))}</td><td class="num">${per[id].length}</td><td class="num" style="font-size:12px;white-space:normal">${per[id].map(dShort).join("، ")}</td><td class="num"><b>${fmtBD(per[id].length*val)}</b></td></tr>`).join("");
+  const drows = dates.map(d=>`<tr><td class="num">${DAY[parse(d).getDay()]} ${dShort(d)}</td><td style="white-space:normal">${S.prizes[d].map(id=>esc(name(id).split(" ").slice(0,3).join(" "))).join("، ")}</td><td class="num">${fmtBD(S.prizes[d].length*val)}</td></tr>`).join("");
+  return `<section class="card" style="display:flex;flex-direction:column;gap:12px">
+    <div class="sec-h" style="margin:0"><h2>كشف مبالغ الجوائز</h2><small>شهر ${monthLong(mk)} · الجائزة ${fmtBD(val)}</small></div>
+    <div class="term-card"><div><b class="num">${dates.length}</b><span>أيام السحب</span></div><div><b class="num">${total}</b><span>عدد الجوائز</span></div><div><b class="num">${ids.length}</b><span>طلاب فائزون</span></div><div><b class="num">${fmtBD(total*val)}</b><span>إجمالي المبلغ</span></div></div>
+    ${total ? `<div class="fee-tbl-wrap"><table class="fee-tbl co-tbl"><thead><tr><th>الطالب</th><th>الجوائز</th><th>التواريخ</th><th>المبلغ</th></tr></thead><tbody>${rows}</tbody><tfoot><tr><td><b>المجموع</b></td><td class="num"><b>${total}</b></td><td></td><td class="num"><b>${fmtBD(total*val)}</b></td></tr></tfoot></table></div>
+    <h3 style="margin:4px 0 0;font-size:15px">حسب الأيام</h3>
+    <div class="fee-tbl-wrap"><table class="fee-tbl co-tbl"><thead><tr><th>اليوم</th><th>الفائزون</th><th>المبلغ</th></tr></thead><tbody>${drows}</tbody></table></div>` : `<div class="demo">لا توجد جوائز مسجّلة في هذا الشهر.</div>`}
+  </section>`;
+}
+function coTpaySums(C, mk){
+  const T = S.teachers||[], pay = (C.tpay||{})[mk]||{}, paid = (C.tpaid||{})[mk]||{};
+  const total = T.reduce((a,t)=>a+(+pay[t.id]||0), 0), done = T.reduce((a,t)=>a+(paid[t.id]?(+pay[t.id]||0):0), 0);
+  return {total, done, rest: total-done};
+}
+function coTpayRefresh(mk){
+  const m = coTpaySums(coordState(), mk);
+  [["co-ttot",m.total],["co-sum-total",m.total],["co-sum-done",m.done],["co-sum-rest",m.rest]].forEach(([id,v])=>{ const el = $("#"+id); if(el) el.textContent = fmtBD(v); });
+}
+function coTpay(C, mk){
+  const T = S.teachers||[], pay = (C.tpay||{})[mk]||{}, paid = (C.tpaid||{})[mk]||{}, m = coTpaySums(C, mk);
+  const att = t => Object.entries(S.tatt||{}).filter(([d])=>monthKey(d)===mk && d<=TODAY && inProg(d)).reduce((a,[d,x])=>{ if(x[t.id]==="p") a.p++; else if(x[t.id]==="a") a.a++; return a; }, {p:0,a:0});
+  const rows = T.map((t,ix)=>{ const c = att(t), v = pay[t.id], on = !!paid[t.id];
+    return `<tr><td><span class="no num">${ix+1}</span>${esc(t.name)}</td><td class="num" style="color:var(--ok);font-weight:700">${c.p}</td><td class="num" style="color:var(--bad);font-weight:700">${c.a}</td>
+      <td><input class="inp num no-print co-amt" id="tp-${t.id}" type="number" inputmode="decimal" min="0" step="0.5" dir="ltr" placeholder="0" value="${v===undefined?"":v}" data-co="tpay" data-tid="${t.id}" data-m="${mk}" aria-label="مكافأة ${esc(t.name)}"><span class="print-only num">${v?fmtBD(v):"—"}</span></td>
+      <td><button class="fbtn ${on?"on":""}" data-act="co-paid" data-tid="${t.id}" data-m="${mk}" aria-label="${esc(t.name)}: ${on?"تم الصرف":"لم يُصرف"}">${on?I.check:""}</button><span class="print-only">${on?"✓":"—"}</span></td></tr>`; }).join("");
+  return `<section class="card" style="display:flex;flex-direction:column;gap:12px">
+    <div class="sec-h" style="margin:0"><h2>كشف مكافآت المعلمين</h2><small>شهر ${monthLong(mk)}</small></div>
+    <div class="term-card"><div><b class="num">${T.length}</b><span>المعلمون</span></div><div><b class="num" id="co-sum-total">${fmtBD(m.total)}</b><span>إجمالي المكافآت</span></div><div><b class="num" id="co-sum-done" style="color:var(--ok)">${fmtBD(m.done)}</b><span>تم صرفه</span></div><div><b class="num" id="co-sum-rest" style="color:var(--bad)">${fmtBD(m.rest)}</b><span>المتبقي</span></div></div>
+    ${T.length ? `<div class="fee-tbl-wrap"><table class="fee-tbl co-tbl"><thead><tr><th>المعلم</th><th>حضور</th><th>غياب</th><th>المكافأة (د.ب)</th><th>تم الصرف</th></tr></thead><tbody>${rows}</tbody><tfoot><tr><td><b>المجموع</b></td><td></td><td></td><td class="num"><b id="co-ttot">${fmtBD(m.total)}</b></td><td></td></tr></tfoot></table></div>
+    <p class="muted no-print" style="margin:0;font-size:12.5px">اكتب مبلغ مكافأة كل معلم لهذا الشهر، واضغط خانة "تم الصرف" عند التسليم. أيام الحضور تُحسب من تبويب حضور المعلمين.</p>` : `<div class="demo">ما فيه معلمين مسجّلين. أضفهم من تبويب حضور المعلمين.</div>`}
+  </section>`;
+}
+function coSettings(C){
+  return `<div class="card no-print" style="display:flex;flex-direction:column;gap:12px">
+    <div class="sec-h" style="margin:0"><h2>إعدادات المنسق</h2></div>
+    <label style="display:flex;align-items:center;gap:10px;font-size:14px;flex-wrap:wrap">قيمة الجائزة الواحدة (د.ب)<input class="inp num co-amt" type="number" min="0.1" step="0.5" dir="ltr" id="co-pval" value="${+C.prizeVal||1}" data-co="prizeVal" style="margin:0"></label>
+    <form id="coord-change" style="display:flex;flex-direction:column;gap:8px;border-top:1px solid var(--line);padding-top:12px" autocomplete="off">
+      <b style="font-size:14px">تغيير رمز المنسق</b>
+      <input class="inp pin num" type="password" id="co-old" inputmode="numeric" maxlength="8" autocomplete="off" placeholder="الرمز الحالي" aria-label="الرمز الحالي">
+      <input class="inp pin num" type="password" id="co-new" inputmode="numeric" maxlength="8" autocomplete="off" placeholder="الرمز الجديد (٤–٨ أرقام)" aria-label="الرمز الجديد">
+      <input class="inp pin num" type="password" id="co-new2" inputmode="numeric" maxlength="8" autocomplete="off" placeholder="تأكيد الرمز الجديد" aria-label="تأكيد الرمز الجديد">
+      <div class="err" id="co-cerr" role="status"></div>
+      <div><button class="btn" type="submit">تغيير الرمز</button></div>
+    </form>
+  </div>`;
+}
+function tabCoord(){
+  const C = coordState();
+  if(!ui.coordOK) return coordLock(C);
+  const months = coMonths(); if(!months.includes(ui.coMonth)) ui.coMonth = months[months.length-1];
+  const mk = ui.coMonth, V = ui.coView==="tpay" ? "tpay" : "prize";
+  return `<div class="row no-print" style="justify-content:space-between"><div class="sec-h" style="margin:0"><h2>قسم المنسق</h2></div><div class="row" style="gap:8px"><button class="btn" data-act="print">طباعة / حفظ PDF</button><button class="btn ghost" data-act="co-lock">قفل القسم</button></div></div>
+    <div class="seg no-print"><button class="${V==="prize"?"on":""}" data-act="co-view" data-k="prize">مبالغ الجوائز</button><button class="${V==="tpay"?"on":""}" data-act="co-view" data-k="tpay">مكافآت المعلمين</button></div>
+    <div class="seg no-print">${months.map(m=>`<button class="${m===mk?"on":""}" data-act="co-month" data-k="${m}">${monthName(m)}</button>`).join("")}</div>
+    <div class="print-only" style="margin-bottom:10px"><b>حلقات جامع يوسف بن شاهين الجلاهمة</b><div>${V==="prize"?"كشف مبالغ الجوائز":"كشف مكافآت المعلمين"} · شهر ${monthLong(mk)}</div></div>
+    ${V==="prize" ? coPrizes(C, mk) : coTpay(C, mk)}
+    ${coSettings(C)}`;
+}
+document.addEventListener("submit", async e=>{
+  const id = e.target.id; if(id!=="coord-form" && id!=="coord-change") return;
+  e.preventDefault();
+  const C = coordState();
+  if(id==="coord-form"){
+    const out = $("#co-err"), p = $("#co-pin").value.trim();
+    if(Date.now() < (ui.coUntil||0)){ out.textContent = "محاولات كثيرة، انتظر دقيقة ثم حاول."; return; }
+    if(!C.hash){
+      const p2 = $("#co-pin2").value.trim();
+      if(!/^\d{4,8}$/.test(p)){ out.textContent = "الرمز لازم يكون من ٤ إلى ٨ أرقام."; return; }
+      if(p!==p2){ out.textContent = "تأكيد الرمز غير مطابق."; return; }
+      C.salt = randHex(); C.hash = await sha(C.salt+p); save(); ui.coordOK = true; render(); toast("تم تعيين رمز المنسق"); return;
+    }
+    if(await sha((C.salt||"")+p) === C.hash){ ui.coFail = 0; ui.coordOK = true; render(); window.scrollTo(0,0); }
+    else { ui.coFail = (ui.coFail||0)+1; if(ui.coFail>=5){ ui.coFail = 0; ui.coUntil = Date.now()+60000; } out.textContent = "الرمز غير صحيح."; $("#co-pin").select(); }
+  } else {
+    const out = $("#co-cerr"), o = $("#co-old").value.trim(), n1 = $("#co-new").value.trim(), n2 = $("#co-new2").value.trim();
+    out.className = "err";
+    if(await sha((C.salt||"")+o) !== C.hash){ out.textContent = "الرمز الحالي غير صحيح."; return; }
+    if(!/^\d{4,8}$/.test(n1)){ out.textContent = "الرمز الجديد لازم يكون من ٤ إلى ٨ أرقام."; return; }
+    if(n1!==n2){ out.textContent = "تأكيد الرمز غير مطابق."; return; }
+    C.salt = randHex(); C.hash = await sha(C.salt+n1); save(); e.target.reset(); out.className = "err ok"; out.textContent = "تم تغيير رمز المنسق.";
+  }
+});
 function renderTeacher(){
-  const body = {rec:tabRec,wheel:tabWheel,knights:tabKnights,fees:tabFees,reports:tabReports,students:tabStudents,parents:tabParents,tatt:tabTeachers,info:tabInfo,account:tabAccount}[ui.tab]();
+  const body = {rec:tabRec,wheel:tabWheel,knights:tabKnights,fees:tabFees,reports:tabReports,students:tabStudents,parents:tabParents,tatt:tabTeachers,info:tabInfo,coord:tabCoord,account:tabAccount}[ui.tab]();
   return mast({title:"لوحة الأستاذ", sub:`<span>تسجيل اليوم، القرعة، الرسوم، والفرسان</span>`, back:true}) + `<main class="wrap">
     <div class="tabs" role="tablist">${TABS.map(([k,l])=>`<button role="tab" class="${ui.tab===k?"on":""}" data-act="tab" data-k="${k}">${l}</button>`).join("")}</div>
     ${body}
@@ -1336,7 +1534,7 @@ document.addEventListener("click", e=>{
     case "home": if(!teacher){ ui.stuDoc = null; } go("home"); break;
     case "teacher": go("teacher"); break;
     case "login": openLogin(); break;
-    case "logout": FB.signOut(FB.auth); break;
+    case "logout": ui.coordOK=false; FB.signOut(FB.auth); break;
     case "forgot": {
       const out = $("#pass-err");
       if(!FB.teacherEmail){ out.className="err"; out.textContent="حساب الأستاذ غير مضبوط في firebase-config.js."; break; }
@@ -1355,7 +1553,7 @@ document.addEventListener("click", e=>{
     case "done": { const r=ensure(d,sid); r.d=!r.d; if(r.d && !r.a) r.a="p"; save(); render(); toast(r.d?"تم التسميع ✓":"أُلغي التأشير"); break; }
     case "att": { const r=ensure(ui.recDay,sid); if(b.dataset.v) r.a=b.dataset.v; else delete r.a; if(r.a!=="p") r.d=false; save(); ui.open.add(sid); render(); break; }
     case "allp": S.students.forEach(s=>{ const r=ensure(ui.recDay,s.id); if(!r.a) r.a="p"; }); save(); render(); toast("سُجّل حضور الجميع"); break;
-    case "tab": if(ui.view!=="teacher") ui.view="teacher"; ui.tab=b.dataset.k; if(ui.tab==="wheel") ui.wheelSel=null; render(); break;
+    case "tab": if(b.dataset.k!=="coord") ui.coordOK=false; if(ui.view!=="teacher") ui.view="teacher"; ui.tab=b.dataset.k; if(ui.tab==="wheel") ui.wheelSel=null; render(); break;
     case "wsel": ui.wheelSel.has(sid)?ui.wheelSel.delete(sid):ui.wheelSel.add(sid); render(); break;
     case "wall": { const dd=activeDay(); ui.wheelSel=new Set(S.students.filter(s=>rec(dd,s.id)?.a==="p" && !prizesOn(dd).includes(s.id)).map(s=>s.id)); render(); break; }
     case "wnone": ui.wheelSel=new Set(); render(); break;
@@ -1375,6 +1573,11 @@ document.addEventListener("click", e=>{
     case "rep": ui.rep=b.dataset.k; render(); break;
     case "repv": ui.repView=b.dataset.k; render(); break;
     case "tmonth": ui.tMonth=b.dataset.k; render(); break;
+    case "co-view": ui.coView=b.dataset.k; render(); break;
+    case "co-month": ui.coMonth=b.dataset.k; render(); break;
+    case "co-lock": ui.coordOK=false; render(); break;
+    case "co-paid": { const C=coordState(), m=b.dataset.m, tid=b.dataset.tid; C.tpaid=C.tpaid||{}; const o=C.tpaid[m]=C.tpaid[m]||{}; if(o[tid]) delete o[tid]; else o[tid]=true; save(); render(); break; }
+    case "vid-link": addVideoLink(); break;
     case "album": ui.album=b.dataset.album; if(ui.view!=="gallery"){ go("gallery"); loadGallery(); } else { render(); window.scrollTo(0,0); } break;
     case "albums": ui.album=null; render(); break;
     case "rep-stu": ui.repSid=sid; render(); window.scrollTo(0,0); break;
@@ -1472,6 +1675,15 @@ document.addEventListener("change", e=>{
   }
   if(t.dataset.rep){ if(t.dataset.rep==="from") ui.repFrom = t.value; else ui.repTo = t.value; render(); }
   if(t.dataset.note){ const r = ensure(t.dataset.day, t.dataset.note), v = t.value.trim(); if(v) r.note = v; else delete r.note; ui.open.add(t.dataset.note); save(); toast("حُفظت الملاحظة"); }
+  if(t.dataset.co){
+    const C = coordState(), k = t.dataset.co, v = parseFloat(t.value);
+    if(k==="prizeVal"){ C.prizeVal = v>0 ? Math.round(v*1000)/1000 : 1; save(); render(); toast("حُفظ"); }
+    else if(k==="tpay"){ const m = t.dataset.m, id = t.dataset.tid; C.tpay = C.tpay||{}; const o = C.tpay[m] = C.tpay[m]||{};
+      if(v>0) o[id] = Math.round(v*1000)/1000; else delete o[id];
+      t.value = o[id]===undefined ? "" : o[id]; const ps = t.parentElement.querySelector(".print-only"); if(ps) ps.textContent = o[id] ? fmtBD(o[id]) : "—";
+      save(); coTpayRefresh(m); toast("حُفظ"); }
+  }
+  if(t.id==="vid-file" && t.files && t.files[0]){ uploadVideo(t.files[0]); t.value = ""; }
   if(t.dataset.tname){ const x = (S.teachers||[]).find(y=>y.id===t.dataset.tname), v = t.value.trim(); if(x && v){ x.name = v; save(); toast("حُفظ"); } }
   if(t.dataset.actIn==="name"){ const s=stu(t.dataset.sid); const v=t.value.trim(); if(v){ s.name=v; save(); toast("حُفظ الاسم"); } }
   if(t.dataset.actIn==="iqra"){
@@ -1518,7 +1730,7 @@ document.addEventListener("visibilitychange", ()=>{ if(document.visibilityState=
 document.fonts && document.fonts.ready.then(()=>{ if(ui.view==="teacher" && ui.tab==="wheel") drawWheel(); });
 </script>
 <script type="module">
-import * as CFG from "./firebase-config.js?v=1792045285";
+import * as CFG from "./firebase-config.js?v=1792168074";
 const FIREBASE_CONFIG = CFG.FIREBASE_CONFIG;
 if(!FIREBASE_CONFIG || !FIREBASE_CONFIG.apiKey || /PASTE/.test(FIREBASE_CONFIG.apiKey)){
   window.dispatchEvent(new Event("fb-missing"));
@@ -1540,7 +1752,8 @@ if(!FIREBASE_CONFIG || !FIREBASE_CONFIG.apiKey || /PASTE/.test(FIREBASE_CONFIG.a
     sendPasswordResetEmail: A.sendPasswordResetEmail, updatePassword: A.updatePassword, reauthenticateWithCredential: A.reauthenticateWithCredential,
     EmailAuthProvider: A.EmailAuthProvider, verifyBeforeUpdateEmail: A.verifyBeforeUpdateEmail,
     doc: F.doc, getDoc: F.getDoc, setDoc: F.setDoc, deleteDoc: F.deleteDoc, onSnapshot: F.onSnapshot, collection: F.collection, writeBatch: F.writeBatch,
-    query: F.query, orderBy: F.orderBy, limit: F.limit, getDocs: F.getDocs };
+    query: F.query, orderBy: F.orderBy, limit: F.limit, getDocs: F.getDocs,
+    storage: async () => { const ST = await import(`https://www.gstatic.com/firebasejs/${V}/firebase-storage.js`); return { st: ST.getStorage(app), ref: ST.ref, uploadBytesResumable: ST.uploadBytesResumable, getDownloadURL: ST.getDownloadURL, deleteObject: ST.deleteObject }; } };
   window.dispatchEvent(new Event("fb-ready"));
 }
 </script>
