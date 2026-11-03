@@ -356,6 +356,38 @@ details.st summary .meta{display:flex;gap:6px;align-items:center;flex-wrap:wrap;
 .term-card span{font-size:12px;color:var(--muted)}
 @media (max-width:420px){.term-card{grid-template-columns:repeat(2,1fr)}}
 .print-only{display:none}
+textarea.autogrow{overflow:hidden;resize:none;min-height:42px;line-height:1.6}
+.sur{position:relative;min-width:0}
+.sur .inp{width:100%}
+.sur-list{position:absolute;z-index:20;top:calc(100% + 4px);inset-inline:0;background:var(--surface);border:1px solid var(--line);border-radius:12px;box-shadow:0 10px 28px rgba(15,20,40,.16);max-height:264px;overflow:auto;padding:4px}
+.sur-list button{display:block;width:100%;text-align:start;border:0;background:none;padding:9px 10px;border-radius:8px;font:inherit;font-size:14px;color:var(--ink);cursor:pointer}
+.sur-list button:hover,.sur-list button:focus{background:var(--sunk);outline:none}
+.sur-list .no{margin-inline-end:6px}
+.sur-empty{padding:9px 10px;color:var(--muted);font-size:13px}
+.eth{border:1px solid var(--line);border-radius:12px;padding:10px 12px;display:flex;flex-direction:column;gap:8px;background:var(--surface)}
+.eth-row{display:flex;align-items:center;justify-content:space-between;gap:10px}
+.eth-ctl{display:inline-flex;align-items:center;gap:10px}
+.eth-b{width:40px;height:40px;border-radius:12px;border:1px solid var(--line);background:var(--sunk);font-size:22px;font-weight:700;color:var(--ink);cursor:pointer;line-height:1}
+.eth-b:disabled{opacity:.35;cursor:default}
+.eth-v{font-size:20px;font-weight:700;min-width:54px;text-align:center}
+.eth-v small{font-size:12px;color:var(--muted);font-weight:500}
+.eth-v.low{color:var(--bad)}
+.eth-list{display:flex;flex-wrap:wrap;gap:6px}
+.eth-list .pill,.eth-tag{background:var(--bad-soft);color:var(--bad);font-size:12px}
+.eth-pick{display:flex;flex-direction:column;gap:8px;border-top:1px dashed var(--line);padding-top:8px}
+.eth-big{font-size:26px;font-weight:700}
+.eth-big small{font-size:14px;color:var(--muted);font-weight:500}
+.cyc-row{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.2fr) auto;gap:8px;align-items:center;font-size:13.5px}
+.cyc-row small{color:var(--muted);display:block;font-size:12px}
+.pdf-sheet{position:fixed;inset:0;z-index:60;background:rgba(10,13,26,.55);display:grid;place-items:end center;padding:16px}
+.pdf-sheet .dlg{width:min(100%,420px);background:var(--surface);border-radius:18px;padding:18px;display:flex;flex-direction:column;gap:10px}
+body.pdfmode{background:#fff!important}
+body.pdfmode .mast,body.pdfmode .tabs,body.pdfmode .tbar,body.pdfmode .no-print,body.pdfmode #toast,body.pdfmode #drawer,body.pdfmode .row>.btn,body.pdfmode #app button{display:none!important}
+body.pdfmode .print-only{display:block!important}
+body.pdfmode .wrap{max-width:none;padding:0}
+body.pdfmode .card,body.pdfmode .fee-tbl-wrap{border:0!important;box-shadow:none!important}
+body.pdfmode .fee-tbl-wrap{overflow:visible!important}
+body.pdfmode .rep-tbl,body.pdfmode .co-aw{min-width:0}
 .co-tbl{min-width:0}
 .co-tbl tfoot td{background:var(--sunk);border-top:2px solid var(--line)}
 .co-tbl td:first-child{white-space:normal;min-width:130px}
@@ -441,7 +473,7 @@ const LOGO = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="289 14 239 496"><
 const Q = {"n":["الفاتحة","البقرة","آل عمران","النساء","المائدة","الأنعام","الأعراف","الأنفال","التوبة","يونس","هود","يوسف","الرعد","إبراهيم","الحجر","النحل","الإسراء","الكهف","مريم","طه","الأنبياء","الحج","المؤمنون","النور","الفرقان","الشعراء","النمل","القصص","العنكبوت","الروم","لقمان","السجدة","الأحزاب","سبإ","فاطر","يس","الصافات","ص","الزمر","غافر","فصلت","الشورى","الزخرف","الدخان","الجاثية","الأحقاف","محمد","الفتح","الحجرات","ق","الذاريات","الطور","النجم","القمر","الرحمن","الواقعة","الحديد","المجادلة","الحشر","الممتحنة","الصف","الجمعة","المنافقون","التغابن","الطلاق","التحريم","الملك","القلم","الحاقة","المعارج","نوح","الجن","المزمل","المدثر","القيامة","الإنسان","المرسلات","النبإ","النازعات","عبس","التكوير","الانفطار","المطففين","الانشقاق","البروج","الطارق","الأعلى","الغاشية","الفجر","البلد","الشمس","الليل","الضحى","الشرح","التين","العلق","القدر","البينة","الزلزلة","العاديات","القارعة","التكاثر","العصر","الهمزة","الفيل","قريش","الماعون","الكوثر","الكافرون","النصر","المسد","الإخلاص","الفلق","الناس"],"c":[7,286,200,176,120,165,206,75,129,109,123,111,43,52,99,128,111,110,98,135,112,78,118,64,77,227,93,88,69,60,34,30,73,54,45,83,182,88,75,85,54,53,89,59,37,35,38,29,18,45,60,49,62,55,78,96,29,22,24,13,14,11,11,18,12,12,30,52,52,44,28,28,20,56,40,31,50,40,46,42,29,19,36,25,22,17,19,26,30,20,15,21,11,8,8,19,5,8,8,11,11,8,3,9,5,4,7,3,6,3,5,4,5,6],"p":[0,1,8,13,24,32,37,45,56,65,69,77,84,91,96,101,109,113,120,127,134,142,149,153,161,171,177,184,189,194,198,204,210,218,223,227,232,238,241,245,253,256,260,264,267,272,277,282,289,290,294,303,309,316,323,331,339,346,355,364,371,377,385,394,402,409,415,426,434,442,447,451,459,467,474,480,488,494,500,505,508,513,517,520,527,531,538,545,553,559,568,573,580,585,588,595,599,607,615,621,628,634,641,648,656,664,669,672,675,679,683,687,693,701,706,711,715,720,727,734,740,746,752,759,765,773,778,783,790,798,808,817,825,834,842,849,858,863,871,880,884,891,900,908,914,921,927,932,936,941,947,955,966,977,985,992,998,1006,1012,1022,1028,1036,1042,1050,1059,1075,1085,1092,1098,1104,1110,1114,1118,1125,1133,1142,1150,1161,1169,1177,1186,1194,1201,1206,1213,1222,1230,1236,1242,1249,1256,1262,1267,1272,1276,1283,1290,1297,1304,1308,1315,1322,1329,1335,1342,1347,1353,1358,1365,1371,1379,1385,1390,1398,1407,1418,1426,1435,1443,1453,1462,1471,1479,1486,1493,1502,1511,1519,1527,1536,1545,1555,1562,1571,1582,1591,1601,1611,1619,1627,1634,1640,1649,1660,1666,1675,1683,1692,1700,1708,1713,1721,1726,1736,1742,1750,1756,1761,1769,1775,1784,1793,1803,1818,1834,1854,1873,1893,1908,1916,1928,1936,1944,1956,1966,1974,1981,1989,1995,2004,2012,2020,2030,2037,2047,2057,2068,2079,2088,2096,2105,2116,2126,2134,2145,2156,2161,2168,2175,2186,2194,2202,2215,2224,2238,2251,2262,2276,2289,2302,2315,2327,2346,2361,2386,2400,2413,2425,2436,2447,2462,2474,2484,2494,2508,2519,2528,2541,2556,2565,2574,2585,2596,2601,2611,2619,2626,2634,2642,2651,2660,2668,2674,2691,2701,2716,2733,2748,2763,2778,2792,2802,2812,2819,2823,2828,2835,2845,2850,2853,2858,2867,2876,2888,2899,2911,2923,2933,2952,2972,2993,3016,3044,3069,3092,3116,3139,3160,3173,3182,3195,3204,3215,3223,3236,3248,3258,3266,3274,3281,3288,3296,3303,3312,3323,3330,3337,3347,3355,3364,3371,3379,3386,3393,3404,3415,3425,3434,3442,3451,3460,3470,3481,3489,3498,3504,3515,3524,3534,3540,3549,3556,3564,3569,3577,3584,3588,3596,3607,3614,3621,3629,3638,3646,3655,3664,3672,3679,3691,3699,3705,3718,3733,3746,3760,3776,3789,3813,3840,3865,3891,3915,3942,3971,3987,3997,4013,4032,4054,4064,4069,4080,4090,4099,4106,4115,4126,4133,4141,4150,4159,4167,4174,4183,4192,4200,4211,4219,4230,4239,4248,4257,4265,4273,4283,4288,4295,4304,4317,4324,4336,4348,4359,4373,4386,4399,4415,4433,4454,4474,4487,4496,4506,4516,4525,4531,4539,4546,4557,4565,4575,4584,4593,4599,4607,4612,4617,4624,4631,4646,4666,4682,4706,4727,4750,4767,4785,4811,4829,4853,4874,4896,4918,4942,4969,4996,5030,5056,5079,5087,5094,5100,5105,5111,5116,5126,5130,5136,5143,5151,5156,5162,5169,5178,5186,5193,5200,5209,5218,5223,5230,5237,5242,5254,5268,5287,5314,5332,5358,5386,5415,5430,5448,5461,5476,5495,5513,5543,5571,5597,5617,5642,5673,5703,5728,5759,5801,5830,5855,5883,5910,5932,5964,5994,6017,6044,6073,6099,6126,6138,6156,6177,6194,6208,6222,6237]};
 const SEED_NAMES = ["تميم بن علي الرميحي","علي بن حمد الرميحي","محمد بن حمد الرميحي","عبدالله بن فيصل الفضالة","خميس بن محمد الرميحي","حمد بن علي الرميحي","إبراهيم بن ثامر الرميحي","ناصر بن يوسف النجار","علي بن فيصل المنصوري","أحمد بن علي الرميحي","حمد بن أحمد الرميحي","عبدالعزيز بن راشد هرمس"];
 const KEY = "halaqat-jalahma";
-const BUILD = "1792314654";
+const BUILD = "1793711500";
 const MAX_PRIZES = 3;
 
 /* ---------- Quran pages (Madinah mushaf, 604 pages) ---------- */
@@ -493,13 +525,34 @@ const NOW = new Date(); const TODAY = iso(NOW);
 const sessionDays = mon => [0,1,2].map(i => iso(addDays(parse(mon),i)));
 function activeDay(){ const g=NOW.getDay(); if(g>=1&&g<=3) return TODAY; return iso(addDays(mondayOf(NOW),2)); }
 const CUR_WEEK = iso(mondayOf(NOW));
-const monthKey = s => s.slice(0,7);
-const monthName = k => { const [y,m]=k.split("-").map(Number); return new Date(y,m-1,1).toLocaleDateString("ar-u-nu-latn",{month:"long"}); };
-const monthLong = k => `${monthName(k)} ${k.slice(0,4)}`;
+/* "الشهر" = 4 weeks counted from the program start; S.info.cyc = {n: start date} overrides */
+const ORD = ["الأول","الثاني","الثالث","الرابع","الخامس","السادس","السابع","الثامن","التاسع","العاشر","الحادي عشر","الثاني عشر","الثالث عشر","الرابع عشر","الخامس عشر"];
+const ckey = n => "c" + String(n).padStart(2,"0");
+function cycStarts(until){
+  const ov = (S && S.info && S.info.cyc) || {}, out = [START()];
+  for(let n=2; n<120; n++){
+    const prev = out[out.length-1]; let nx = ov[n];
+    if(!nx || nx <= prev) nx = iso(addDays(parse(prev), 28));
+    out.push(nx); if(nx > until) break;
+  }
+  return out;
+}
+const monthKey = d => { if(d < START()) return "c00"; const st = cycStarts(d); let i = 0; while(i+1 < st.length && st[i+1] <= d) i++; return ckey(i+1); };
+function cycRange(k){
+  const n = Math.max(1, +String(k).slice(1) || 1);
+  const ov = (S && S.info && S.info.cyc) || {}, st = [START()];
+  while(st.length <= n){ const prev = st[st.length-1]; let nx = ov[st.length+1]; if(!nx || nx <= prev) nx = iso(addDays(parse(prev), 28)); st.push(nx); }
+  const a = st[n-1], end = iso(addDays(parse(st[n]), -1));
+  let first = a; while(![1,2,3].includes(parse(first).getDay()) && first < end) first = iso(addDays(parse(first),1));
+  let last = end; while(![1,2,3].includes(parse(last).getDay()) && last > a) last = iso(addDays(parse(last),-1));
+  return {a, end, first, last, n};
+}
+const monthName = k => k==="c00" ? "قبل البداية" : "الشهر " + (ORD[(+String(k).slice(1))-1] || String(k).slice(1));
+const monthLong = k => { if(k==="c00") return "قبل البداية"; const r = cycRange(k); return `${monthName(k)} (\u2067${dShort(r.first)} – ${dShort(r.last)}\u2069)`; };
 const dShort = s => { const d=parse(s); return `${d.getDate()}/${d.getMonth()+1}`; };
 function academicMonths(){
-  const y = NOW.getMonth()>=8 ? NOW.getFullYear() : NOW.getFullYear()-1;
-  const out=[]; for(let i=0;i<10;i++){ const d=new Date(y,8+i,1); out.push(`${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,"0")}`); } return out;
+  const cur = monthKey(TODAY), n = cur==="c00" ? 1 : +cur.slice(1);
+  const out = []; for(let i=1; i<=n; i++) out.push(ckey(i)); return out;
 }
 
 /* ---------- Store: Firebase (Firestore + Auth) ----------
@@ -533,7 +586,7 @@ function publicView(){
 function mirrorFor(s){
   const days = {};
   for(const [d,m] of Object.entries(S.days)){ const r=(m||{})[s.id]; if(r && (r.a || r.d || r.note || hasWork(r))) days[d]=r; }
-  return { sid:s.id, name:s.name, days, fees:S.fees[s.id]||{}, iqra:s.iqra||"", email:s.email||"", notes:s.notes||"", phone:s.phone||"", photo:(S.photos||{})[s.id]||"", awards:Object.fromEntries(Object.entries((S.coord||{}).awards||{}).filter(([k,o])=>o[s.id]).map(([k,o])=>[k,o[s.id]])), pv:+(S.coord||{}).prizeVal||1 };
+  return { sid:s.id, name:s.name, days, fees:S.fees[s.id]||{}, iqra:s.iqra||"", email:s.email||"", notes:s.notes||"", phone:s.phone||"", sphone:s.sphone||"", photo:(S.photos||{})[s.id]||"", awards:Object.fromEntries(Object.entries((S.coord||{}).awards||{}).filter(([k,o])=>o[s.id]).map(([k,o])=>[k,o[s.id]])), pv:+(S.coord||{}).prizeVal||1 };
 }
 let saveT = null, inFlight = 0, lastMirror = {}, lastTeacherJSON = "", syncState = "ok";
 function setSync(st){ syncState = st; const el=$("#sync"); if(el){ el.className="sync "+st; el.innerHTML = `<i></i>${st==="ok"?"محفوظ":st==="pending"?"جاري الحفظ…":"بانتظار الاتصال"}`; } }
@@ -565,7 +618,7 @@ function applyPublic(p){
   if(ui.stuDoc) mergeStudent(ui.stuDoc);
 }
 function mergeStudent(m){
-  { const s = stu(m.sid); if(s){ s.awards = m.awards||{}; s.pv = +m.pv||1; s.iqra = m.iqra||""; s.email = m.email||""; s.notes = m.notes||""; s.phone = m.phone||""; S.photos = S.photos||{}; S.photos[m.sid] = m.photo||""; } }
+  { const s = stu(m.sid); if(s){ s.awards = m.awards||{}; s.pv = +m.pv||1; s.iqra = m.iqra||""; s.email = m.email||""; s.notes = m.notes||""; s.phone = m.phone||""; s.sphone = m.sphone||""; S.photos = S.photos||{}; S.photos[m.sid] = m.photo||""; } }
   for(const [d,r] of Object.entries(m.days||{})){ S.days[d] = Object.assign({}, S.days[d]||{}); S.days[d][m.sid] = r; }
   S.fees[m.sid] = m.fees||{};
 }
@@ -615,13 +668,37 @@ function startData(){
     }
   });
 }
-function migrate(){
-  if(S.migr1) return false;
-  for(const s of S.students){
-    const iq = normPhone(s.iqra);
-    if(/^\d{8}$/.test(iq)){ if(!s.phone) s.phone = iq; if(normPhone(s.phone)===iq) s.iqra = ""; }
+function migrateCycles(){
+  const isM = k => /^\d{4}-\d{2}$/.test(k), T = "c01";
+  for(const sid of Object.keys(S.fees||{})){ const f = S.fees[sid]||{}; let any = false; for(const k of Object.keys(f)) if(isM(k)){ if(f[k]) any = true; delete f[k]; } if(any) f[T] = true; }
+  const K = S.knights = S.knights||{}, kn = {}; let has = false;
+  for(const k of Object.keys(K)) if(isM(k)){ has = true; for(const f of Object.keys(K[k]||{})) kn[f] = [...new Set([...(kn[f]||[]), ...(K[k][f]||[])])]; delete K[k]; }
+  if(has){ const t = K[T] = K[T]||{}; for(const f of Object.keys(kn)) t[f] = [...new Set([...(t[f]||[]), ...kn[f]])]; }
+  const C = S.coord;
+  if(C){
+    for(const fld of ["awards","tpay"]){
+      const A = C[fld]; if(!A) continue; const tgt = {}; let h = false;
+      for(const k of Object.keys(A)) if(isM(k)){ h = true;
+        for(const [id,v] of Object.entries(A[k]||{})){
+          if(fld==="awards"){ const o = tgt[id] = tgt[id]||{}; for(const [f,x] of Object.entries(v||{})) o[f] = Math.max(o[f]||0, +x||0); }
+          else tgt[id] = Math.max(tgt[id]||0, +v||0);
+        } delete A[k]; }
+      if(h){ const cur = A[T]||{}; if(fld==="awards"){ for(const [id,o] of Object.entries(cur)) tgt[id] = Object.assign(tgt[id]||{}, o); A[T] = tgt; } else A[T] = Object.assign(tgt, cur); }
+    }
+    if(C.tpaid){ const P = C.tpaid, tgt = {}; let h = false; for(const k of Object.keys(P)) if(isM(k)){ h = true; Object.assign(tgt, P[k]); delete P[k]; } if(h) P[T] = Object.assign(tgt, P[T]||{}); }
   }
-  S.migr1 = true; return true;
+}
+function migrate(){
+  let ch = false;
+  if(!S.migr1){
+    for(const s of S.students){
+      const iq = normPhone(s.iqra);
+      if(/^\d{8}$/.test(iq)){ if(!s.phone) s.phone = iq; if(normPhone(s.phone)===iq) s.iqra = ""; }
+    }
+    S.migr1 = true; ch = true;
+  }
+  if(!S.migr2){ migrateCycles(); S.migr2 = true; ch = true; }
+  return ch;
 }
 let photosLoaded = false, unsubPhotos = null;
 function startTeacherExtras(){
@@ -703,13 +780,13 @@ function renderHome(){
     </div>`:`<div class="demo">لا توجد إعلانات حالياً.</div>`}
   </section>`;
 
-  const kKeys = Object.keys(S.knights).filter(k=>(S.knights[k].h||[]).length||(S.knights[k].i||[]).length).sort();
+  const kKeys = Object.keys(S.knights).filter(k=>(S.knights[k].h||[]).length||(S.knights[k].i||[]).length||(S.knights[k].e||[]).length).sort();
   const kk = kKeys[kKeys.length-1];
   const names = ids => (ids||[]).map(id=>`<span>${esc(stu(id)?.name||"")}</span>`).join("") || `<span class="k-empty">—</span>`;
   const knHtml = `<section class="knights">
     <div class="k-head"><h2>فرسان الشهر</h2><small>${kk?monthLong(kk):""}</small></div>
     ${kk?`<div class="k"><div class="k-lbl">${I.book} فارس الحفظ</div><div class="k-names">${names(S.knights[kk].h)}</div></div>
-    <div class="k"><div class="k-lbl">${I.star} فارس الانضباط</div><div class="k-names">${names(S.knights[kk].i)}</div></div>`:`<div class="k-empty" style="grid-column:1/-1">يُعلن آخر الشهر.</div>`}
+    <div class="k"><div class="k-lbl">${I.star} فارس الانضباط</div><div class="k-names">${names(S.knights[kk].i)}</div></div>${(S.knights[kk].e||[]).length?`<div class="k"><div class="k-lbl">${I.trophy} فارس الأخلاق</div><div class="k-names">${names(S.knights[kk].e)}</div></div>`:""}`:`<div class="k-empty" style="grid-column:1/-1">يُعلن آخر الشهر.</div>`}
   </section>`;
 
   const rows = S.students.map((s,ix)=>{
@@ -900,13 +977,21 @@ function stuAwards(sid, mk){
   if(teacher){ const C = S.coord||{}; return {aw:(((C.awards||{})[mk]||{})[sid])||{}, pv:+C.prizeVal||1}; }
   return {aw:(s.awards||{})[mk]||{}, pv:+s.pv||1};
 }
+function stuEthCard(sid, mk){
+  const E = ethStats(sid, mk); if(!E.max) return "";
+  return `<section class="card" style="display:flex;flex-direction:column;gap:8px">
+    <div class="sec-h" style="margin:0"><h2>الأخلاق</h2><small>${monthLong(mk)}</small></div>
+    <div class="row" style="justify-content:space-between"><span class="eth-big num">${E.pts}<small> / ${E.max}</small></span><span class="muted" style="font-size:12.5px">${E.abs?`الغياب: ${E.abs} يوم (−10 لكل يوم)`:"بدون غياب"}</span></div>
+    ${E.list.length?`<div>${E.list.map(([d,x])=>`<div class="kv"><span class="num">${DAY[parse(d).getDay()]} ${dShort(d)}</span><span style="color:var(--ink);text-align:start;flex:1">${esc(x)}</span><b class="num" dir="ltr" style="color:var(--bad)">−1</b></div>`).join("")}</div>`:`<p class="muted" style="margin:0;font-size:13px">ما فيه خصومات، ما شاء الله.</p>`}
+  </section>`;
+}
 function stuAwardCard(sid, mk, pr){
-  const {aw, pv} = stuAwards(sid, mk), d = pr*pv, m = +aw.m||0, h = +aw.h||0, i = +aw.i||0, t = d+m+h+i;
+  const {aw, pv} = stuAwards(sid, mk), d = pr*pv, m = +aw.m||0, h = +aw.h||0, i = +aw.i||0, e = +aw.e||0, t = d+m+h+i+e;
   if(!t) return "";
   const row = (l, v, sub) => v ? `<div class="kv"><span>${l}${sub?` <small class="num">${sub}</small>`:""}</span><b class="num">${fmtBD(v)}</b></div>` : "";
   return `<section class="card" style="display:flex;flex-direction:column;gap:2px">
     <div class="sec-h" style="margin:0 0 4px"><h2>الجوائز المالية</h2><small>${monthLong(mk)}</small></div>
-    ${row("الجوائز اليومية", d, `(${pr} × ${fmtBD(pv)})`)}${row("الجائزة الشهرية", m)}${row("جائزة فارس الحفظ", h)}${row("جائزة فارس الانضباط", i)}
+    ${row("الجوائز اليومية", d, `(${pr} × ${fmtBD(pv)})`)}${row("الجائزة الشهرية", m)}${row("جائزة فارس الحفظ", h)}${row("جائزة فارس الانضباط", i)}${row("جائزة فارس الأخلاق", e)}
     <div class="kv" style="border-bottom:0;padding-top:10px"><b>المجموع</b><b class="num" style="color:var(--copper-deep);font-size:16px">${fmtBD(t)}</b></div>
   </section>`;
 }
@@ -934,7 +1019,7 @@ function renderStudent(){
   const curM = monthKey(TODAY), paidNow = (S.fees[s.id]||{})[curM];
   const late = academicMonths().filter(k=>k<curM && !(S.fees[s.id]||{})[k]).map(monthName);
   const feeCard = `<div class="fee-strip ${paidNow&&!late.length?"fs-paid":paidNow?"fs-warn":"fs-due"}">${I.cash}<b>رسوم ${monthName(curM)} (20 دينار): ${paidNow?"تم الدفع":"لم تُدفع"}</b>${late.length?`<span>متأخر: ${late.join("، ")}</span>`:""}${(!paidNow||late.length)&&S.info.iban?`<button class="btn sm" data-act="copy" data-v="${esc(S.info.iban)}">نسخ الآيبان</button>`:""}</div>`;
-  const kts = Object.keys(S.knights).sort().reverse().flatMap(m=>[["h","فارس الحفظ",I.book],["i","فارس الانضباط",I.star]].filter(([f])=>(S.knights[m][f]||[]).includes(s.id)).map(([f,l,ic])=>`<div class="knight">${I.trophy}<div><b>${l}</b><span>شهر ${monthLong(m)}، بارك الله فيه</span></div></div>`));
+  const kts = Object.keys(S.knights).sort().reverse().flatMap(m=>[["h","فارس الحفظ",I.book],["i","فارس الانضباط",I.star],["e","فارس الأخلاق",I.star]].filter(([f])=>(S.knights[m][f]||[]).includes(s.id)).map(([f,l,ic])=>`<div class="knight">${I.trophy}<div><b>${l}</b><span>${monthLong(m)}، بارك الله فيه</span></div></div>`));
   const knCard = kts.length ? `<div class="knights-me">${kts.join("")}</div>` : "";
   const nd = nextDue(s.id);
   const hw = `<section class="hw"><div class="sec-h" style="margin:0"><h2>المطلوب للحصة القادمة</h2>${nd?`<small class="num" style="color:var(--navy-muted)">${DAY[parse(nd[0]).getDay()]} ${dShort(nd[0])}</small>`:""}</div>
@@ -948,10 +1033,11 @@ function renderStudent(){
     <div class="avatar">${photo?`<img src="${esc(photo)}" alt="صورة ${esc(s.name)}">`:initials}${teacher?`<label class="av-edit" for="pfimg-${s.id}" title="تغيير الصورة">${I.cam}</label><input type="file" accept="image/*" id="pfimg-${s.id}" data-photo="${s.id}" hidden>`:""}</div>
     <div class="pf-main"><h2>${esc(s.name)}</h2><div class="pf-grid">
       ${pfRow("هاتف ولي الأمر", s.phone, "phone", `id="pfph-${s.id}" type="tel" inputmode="tel" maxlength="15" data-act-in="phone" data-sid="${s.id}"`)}
+      ${pfRow("هاتف الطالب", s.sphone, "sphone", `id="pfsp-${s.id}" type="tel" inputmode="tel" maxlength="15" data-stu="sphone" data-sid="${s.id}"`)}
       ${pfRow("رقم اقراء", s.iqra, "iqra", `id="sq-${s.id}" inputmode="numeric" maxlength="12" data-stu="iqra" data-sid="${s.id}"`)}
       ${pfRow("البريد الإلكتروني", s.email, "email", `id="se-${s.id}" type="email" data-stu="email" data-sid="${s.id}"`)}
     </div></div>
-    ${teacher?`<div class="pf-notes"><span>ملاحظات (تظهر لولي الأمر)</span><textarea class="inp" rows="2" id="sn-${s.id}" data-stu="notes" data-sid="${s.id}">${esc(s.notes||"")}</textarea></div>`:(s.notes?`<div class="pf-notes"><span>ملاحظات</span><p>${esc(s.notes)}</p></div>`:"")}
+    ${teacher?`<div class="pf-notes"><span>ملاحظات (تظهر لولي الأمر)</span><textarea class="inp autogrow" rows="1" id="sn-${s.id}" data-stu="notes" data-sid="${s.id}">${esc(s.notes||"")}</textarea></div>`:(s.notes?`<div class="pf-notes"><span>ملاحظات</span><p>${esc(s.notes)}</p></div>`:"")}
   </section>`;
   const tr = periodRange(currentTerm()), ts = rangeStats(s.id, tr[0], tr[1]);
   const termCard = `<section class="card" style="display:flex;flex-direction:column;gap:10px"><div class="sec-h" style="margin:0"><h2>${tr[2]}</h2><small>حصيلة الفصل</small></div>
@@ -966,6 +1052,7 @@ function renderStudent(){
     <div class="row" style="justify-content:space-between"><div class="sec-h" style="margin:0"><h2>${monthLong(ui.stuMonth)}</h2></div>${seg}</div>
     ${tiles}
     ${stuAwardCard(s.id, ui.stuMonth, st.pr)}
+    ${stuEthCard(s.id, ui.stuMonth)}
     <section class="card"><div class="sec-h"><h2>السجل اليومي</h2></div><div class="log">${log}</div></section>
   </main>`;
 }
@@ -981,7 +1068,7 @@ function recFields(sid,k,e,day){
     const da = `data-sid="${sid}" data-day="${day}" data-k="${k}" data-i="${i}"`;
     return `<div class="rec-item">
       <div class="rec-row">
-        <select class="inp" id="${k}s-${id}" ${da} data-f="s" aria-label="السورة">${surahOptions(x.s)}</select>
+        <div class="sur"><input class="inp sur-in" type="search" enterkeyhint="search" autocomplete="off" id="${k}q-${id}" placeholder="اسم السورة أو رقمها" value="${x.s?`${x.s}. ${Q.n[x.s-1]}`:""}" aria-label="السورة"><select id="${k}s-${id}" ${da} data-f="s" hidden aria-hidden="true" tabindex="-1">${surahOptions(x.s)}</select><div class="sur-list" hidden></div></div>
         <input class="inp num" type="number" inputmode="numeric" min="1" max="${n}" id="${k}f-${id}" placeholder="من" value="${x.full?"":esc(x.f??"")}" ${da} data-f="f" ${x.full||!x.s?"disabled":""} aria-label="من آية">
         <input class="inp num" type="number" inputmode="numeric" min="1" max="${n}" id="${k}t-${id}" placeholder="إلى" value="${x.full?"":esc(x.t??"")}" ${da} data-f="t" ${x.full||!x.s?"disabled":""} aria-label="إلى آية">
       </div>
@@ -1010,6 +1097,24 @@ function nextBox(sid){
     <span class="muted" style="font-size:12.5px">يظهر مباشرة في صفحة الطالب ليحفظه في البيت.</span>
   </div>`;
 }
+const ETH_R = ["الكلام الجانبي","ألفاظ غير مناسبة","استخدام التلفون في الحلقة","إساءة للزملاء","عدم مراعاة آداب المسجد"];
+const ethDay = r => !r ? null : r.a==="p" ? Math.max(0, 10-(r.eth||[]).length) : r.a==="a" ? 0 : null;
+function ethStats(sid, k){
+  let pts = 0, max = 0, abs = 0; const list = [];
+  for(const d of Object.keys(S.days).filter(d=>monthKey(d)===k && d<=TODAY && inProg(d)).sort()){
+    const r = (S.days[d]||{})[sid], v = ethDay(r); if(v===null) continue;
+    pts += v; max += 10; if(r.a==="a") abs++; else (r.eth||[]).forEach(x=>list.push([d,x]));
+  }
+  return {pts, max, abs, list};
+}
+function ethBox(sid, r){
+  const L = r.eth||[], p = Math.max(0, 10-L.length);
+  return `<div class="eth"><div class="eth-row"><b>الأخلاق</b><span class="eth-ctl"><button class="eth-b" data-act="eth-minus" data-sid="${sid}" ${p<=0?"disabled":""} aria-label="خصم نقطة">−</button><span class="eth-v num ${p<10?"low":""}">${p}<small> / 10</small></span><button class="eth-b" data-act="eth-plus" data-sid="${sid}" ${!L.length?"disabled":""} aria-label="إرجاع نقطة">+</button></span></div>
+    ${L.length?`<div class="eth-list">${L.map(x=>`<span class="pill">${esc(x)}</span>`).join("")}</div>`:""}
+    ${ui.ethPick===sid?`<div class="eth-pick"><span class="muted" style="font-size:13px">سبب الخصم:</span><div class="chips">${ETH_R.map(x=>`<button class="chip" data-act="eth-r" data-sid="${sid}" data-r="${esc(x)}">${x}</button>`).join("")}</div>
+      <div class="row" style="gap:6px;flex-wrap:nowrap"><input class="inp" id="eth-o-${sid}" placeholder="أخرى: اكتب السبب" aria-label="سبب آخر"><button class="btn sm" data-act="eth-other" data-sid="${sid}">خصم</button><button class="btn sm ghost" data-act="eth-cancel">إلغاء</button></div></div>`:""}
+  </div>`;
+}
 function tabRec(){
   const days = sessionDays(ui.week);
   if(!days.includes(ui.recDay)) ui.recDay = days[0];
@@ -1022,9 +1127,10 @@ function tabRec(){
     const att = r.a==="p"?`<span class="pill p">حاضر</span>`:r.a==="a"?`<span class="pill a">غائب</span>`:`<span class="pill" style="background:var(--sunk);color:var(--muted)">لم يُسجَّل</span>`;
     const pg = pagesFor(r.h);
     return `<details class="st" data-sid="${s.id}" ${ui.open.has(s.id)?"open":""}>
-      <summary><span class="n"><span class="no num">${ix+1}</span>${esc(s.name)}</span><span class="meta">${r.note?`<span class="pill" style="background:var(--sunk);color:var(--muted)" title="${esc(r.note)}">ملاحظة</span>`:""}${pg?`<span class="pg num" style="font-size:13px">${fmtPages(pg)} وجه</span>`:""}${r.d?`<span class="pill c">تم</span>`:""}${att}</span></summary>
+      <summary><span class="n"><span class="no num">${ix+1}</span>${esc(s.name)}</span><span class="meta">${(r.a==="p"&&(r.eth||[]).length)?`<span class="pill eth-tag">أخلاق ${Math.max(0,10-r.eth.length)}</span>`:""}${r.note?`<span class="pill" style="background:var(--sunk);color:var(--muted)" title="${esc(r.note)}">ملاحظة</span>`:""}${pg?`<span class="pg num" style="font-size:13px">${fmtPages(pg)} وجه</span>`:""}${r.d?`<span class="pill c">تم</span>`:""}${att}</span></summary>
       <div class="st-body">
         <div class="seg"><button class="${r.a==="p"?"on":""}" data-act="att" data-sid="${s.id}" data-v="p">حاضر</button><button class="${r.a==="a"?"on":""}" data-act="att" data-sid="${s.id}" data-v="a">غائب</button><button class="${!r.a?"on":""}" data-act="att" data-sid="${s.id}" data-v="">بدون</button></div>
+        ${r.a==="p"?ethBox(s.id,r):""}
         ${dueBox(s.id,r)}
         ${nextBox(s.id)}
       </div></details>`;
@@ -1059,6 +1165,7 @@ function tabKnights(){
     <div class="row" style="justify-content:space-between"><div class="sec-h" style="margin:0"><h2>فرسان الشهر</h2></div><div class="seg">${months.map(m=>`<button class="${m===ui.knMonth?"on":""}" data-act="knm" data-k="${m}">${monthName(m)}</button>`).join("")}</div></div>
     <div class="demo">للمساعدة فقط: الأعلى حفظاً ${topH||"—"}. الأعلى حضوراً ${topI||"—"}.</div>
     ${grp("h","فارس الحفظ")}${grp("i","فارس الانضباط")}
+    <div class="fld"><label>فارس الأخلاق</label><div class="muted" style="font-size:13px">${(k.e||[]).map(id=>esc((stu(id)||{}).name||"")).join("، ") || "يختاره المنسق من قسم المنسق حسب نقاط الأخلاق."}</div></div>
   </div>`;
 }
 function tabFees(){
@@ -1084,7 +1191,7 @@ function periodRange(p){
   if(p==="t2") return [`${y+1}-02-01`, `${y+1}-06-30`, "الفصل الثاني"];
   if(p==="year") return [`${y}-09-01`, `${y+1}-08-31`, "السنة الدراسية"];
   if(p==="custom"){ const f = ui.repFrom||START(), t = ui.repTo||TODAY; return [f, t, "من "+dShort(f)+" إلى "+dShort(t)]; }
-  const mk = monthKey(TODAY); return [mk+"-01", mk+"-31", "شهر "+monthLong(mk)];
+  const mk = monthKey(TODAY), c = cycRange(mk); return [c.a, c.end, monthLong(mk)];
 }
 function rangeStats(sid, a, b){
   let att=0, abs=0, h=0, m=0, pr=0, rec=0; const notes=[], months={};
@@ -1163,11 +1270,11 @@ function tabTeachers(){
   const rows = T.map((t,ix)=>{ const c = cnt(t); return `<tr><td class="nm"><span class="no num">${ix+1}</span><b style="font-size:14.5px">${esc(t.name)}</b></td>${days.map(d=>{ const v=(S.tatt[d]||{})[t.id]; const cls = v==="p"?"p":v==="a"?"a":(d>TODAY?"f":"n"); return `<td><button class="cell ${cls} edit" data-act="tcyc" data-d="${d}" data-tid="${t.id}" aria-label="${esc(t.name)}، ${DAY[parse(d).getDay()]}: ${v==="p"?"حاضر":v==="a"?"غائب":"لم يُسجَّل"}">${v==="p"?I.check:v==="a"?I.cross:"·"}</button></td>`; }).join("")}<td class="num" style="font-size:12.5px;white-space:nowrap"><span style="color:var(--ok)">${c.p}</span> / <span style="color:var(--bad)">${c.a}</span></td></tr>`; }).join("");
   const months = academicMonths().filter(k=>k<=monthKey(TODAY) && k>=monthKey(START()));
   if(!months.includes(ui.tMonth)) ui.tMonth = months[months.length-1] || monthKey(TODAY);
-  const pa = ui.tMonth+"-01", pb = iso(new Date(+ui.tMonth.slice(0,4), +ui.tMonth.slice(5,7), 0));
+  const pa = cycRange(ui.tMonth).a, pb = cycRange(ui.tMonth).end;
   const printable = `<div class="row no-print" style="justify-content:space-between"><div class="sec-h" style="margin:0"><h2>كشف المعلمين للطباعة</h2></div><button class="btn" data-act="print">طباعة / حفظ PDF</button></div>
     <div class="seg no-print">${months.map(m=>`<button class="${m===ui.tMonth?"on":""}" data-act="tmonth" data-k="${m}">${monthName(m)}</button>`).join("")}</div>
-    <div class="print-only" style="margin-bottom:10px"><b>حلقات جامع يوسف بن شاهين الجلاهمة</b><div>كشف حضور المعلمين · شهر ${monthLong(ui.tMonth)}</div></div>
-    ${attGrid(pa, pb, "شهر "+monthLong(ui.tMonth), "t")}`;
+    <div class="print-only" style="margin-bottom:10px"><b>حلقات جامع يوسف بن شاهين الجلاهمة</b><div>كشف حضور المعلمين · ${monthLong(ui.tMonth)}</div></div>
+    ${attGrid(pa, pb, monthLong(ui.tMonth), "t")}`;
   return `<div class="card no-print" style="display:flex;flex-direction:column;gap:12px">
     <div class="sec-h" style="margin:0"><h2>تسجيل حضور المعلمين</h2><small>للأساتذة فقط</small></div>
     <div class="row"><button class="btn ghost" data-act="rwk" data-d="-7" aria-label="الأسبوع السابق">${I.back.replace('<svg','<svg width="16" height="16"')}</button><span class="num muted">${weekLabel(ui.week)}</span><button class="btn ghost" data-act="rwk" data-d="7" ${ui.week>=CUR_WEEK?"disabled":""} aria-label="الأسبوع التالي">${I.chev.replace('<svg','<svg width="16" height="16"')}</button></div>
@@ -1189,8 +1296,10 @@ function tabInfo(){
     <div><button class="add-btn" data-act="c-add">${I.plus} رقم جديد</button></div>
   </div>
   <div class="card" style="display:flex;flex-direction:column;gap:10px">
-    <div class="sec-h" style="margin:0"><h2>تاريخ بداية البرنامج</h2><small>الأيام قبله ما تدخل في التقارير والحصيلة</small></div>
-    <input class="inp" type="date" id="start-in" value="${esc(f.start||DEFAULT_START)}" data-info="start">
+    <div class="sec-h" style="margin:0"><h2>بداية البرنامج والشهور</h2><small>كل شهر ٤ أسابيع</small></div>
+    <label class="cyc-row"><span>بداية البرنامج<small>بداية الشهر الأول</small></span><input class="inp" type="date" id="start-in" value="${esc(f.start||DEFAULT_START)}" data-info="start"><span></span></label>
+    ${(()=>{ const cur = monthKey(TODAY), N = (cur==="c00"?1:+cur.slice(1)) + 1, ov = f.cyc||{}; let h = ""; for(let n=2; n<=N; n++){ const r = cycRange(ckey(n)); h += `<label class="cyc-row"><span>${monthName(ckey(n))} يبدأ<small class="num">${dShort(r.first)} – ${dShort(r.last)}</small></span><input class="inp" type="date" id="cyc-${n}" value="${esc(r.a)}" data-cyc="${n}"><span>${ov[n]?`<button class="btn sm ghost" data-act="cyc-reset" data-n="${n}">تلقائي</button>`:""}</span></label>`; } return h; })()}
+    <span class="muted" style="font-size:12.5px">الشهر يبدأ تلقائياً بعد ٤ أسابيع من الشهر اللي قبله. غيّر التاريخ فقط إذا صار تأجيل أو عطلة.</span>
   </div>
   <div class="card" style="display:flex;flex-direction:column;gap:10px">
     <div class="sec-h" style="margin:0"><h2>الحساب المصرفي للمركز (IBAN)</h2><small>يظهر مع زر نسخ</small></div>
@@ -1255,45 +1364,76 @@ function coordLock(C){
 }
 function coRange(){
   if(ui.coMonth==="custom"){ const a = ui.coFrom||START(), b = ui.coTo||TODAY; return {a, b, mk:null, label:`من ${dShort(a)} إلى ${dShort(b)}`}; }
-  const mk = ui.coMonth; return {a:mk+"-01", b:mk+"-31", mk, label:"شهر "+monthLong(mk)};
+  const mk = ui.coMonth, c = cycRange(mk); return {a:c.a, b:c.end, mk, label:monthLong(mk)};
 }
 function coAwData(C, R){
   const pv = +C.prizeVal || 1, AW = C.awards || {};
   const dates = Object.keys(S.prizes||{}).filter(d=>d>=R.a && d<=R.b && inProg(d) && (S.prizes[d]||[]).length).sort();
   const cnt = {}; dates.forEach(d=>S.prizes[d].forEach(id=>{ cnt[id] = (cnt[id]||0)+1; }));
-  const mks = Object.keys(AW).filter(k=>k>=monthKey(R.a) && k<=monthKey(R.b));
+  const ka = monthKey(R.a), kb = monthKey(R.b);
+  const mks = Object.keys(AW).filter(k=>k>=ka && k<=kb);
   const aw = (sid,f) => mks.reduce((a,k)=>a+(+(((AW[k]||{})[sid]||{})[f])||0), 0);
   const extra = new Set([...Object.keys(cnt), ...mks.flatMap(k=>Object.keys(AW[k]||{}))].filter(id=>!stu(id)));
   const ids = [...S.students.map(s=>s.id), ...extra];
-  const rows = ids.map(id=>{ const n = cnt[id]||0, r = {id, n, d:n*pv, m:aw(id,"m"), h:aw(id,"h"), i:aw(id,"i")}; r.t = r.d+r.m+r.h+r.i; return r; });
+  const rows = ids.map(id=>{ const n = cnt[id]||0, r = {id, n, d:n*pv, m:aw(id,"m"), h:aw(id,"h"), i:aw(id,"i"), e:aw(id,"e")}; r.t = r.d+r.m+r.h+r.i+r.e; return r; });
   const sum = f => rows.reduce((a,r)=>a+r[f], 0);
-  return {pv, dates, rows, tot:{n:sum("n"), d:sum("d"), m:sum("m"), h:sum("h"), i:sum("i"), t:sum("t")}};
+  return {pv, dates, rows, tot:{n:sum("n"), d:sum("d"), m:sum("m"), h:sum("h"), i:sum("i"), e:sum("e"), t:sum("t")}};
 }
 function coAwRefresh(){
   const X = coAwData(coordState(), coRange());
   X.rows.forEach(r=>{ const el = $("#aw-t-"+r.id); if(el) el.textContent = r.t ? fmtBD(r.t) : "—"; });
-  ["d","m","h","i","t"].forEach(f=>{ const el = $("#aw-sum-"+f); if(el) el.textContent = fmtBD(X.tot[f]); });
-  [["daily",X.tot.d],["month",X.tot.m],["kn",X.tot.h+X.tot.i],["all",X.tot.t]].forEach(([k,v])=>{ const el = $("#aw-tile-"+k); if(el) el.textContent = fmtBD(v); });
+  ["m","h","i","e","t"].forEach(f=>{ const el = $("#aw-sum-"+f); if(el) el.textContent = fmtBD(X.tot[f]); });
+  [["daily",X.tot.d],["month",X.tot.m],["kn",X.tot.h+X.tot.i+X.tot.e],["all",X.tot.t]].forEach(([k,v])=>{ const el = $("#aw-tile-"+k); if(el) el.textContent = fmtBD(v); });
 }
+const AW_L = {m:"الجائزة الشهرية", h:"فارس الحفظ", i:"فارس الانضباط", e:"فارس الأخلاق"};
 function coPrizes(C, R){
   const X = coAwData(C, R), mk = R.mk, AWm = mk ? ((C.awards||{})[mk]||{}) : {}, K = mk ? (S.knights[mk]||{}) : {};
   const name = id => (stu(id)||{}).name || "طالب محذوف";
   const cell = (r, f) => {
     if(!mk) return `<td class="num">${r[f]?fmtBD(r[f]):"—"}</td>`;
-    const v = (AWm[r.id]||{})[f], star = (f==="h"||f==="i") && (K[f]||[]).includes(r.id) ? `<span class="kn-star" title="فارس الشهر" aria-label="فارس الشهر">★</span>` : "";
-    return `<td>${star}<input class="inp num no-print co-amt" type="number" inputmode="decimal" min="0" step="0.5" dir="ltr" placeholder="0" value="${v===undefined?"":v}" data-co="aw" data-f="${f}" data-sid="${r.id}" data-m="${mk}" aria-label="${f==="m"?"الجائزة الشهرية":f==="h"?"فارس الحفظ":"فارس الانضباط"}: ${esc(name(r.id))}"><span class="print-only num">${v?fmtBD(v):"—"}</span></td>`;
+    const v = (AWm[r.id]||{})[f], star = f!=="m" && (K[f]||[]).includes(r.id) ? `<span class="kn-star" title="فارس هذا الشهر" aria-label="فارس هذا الشهر">★</span>` : "";
+    return `<td>${star}<input class="inp num no-print co-amt" type="number" inputmode="decimal" min="0" step="0.5" dir="ltr" placeholder="0" value="${v===undefined?"":v}" data-co="aw" data-f="${f}" data-sid="${r.id}" data-m="${mk}" aria-label="${AW_L[f]}: ${esc(name(r.id))}"><span class="print-only num">${v?fmtBD(v):"—"}</span></td>`;
   };
-  const rows = X.rows.map((r,ix)=>`<tr><td><span class="no num">${ix+1}</span>${esc(name(r.id))}</td><td class="num">${r.n||"—"}</td><td class="num">${r.d?fmtBD(r.d):"—"}</td>${cell(r,"m")}${cell(r,"h")}${cell(r,"i")}<td class="num"><b id="aw-t-${r.id}">${r.t?fmtBD(r.t):"—"}</b></td></tr>`).join("");
+  const daily = r => r.n ? `${fmtBD(r.d)} <small class="muted">(${r.n})</small>` : "—";
+  const rows = X.rows.map((r,ix)=>`<tr><td><span class="no num">${ix+1}</span>${esc(name(r.id))}</td><td class="num">${daily(r)}</td>${cell(r,"m")}${cell(r,"h")}${cell(r,"i")}${cell(r,"e")}<td class="num"><b id="aw-t-${r.id}">${r.t?fmtBD(r.t):"—"}</b></td></tr>`).join("");
   const nm = id => esc(name(id).split(" ").slice(0,3).join(" "));
   const drows = X.dates.map(d=>`<tr><td class="num">${DAY[parse(d).getDay()]} ${dShort(d)}</td><td style="white-space:normal">${S.prizes[d].map(nm).join("، ")}</td><td class="num">${fmtBD(S.prizes[d].length*X.pv)}</td></tr>`).join("");
   return `<section class="card" style="display:flex;flex-direction:column;gap:12px">
     <div class="sec-h" style="margin:0"><h2>كشف مبالغ الجوائز</h2><small>${R.label} · الجائزة اليومية ${fmtBD(X.pv)}</small></div>
-    <div class="term-card"><div><b class="num" id="aw-tile-daily">${fmtBD(X.tot.d)}</b><span>الجوائز اليومية (${X.tot.n})</span></div><div><b class="num" id="aw-tile-month">${fmtBD(X.tot.m)}</b><span>الجوائز الشهرية</span></div><div><b class="num" id="aw-tile-kn">${fmtBD(X.tot.h+X.tot.i)}</b><span>جوائز الفرسان</span></div><div><b class="num" id="aw-tile-all" style="color:var(--copper-deep)">${fmtBD(X.tot.t)}</b><span>المجموع الكلي</span></div></div>
-    ${X.rows.length ? `<div class="fee-tbl-wrap"><table class="fee-tbl co-tbl co-aw"><thead><tr><th>الطالب</th><th>عدد اليومية</th><th>اليومية</th><th>الشهرية</th><th>فارس الحفظ</th><th>فارس الانضباط</th><th>المجموع</th></tr></thead><tbody>${rows}</tbody>
-      <tfoot><tr><td><b>المجموع</b></td><td class="num"><b>${X.tot.n}</b></td><td class="num"><b id="aw-sum-d">${fmtBD(X.tot.d)}</b></td><td class="num"><b id="aw-sum-m">${fmtBD(X.tot.m)}</b></td><td class="num"><b id="aw-sum-h">${fmtBD(X.tot.h)}</b></td><td class="num"><b id="aw-sum-i">${fmtBD(X.tot.i)}</b></td><td class="num"><b id="aw-sum-t">${fmtBD(X.tot.t)}</b></td></tr></tfoot></table></div>
-    <p class="muted no-print" style="margin:0;font-size:12.5px">${mk ? "اكتب مبلغ الجائزة الشهرية وجائزة فارس الحفظ وفارس الانضباط لكل طالب. النجمة ★ تعني أن الطالب مختار فارساً لهذا الشهر. المبالغ تظهر لولي الأمر في صفحة الطالب." : "هذه خلاصة الفترة المحددة. لتعديل المبالغ اختر الشهر."}</p>` : `<div class="demo">ما فيه طلاب مسجّلين.</div>`}
-    ${X.dates.length ? `<h3 style="margin:4px 0 0;font-size:15px">الجوائز اليومية حسب الأيام</h3>
-    <div class="fee-tbl-wrap"><table class="fee-tbl co-tbl"><thead><tr><th>اليوم</th><th>الفائزون</th><th>المبلغ</th></tr></thead><tbody>${drows}</tbody></table></div>` : ""}
+    <div class="term-card"><div><b class="num" id="aw-tile-daily">${fmtBD(X.tot.d)}</b><span>الجوائز اليومية (${X.tot.n})</span></div><div><b class="num" id="aw-tile-month">${fmtBD(X.tot.m)}</b><span>الجوائز الشهرية</span></div><div><b class="num" id="aw-tile-kn">${fmtBD(X.tot.h+X.tot.i+X.tot.e)}</b><span>جوائز الفرسان</span></div><div><b class="num" id="aw-tile-all" style="color:var(--copper-deep)">${fmtBD(X.tot.t)}</b><span>المجموع الكلي</span></div></div>
+    ${X.rows.length ? `<div class="fee-tbl-wrap"><table class="fee-tbl co-tbl co-aw"><thead><tr><th>الطالب</th><th>اليومية</th><th>الشهرية</th><th>فارس الحفظ</th><th>فارس الانضباط</th><th>فارس الأخلاق</th><th>المجموع</th></tr></thead><tbody>${rows}</tbody>
+      <tfoot><tr><td><b>المجموع</b></td><td class="num"><b>${fmtBD(X.tot.d)}</b></td><td class="num"><b id="aw-sum-m">${fmtBD(X.tot.m)}</b></td><td class="num"><b id="aw-sum-h">${fmtBD(X.tot.h)}</b></td><td class="num"><b id="aw-sum-i">${fmtBD(X.tot.i)}</b></td><td class="num"><b id="aw-sum-e">${fmtBD(X.tot.e)}</b></td><td class="num"><b id="aw-sum-t">${fmtBD(X.tot.t)}</b></td></tr></tfoot></table></div>
+    <p class="muted no-print" style="margin:0;font-size:12.5px">${mk ? "اكتب مبلغ الجائزة الشهرية وجوائز الفرسان لكل طالب. النجمة ★ تعني أن الطالب مختار فارساً لهذا الشهر. المبالغ تظهر لولي الأمر في صفحة الطالب." : "هذه خلاصة الفترة المحددة. لتعديل المبالغ اختر الشهر."}</p>` : `<div class="demo">ما فيه طلاب مسجّلين.</div>`}
+    ${X.dates.length ? `<details class="no-print"><summary style="cursor:pointer;font-weight:600;font-size:14px">الجوائز اليومية حسب الأيام</summary>
+    <div class="fee-tbl-wrap" style="margin-top:8px"><table class="fee-tbl co-tbl"><thead><tr><th>اليوم</th><th>الفائزون</th><th>المبلغ</th></tr></thead><tbody>${drows}</tbody></table></div></details>` : ""}
+  </section>`;
+}
+function coEthics(mk){
+  const K = (S.knights[mk]||{}).e || [];
+  const rows = S.students.map(s=>({s, ...ethStats(s.id, mk)})).sort((a,b)=>b.pts-a.pts || (b.max?b.pts/b.max:0)-(a.max?a.pts/a.max:0) || String(a.s.name).localeCompare(String(b.s.name),"ar"));
+  let rank = 0, prev = null;
+  const trs = rows.map((r,ix)=>{ if(r.pts!==prev){ rank = ix+1; prev = r.pts; } const on = K.includes(r.s.id);
+    return `<tr><td><span class="no num">${rank}</span>${esc(r.s.name)}${on?` <span class="kn-star">★</span>`:""}</td><td class="num"><b>${r.pts}</b> <small class="muted">/ ${r.max}</small></td><td class="num">${r.list.length||"—"}</td><td class="num">${r.abs||"—"}</td>
+      <td class="no-print"><button class="btn sm ${on?"cop":"ghost"}" data-act="co-ek" data-sid="${r.s.id}" data-m="${mk}">${on?"فارس ✓":"اختيار"}</button></td></tr>`; }).join("");
+  return `<section class="card" style="display:flex;flex-direction:column;gap:12px">
+    <div class="sec-h" style="margin:0"><h2>ترتيب الأخلاق</h2><small>${monthLong(mk)}</small></div>
+    <div class="demo no-print">فرسان الأخلاق لهذا الشهر: <b>${K.map(id=>esc((stu(id)||{}).name||"")).join("، ") || "لم يُختاروا بعد"}</b> (فارسين كحد أقصى). الحاضر يبدأ يومياً بـ 10، والغائب ياخذ صفر ذاك اليوم.</div>
+    <div class="fee-tbl-wrap"><table class="fee-tbl co-tbl" style="min-width:520px"><thead><tr><th>الطالب</th><th>النقاط</th><th>الخصومات</th><th>الغياب</th><th class="no-print">فارس الأخلاق</th></tr></thead><tbody>${trs}</tbody></table></div>
+  </section>`;
+}
+function coTpayRange(C, R){
+  const T = S.teachers||[], ka = monthKey(R.a), kb = monthKey(R.b);
+  const mks = [...new Set([...Object.keys(C.tpay||{}), ...Object.keys(C.tpaid||{})])].filter(k=>k>=ka && k<=kb);
+  const rows = T.map((t,ix)=>{ let p=0, ab=0; for(const [d,x] of Object.entries(S.tatt||{})) if(d>=R.a && d<=R.b && d<=TODAY && inProg(d)){ if(x[t.id]==="p") p++; else if(x[t.id]==="a") ab++; }
+    const amt = mks.reduce((a,k)=>a+(+((C.tpay||{})[k]||{})[t.id]||0), 0), paid = mks.reduce((a,k)=>a+(((C.tpaid||{})[k]||{})[t.id] ? (+((C.tpay||{})[k]||{})[t.id]||0) : 0), 0);
+    return {t, ix, p, ab, amt, paid}; });
+  const tot = f => rows.reduce((a,r)=>a+r[f], 0);
+  return `<section class="card" style="display:flex;flex-direction:column;gap:12px">
+    <div class="sec-h" style="margin:0"><h2>كشف مكافآت المعلمين</h2><small>${R.label}</small></div>
+    <div class="term-card"><div><b class="num">${T.length}</b><span>المعلمون</span></div><div><b class="num">${fmtBD(tot("amt"))}</b><span>إجمالي المكافآت</span></div><div><b class="num" style="color:var(--ok)">${fmtBD(tot("paid"))}</b><span>تم صرفه</span></div><div><b class="num" style="color:var(--bad)">${fmtBD(tot("amt")-tot("paid"))}</b><span>المتبقي</span></div></div>
+    ${T.length ? `<div class="fee-tbl-wrap"><table class="fee-tbl co-tbl"><thead><tr><th>المعلم</th><th>حضور</th><th>غياب</th><th>المكافأة</th><th>المصروف</th></tr></thead><tbody>${rows.map(r=>`<tr><td><span class="no num">${r.ix+1}</span>${esc(r.t.name)}</td><td class="num" style="color:var(--ok);font-weight:700">${r.p}</td><td class="num" style="color:var(--bad);font-weight:700">${r.ab}</td><td class="num">${r.amt?fmtBD(r.amt):"—"}</td><td class="num">${r.paid?fmtBD(r.paid):"—"}</td></tr>`).join("")}</tbody>
+    <tfoot><tr><td><b>المجموع</b></td><td></td><td></td><td class="num"><b>${fmtBD(tot("amt"))}</b></td><td class="num"><b>${fmtBD(tot("paid"))}</b></td></tr></tfoot></table></div>
+    <p class="muted no-print" style="margin:0;font-size:12.5px">خلاصة الفترة المحددة: المكافآت تُجمع من الشهور اللي تقع ضمن الفترة. لتعديل المبالغ اختر الشهر.</p>` : `<div class="demo">ما فيه معلمين مسجّلين.</div>`}
   </section>`;
 }
 function coTpaySums(C, mk){
@@ -1313,7 +1453,7 @@ function coTpay(C, mk){
       <td><input class="inp num no-print co-amt" id="tp-${t.id}" type="number" inputmode="decimal" min="0" step="0.5" dir="ltr" placeholder="0" value="${v===undefined?"":v}" data-co="tpay" data-tid="${t.id}" data-m="${mk}" aria-label="مكافأة ${esc(t.name)}"><span class="print-only num">${v?fmtBD(v):"—"}</span></td>
       <td><button class="fbtn ${on?"on":""}" data-act="co-paid" data-tid="${t.id}" data-m="${mk}" aria-label="${esc(t.name)}: ${on?"تم الصرف":"لم يُصرف"}">${on?I.check:""}</button><span class="print-only">${on?"✓":"—"}</span></td></tr>`; }).join("");
   return `<section class="card" style="display:flex;flex-direction:column;gap:12px">
-    <div class="sec-h" style="margin:0"><h2>كشف مكافآت المعلمين</h2><small>شهر ${monthLong(mk)}</small></div>
+    <div class="sec-h" style="margin:0"><h2>كشف مكافآت المعلمين</h2><small>${monthLong(mk)}</small></div>
     <div class="term-card"><div><b class="num">${T.length}</b><span>المعلمون</span></div><div><b class="num" id="co-sum-total">${fmtBD(m.total)}</b><span>إجمالي المكافآت</span></div><div><b class="num" id="co-sum-done" style="color:var(--ok)">${fmtBD(m.done)}</b><span>تم صرفه</span></div><div><b class="num" id="co-sum-rest" style="color:var(--bad)">${fmtBD(m.rest)}</b><span>المتبقي</span></div></div>
     ${T.length ? `<div class="fee-tbl-wrap"><table class="fee-tbl co-tbl"><thead><tr><th>المعلم</th><th>حضور</th><th>غياب</th><th>المكافأة (د.ب)</th><th>تم الصرف</th></tr></thead><tbody>${rows}</tbody><tfoot><tr><td><b>المجموع</b></td><td></td><td></td><td class="num"><b id="co-ttot">${fmtBD(m.total)}</b></td><td></td></tr></tfoot></table></div>
     <p class="muted no-print" style="margin:0;font-size:12.5px">اكتب مبلغ مكافأة كل معلم لهذا الشهر، واضغط خانة "تم الصرف" عند التسليم. أيام الحضور تُحسب من تبويب حضور المعلمين.</p>` : `<div class="demo">ما فيه معلمين مسجّلين. أضفهم من تبويب حضور المعلمين.</div>`}
@@ -1336,16 +1476,17 @@ function coSettings(C){
 function tabCoord(){
   const C = coordState();
   if(!ui.coordOK) return coordLock(C);
-  const V = ui.coView==="tpay" ? "tpay" : "prize";
+  const V = ["tpay","eth"].includes(ui.coView) ? ui.coView : "prize";
   const months = coMonths();
-  if(!(months.includes(ui.coMonth) || (ui.coMonth==="custom" && V==="prize"))) ui.coMonth = months[months.length-1];
+  if(!(months.includes(ui.coMonth) || (ui.coMonth==="custom" && V!=="eth"))) ui.coMonth = months[months.length-1];
   const R = coRange(), mk = R.mk;
+  const T = {prize:"كشف مبالغ الجوائز", tpay:"كشف مكافآت المعلمين", eth:"ترتيب الأخلاق"}[V];
   return `<div class="row no-print" style="justify-content:space-between"><div class="sec-h" style="margin:0"><h2>قسم المنسق</h2></div><div class="row" style="gap:8px"><button class="btn" data-act="print">طباعة / حفظ PDF</button><button class="btn ghost" data-act="co-lock">قفل القسم</button></div></div>
-    <div class="seg no-print"><button class="${V==="prize"?"on":""}" data-act="co-view" data-k="prize">مبالغ الجوائز</button><button class="${V==="tpay"?"on":""}" data-act="co-view" data-k="tpay">مكافآت المعلمين</button></div>
-    <div class="seg no-print">${months.map(m=>`<button class="${m===mk?"on":""}" data-act="co-month" data-k="${m}">${monthName(m)}</button>`).join("")}${V==="prize"?`<button class="${!mk?"on":""}" data-act="co-month" data-k="custom">فترة محددة</button>`:""}</div>
+    <div class="seg no-print"><button class="${V==="prize"?"on":""}" data-act="co-view" data-k="prize">مبالغ الجوائز</button><button class="${V==="tpay"?"on":""}" data-act="co-view" data-k="tpay">مكافآت المعلمين</button><button class="${V==="eth"?"on":""}" data-act="co-view" data-k="eth">الأخلاق</button></div>
+    <div class="seg no-print">${months.map(m=>`<button class="${m===mk?"on":""}" data-act="co-month" data-k="${m}">${monthName(m)}</button>`).join("")}${V!=="eth"?`<button class="${!mk?"on":""}" data-act="co-month" data-k="custom">فترة محددة</button>`:""}</div>
     ${!mk?`<div class="rep-dates no-print"><label>من <input class="inp" type="date" id="co-from" data-corange="from" value="${esc(R.a)}"></label><label>إلى <input class="inp" type="date" id="co-to" data-corange="to" value="${esc(R.b)}"></label></div>`:""}
-    <div class="print-only" style="margin-bottom:10px"><b>حلقات جامع يوسف بن شاهين الجلاهمة</b><div>${V==="prize"?"كشف مبالغ الجوائز":"كشف مكافآت المعلمين"} · ${R.label}</div></div>
-    ${V==="prize" ? coPrizes(C, R) : coTpay(C, mk)}
+    <div class="print-only" style="margin-bottom:10px"><b>حلقات جامع يوسف بن شاهين الجلاهمة</b><div>${T} · ${R.label}</div></div>
+    ${V==="prize" ? coPrizes(C, R) : V==="eth" ? coEthics(mk) : mk ? coTpay(C, mk) : coTpayRange(C, R)}
     ${coSettings(C)}`;
 }
 document.addEventListener("submit", async e=>{
@@ -1563,6 +1704,61 @@ document.addEventListener("mouseover", e=>{ if(e.target.closest && e.target.clos
 function closeModal(){ $("#modal").innerHTML=""; }
 
 /* ---------- Render + events ---------- */
+function growTA(el){ el.style.height = "auto"; el.style.height = (el.scrollHeight+2) + "px"; }
+const normAr = t => String(t||"").replace(/[ً-ْٰـ]/g,"").replace(/[أإآٱ]/g,"ا").replace(/ة/g,"ه").replace(/ى/g,"ي").replace(/\s+/g," ").trim();
+const SUR_N = () => SUR_N.v || (SUR_N.v = Q.n.map(n=>normAr(n)));
+function surMatches(q){
+  const raw = normAr(q), num = /^\d+$/.test(raw) ? +raw : 0;
+  const qq = raw.replace(/^\d+\.?\s*/,"").replace(/^ال/,""), out = [];
+  if(num>=1 && num<=114) out.push(num);
+  const AL = {"ياسين":36,"يسن":36,"تبارك":67,"عم":78,"النبا":78,"قل هو الله":112,"الحمد":1,"سبحان":17,"بني اسرائيل":17,"الدهر":76,"المومن":40,"المومنون":23,"الملايكه":35}; for(const [k,v] of Object.entries(AL)) if(raw.length>=2 && (k.startsWith(raw) || raw.startsWith(k)) && !out.includes(v)) out.push(v);
+  SUR_N().forEach((n,i)=>{ if(out.length>=8 || out.includes(i+1)) return; if(qq && (n.includes(qq) || n.replace(/^ال/,"").startsWith(qq))) out.push(i+1); });
+  return out;
+}
+document.addEventListener("input", e=>{
+  const t = e.target;
+  if(t.matches && t.matches("textarea.autogrow")) growTA(t);
+  if(t.classList && t.classList.contains("sur-in")){
+    const box = t.closest(".sur"), list = box.querySelector(".sur-list"), q = t.value.trim();
+    if(!q){ list.hidden = true; return; }
+    const m = surMatches(q);
+    list.innerHTML = m.length ? m.map(i=>`<button type="button" data-act="sur-pick" data-v="${i}"><span class="no num">${i}</span>${esc(Q.n[i-1])}</button>`).join("") : `<div class="sur-empty">ما فيه سورة بهذا الاسم</div>`;
+    list.hidden = false;
+  }
+});
+document.addEventListener("focusin", e=>{ const t = e.target; if(t.classList && t.classList.contains("sur-in") && /^\d+\. /.test(t.value)){ t.dataset.prev = t.value; t.value = ""; } });
+document.addEventListener("focusout", e=>{ const t = e.target; if(t.classList && t.classList.contains("sur-in")){ setTimeout(()=>{ const box = t.closest(".sur"); if(box && !box.contains(document.activeElement)){ const l = box.querySelector(".sur-list"); if(l) l.hidden = true; const sel = box.querySelector("select"); const v = +sel.value; t.value = v ? `${v}. ${Q.n[v-1]}` : ""; } }, 180); } });
+document.addEventListener("keydown", e=>{ const t = e.target; if(e.key==="Enter" && t.classList && t.classList.contains("sur-in")){ e.preventDefault(); const f = t.closest(".sur").querySelector(".sur-list button"); if(f) f.click(); } });
+const IOS_APP = () => navigator.standalone===true || (/iPhone|iPad|iPod/.test(navigator.userAgent) && matchMedia("(display-mode: standalone)").matches);
+let pdfBlob = null, pdfName = "kashf.pdf", h2pP = null;
+function loadH2P(){ return h2pP || (h2pP = new Promise((res,rej)=>{ const sc = document.createElement("script"); sc.src = "https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"; sc.onload = ()=>res(window.html2pdf); sc.onerror = ()=>{ h2pP = null; rej(new Error("load")); }; document.head.appendChild(sc); })); }
+function doPrint(){ if(!IOS_APP()){ try{ window.print(); }catch(e){ pdfExport(); } return; } pdfExport(); }
+async function pdfExport(){
+  const main = $("#app main"); if(!main) return;
+  toast("جاري تجهيز الملف…");
+  let lib; try{ lib = await loadH2P(); }catch(e){ toast("تعذّر تجهيز الملف، تأكد من الإنترنت"); return; }
+  const head = main.querySelector(".print-only"), title = head ? head.innerText.replace(/\s+/g," ").trim() : "كشف";
+  pdfName = (title.replace(/حلقات جامع يوسف بن شاهين الجلاهمة/,"").replace(/[\u2066-\u2069]/g,"").replace(/\//g,"-").replace(/[\\:*?"<>|·()]/g," ").replace(/\s+/g," ").trim() || "kashf") + ".pdf";
+  document.body.classList.add("pdfmode"); window.scrollTo(0,0);
+  { const w = document.createTreeWalker(main, NodeFilter.SHOW_TEXT), nodes = []; while(w.nextNode()){ const n = w.currentNode; if(/\S\s+\S/.test(n.nodeValue)) nodes.push(n); }
+    nodes.forEach(n=>{ const f = document.createDocumentFragment(); n.nodeValue.split(/(\s+)/).forEach(part=>{ if(!part) return; if(/^\s+$/.test(part)) f.appendChild(document.createTextNode(part)); else { const sp = document.createElement("span"); sp.textContent = part; f.appendChild(sp); } }); n.parentNode.replaceChild(f, n); }); }
+  try{
+    pdfBlob = await lib().set({margin:[8,7,10,7], image:{type:"jpeg", quality:.95}, html2canvas:{scale:2, backgroundColor:"#ffffff", useCORS:true}, jsPDF:{unit:"mm", format:"a4", orientation:"portrait"}, pagebreak:{mode:["css","legacy"], avoid:["tr",".log-day",".kv"]}}).from(main).outputPdf("blob");
+  }catch(e){ console.error(e); pdfBlob = null; }
+  document.body.classList.remove("pdfmode"); render();
+  if(!pdfBlob){ toast("تعذّر إنشاء الملف"); return; }
+  $("#pdfs")?.remove();
+  const d = document.createElement("div"); d.id = "pdfs"; d.className = "pdf-sheet";
+  d.innerHTML = `<div class="dlg" role="dialog" aria-modal="true" aria-label="ملف PDF"><b style="font-size:16px">الملف جاهز</b><span class="muted" style="font-size:13px">${esc(pdfName)}</span><button class="btn pri" data-act="pdf-share">مشاركة / طباعة / حفظ</button><button class="btn" data-act="pdf-open">فتح الملف</button><button class="btn ghost" data-act="pdf-close">إغلاق</button></div>`;
+  d.addEventListener("click", ev=>{ if(ev.target===d) d.remove(); });
+  document.body.appendChild(d);
+}
+async function pdfShare(){
+  if(!pdfBlob) return;
+  const file = new File([pdfBlob], pdfName, {type:"application/pdf"});
+  if(navigator.canShare && navigator.canShare({files:[file]})){ try{ await navigator.share({files:[file], title:pdfName.replace(/\.pdf$/,"")}); }catch(e){} return; }
+  const u = URL.createObjectURL(pdfBlob), a = document.createElement("a"); a.href = u; a.download = pdfName; document.body.appendChild(a); a.click(); a.remove(); setTimeout(()=>URL.revokeObjectURL(u), 60000);
+}
 function render(){
   pendingRender = false;
   if(Array.isArray(S.students)) S.students.sort((a,b)=>String(a.name).localeCompare(String(b.name),"ar"));
@@ -1575,6 +1771,7 @@ function render(){
   $("#app").innerHTML = v==="student" ? renderStudent() : v==="teacher" ? renderTeacher() : v==="gallery" ? renderGallery() : renderHome();
   if(v==="teacher" && ui.tab==="wheel") drawWheel();
   $("#drawer").innerHTML = renderDrawer();
+  document.querySelectorAll("textarea.autogrow").forEach(growTA);
 }
 document.addEventListener("toggle", e=>{ const d=e.target; if(d.matches && d.matches("details.st")){ d.open?ui.open.add(d.dataset.sid):ui.open.delete(d.dataset.sid); } }, true);
 document.addEventListener("click", e=>{
@@ -1623,6 +1820,17 @@ document.addEventListener("click", e=>{
     case "rep": ui.rep=b.dataset.k; render(); break;
     case "repv": ui.repView=b.dataset.k; render(); break;
     case "tmonth": ui.tMonth=b.dataset.k; render(); break;
+    case "eth-minus": ui.ethPick = ui.ethPick===sid ? null : sid; ui.open.add(sid); render(); break;
+    case "eth-cancel": ui.ethPick = null; render(); break;
+    case "eth-r": case "eth-other": { let why = b.dataset.r; if(a==="eth-other"){ const v = ($("#eth-o-"+sid)?.value||"").trim(); if(!v){ toast("اكتب السبب"); $("#eth-o-"+sid)?.focus(); break; } why = "أخرى: "+v; }
+      const r = ensure(ui.recDay, sid); r.eth = r.eth||[]; if(r.eth.length<10) r.eth.push(why); if(!r.a) r.a = "p"; ui.ethPick = null; ui.open.add(sid); save(); render(); toast("خُصمت نقطة"); break; }
+    case "eth-plus": { const r = ensure(ui.recDay, sid); if(r.eth && r.eth.length){ r.eth.pop(); if(!r.eth.length) delete r.eth; save(); } ui.open.add(sid); render(); break; }
+    case "co-ek": { const m = b.dataset.m, K = S.knights[m] = S.knights[m]||{h:[],i:[]}; K.e = K.e||[]; if(K.e.includes(sid)) K.e = K.e.filter(x=>x!==sid); else { if(K.e.length>=2){ toast("فارسين فقط لكل شهر، ألغِ واحد أولاً"); break; } K.e.push(sid); } save(); render(); break; }
+    case "cyc-reset": { const n = b.dataset.n; if(S.info.cyc){ delete S.info.cyc[n]; save(); render(); } break; }
+    case "sur-pick": { const box = b.closest(".sur"), sel = box && box.querySelector("select"); if(sel){ sel.value = b.dataset.v; sel.dispatchEvent(new Event("change", {bubbles:true})); } break; }
+    case "pdf-share": pdfShare(); break;
+    case "pdf-open": { if(pdfBlob){ const u = URL.createObjectURL(pdfBlob); window.open(u, "_blank"); setTimeout(()=>URL.revokeObjectURL(u), 120000); } break; }
+    case "pdf-close": $("#pdfs")?.remove(); break;
     case "co-view": ui.coView=b.dataset.k; render(); break;
     case "co-month": ui.coMonth=b.dataset.k; render(); break;
     case "co-lock": ui.coordOK=false; render(); break;
@@ -1632,7 +1840,7 @@ document.addEventListener("click", e=>{
     case "albums": ui.album=null; render(); break;
     case "rep-stu": ui.repSid=sid; render(); window.scrollTo(0,0); break;
     case "rep-back": ui.repSid=null; render(); break;
-    case "print": window.print(); break;
+    case "print": doPrint(); break;
     case "gallery": ui.album=null; go("gallery"); loadGallery(); break;
     case "gal-open": openPhoto(b.dataset.id); break;
     case "gal-del": delPhoto(b.dataset.id); break;
@@ -1720,10 +1928,16 @@ document.addEventListener("change", e=>{
   if(t.dataset.stu){
     const s = stu(t.dataset.sid), f = t.dataset.stu; let v = t.value.trim();
     if(f==="iqra") v = v.replace(/\D/g,"");
+    if(f==="sphone") v = v.replace(/[^\d+]/g,"");
     if(f==="email" && v && !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(v)){ toast("صيغة البريد غير صحيحة"); return; }
     s[f] = v; t.value = v; save(); toast("حُفظ");
   }
   if(t.dataset.corange){ if(t.dataset.corange==="from") ui.coFrom = t.value; else ui.coTo = t.value; render(); }
+  if(t.dataset.cyc){
+    const n = +t.dataset.cyc, prev = cycRange(ckey(n-1)).a;
+    if(!t.value || t.value <= prev){ toast("التاريخ لازم يكون بعد بداية الشهر اللي قبله"); render(); return; }
+    S.info.cyc = S.info.cyc||{}; S.info.cyc[n] = t.value; save(); render(); toast("حُفظ");
+  }
   if(t.dataset.rep){ if(t.dataset.rep==="from") ui.repFrom = t.value; else ui.repTo = t.value; render(); }
   if(t.dataset.note){ const r = ensure(t.dataset.day, t.dataset.note), v = t.value.trim(); if(v) r.note = v; else delete r.note; ui.open.add(t.dataset.note); save(); toast("حُفظت الملاحظة"); }
   if(t.dataset.co){
@@ -1786,7 +2000,7 @@ document.addEventListener("visibilitychange", ()=>{ if(document.visibilityState=
 document.fonts && document.fonts.ready.then(()=>{ if(ui.view==="teacher" && ui.tab==="wheel") drawWheel(); });
 </script>
 <script type="module">
-import * as CFG from "./firebase-config.js?v=1792314654";
+import * as CFG from "./firebase-config.js?v=1793711500";
 const FIREBASE_CONFIG = CFG.FIREBASE_CONFIG;
 if(!FIREBASE_CONFIG || !FIREBASE_CONFIG.apiKey || /PASTE/.test(FIREBASE_CONFIG.apiKey)){
   window.dispatchEvent(new Event("fb-missing"));
