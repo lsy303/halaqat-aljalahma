@@ -47,6 +47,30 @@ service cloud.firestore {
       allow read, write: if isTeacher();
     }
 
+    // ميدان الأبطال: تقدّم كل طالب في ملف باسم «رقم ولي الأمر_رقم الطالب»
+    // يقرؤه من يعرف الرقم، ويكتبه فقط إذا كان الرقم مسجّلاً والطالب تابعاً له. الأستاذ يرى الجميع.
+    function validPlay(key) {
+      let d = request.resource.data;
+      let num = key.split('_')[0];
+      let sid = key.split('_')[1];
+      return key.matches('^[0-9]{8,12}_[A-Za-z0-9]{1,40}$')
+        && d.keys().hasOnly(['num', 'sid', 'round', 'st', 'miss', 't0', 't1'])
+        && d.num == num && d.sid == sid
+        && d.round is string && d.round.size() <= 40
+        && d.st is map && d.st.size() <= 200
+        && d.miss is map && d.miss.size() <= 200
+        && (d.t0 == request.time || (resource != null && d.t0 == resource.data.get('t0', null)))
+        && (d.t1 == null || d.t1 == request.time || (resource != null && d.t1 == resource.data.get('t1', null)))
+        && exists(/databases/$(database)/documents/parents/$(num))
+        && sid in get(/databases/$(database)/documents/parents/$(num)).data.students;
+    }
+    match /play/{key} {
+      allow get: if true;
+      allow list: if isTeacher();
+      allow create, update: if validPlay(key);
+      allow delete: if isTeacher();
+    }
+
     // ملفات النظام القديم (برقم اقرأ): مغلقة للقراءة، والأستاذ يحذفها تلقائياً
     match /iqra/{num} {
       allow read: if false;
